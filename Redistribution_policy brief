@@ -1,0 +1,76 @@
+---
+title: "Impact of Redistributing Household Production on Income and Time Poverty: "
+subtitle: "The Case of the United States"
+format:
+  simart-pdf:  
+    keep-tex: true  
+    fontsize: 11pt
+    number-depth: 3
+  docx: default
+crossref:
+  custom:
+    - kind: float
+      reference-prefix: Table A
+      space-before-numbering: false
+      key: atbl
+      latex-env: atbl
+      latex-list-of-description: Appendix Tables
+      caption-location: top
+
+author:
+    - name: "Fernando Rios-Avila"
+      affiliations:
+        - name: "Levy Economics Institute"
+          address: Annandale-on-Hudson, NY 12504
+    - name: "Aashima Sinha"
+      affiliations:
+        - name: "Levy Economics Institute"
+          address: Annandale-on-Hudson, NY 12504
+date: today
+keywords: "Time Poverty, Income Poverty, Redistribution , household production, care work, gender equality, LIMTIP"
+abstract: |
+    xxx
+
+bibliography: biblio.bib
+---
+# Introduction
+
+ Redistribution of household production has been identified as an important tool to achieve gender equality (Elson 1995; xx())he The incorporation of the 3R (recognizition, reduction adn redistribution) strategy as a target in the sustainable development goals, is a testament to the decades of activism and advocacy emphasizing that inequality on this front is not purely or even primarily a “private family matter” but a matter of public policy. 
+ While redistribution of household production responsibilities from females to males is important intrsinsically for human rights and fairness concerns, it is also instrumental in achieving gender equality in labor market outcomes (Bruyn-Hundt 1996; Elson 2017; Esquivel 2016). Yet, difficult questions remain about public policies and collective actions that would reduce inequality, especially in poorer countries. A limited consensus seems to have emerged regarding the effectiveness of certain policy initiatives (e.g., paid paternity leave). But, many of them are likely to have only limited efficacy in the poorer countries due to their structural features such as the widespread absence of formal wage labor and weak welfare states.
+
+ In the case of the US, 
+
+Time povxerty xxxx
+xxxx
+
+Explain limtip
+
+Using ATUS and ASEC data and utilzing statitical matching we develop income and time poverty estimates for the United States 
+for the years 2005 to 2022. In this policy brief we focus on discussing the limptip estimates for the year 2022. Further, 
+we develop three redistribution scenarios wherein we alter the share of household production among household memeber and examine
+if limtip estiamtes change for individuals and housheolds.
+
+
+#Resulrs/Evidence
+Overall we find that limtip estiamtes xx 
+
+Moreover, we examine the changes by sex, employment status, presence of children
+in the household. 
+
+xxx
+
+
+
+##Gender Disparity in the Incidence of Time Deficits
+Evidence indicates that negative time balance values (i.e., time deficits) occur mostly among employed persons 
+Add table by sex and employment status for limtip and discuss results.
+Further, presence of children would demand more caregiving hours thereby putting a pressure on time available, particulalrly 
+for employed couples or single memebr hosuehodls. 
+Add table by sex and children for limtip and discuss results.
+
+##Gender and race Disparity in the Incidence of Time Deficits
+
+
+# Policy implications
+
+#Conclusion
