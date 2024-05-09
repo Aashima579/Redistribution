@@ -40,37 +40,57 @@ bibliography: biblio.bib
 
  In the case of the US, 
 
-Time povxerty xxxx
-xxxx
+# LIMTIP: A New Measure of Time Poverty for the United States
 
-Explain limtip
+- Describe the LIMTIP measure and how it is constructed: Methods paper
+- Brief description of the LIMTIP measure and the Hidden Poor in the US. Small section
 
 Using ATUS and ASEC data and utilzing statitical matching we develop income and time poverty estimates for the United States 
 for the years 2005 to 2022. In this policy brief we focus on discussing the limptip estimates for the year 2022. Further, 
 we develop three redistribution scenarios wherein we alter the share of household production among household memeber and examine
 if limtip estiamtes change for individuals and housheolds.
 
+# Identifying the Problem
 
-#Resulrs/Evidence
-Overall we find that limtip estiamtes xx 
+- The problem we need to identify the problem of time-poverty caused by redistribution (or lack thereof) of household production.
+- Identify either: how many Time poor individuals live in household with time non-poor adults.
+- Or identify the baseline of time poverty if there is full flexibility for time allocation. (Household Deficit consider both time deficits and surpluses)
 
-Moreover, we examine the changes by sex, employment status, presence of children
+This would give us a fist look at how much poverty could be alleviated if household production was redistributed.
+
+We could even look at Who are this individuals who are living in time poverty, but that Do not need to. (describe the characteristics of these individuals)
+
+- Added value. This will help us identify those who cannot be helped by redistribution of household production. (even if their incidence changes
+
+- This raises the question. Do we want to analyze redistribution in household that are not time poor?
+ 
+# Redistribution Scenarios
+
+- Here we would describe the three redistribution scenarios we have developed. This would be "realistic" scenarios. 
+
+- Describe the scenarios and the assumptions behind them.
+
+# Results
+
+- Compare the time poverty changes on those identified earlier. 
+ 
+- Moreover, we examine the changes by sex, employment status, presence of children
 in the household. 
+- Perhaps Start with a global analysis (without Specific groups)
+- then Analyze the case for Specific groups
 
-xxx
+Perhaps provide more emphasis on Some of the groups (gender, the employed, parents?)
 
-
-
-##Gender Disparity in the Incidence of Time Deficits
+## Gender Disparity in the Incidence of Time Deficits
 Evidence indicates that negative time balance values (i.e., time deficits) occur mostly among employed persons 
 Add table by sex and employment status for limtip and discuss results.
 Further, presence of children would demand more caregiving hours thereby putting a pressure on time available, particulalrly 
 for employed couples or single memebr hosuehodls. 
 Add table by sex and children for limtip and discuss results.
 
-##Gender and race Disparity in the Incidence of Time Deficits
+##Gender and race Disparity in the  Incidence of Time Deficits
 
 
 # Policy implications
 
-#Conclusion
+# Conclusion
