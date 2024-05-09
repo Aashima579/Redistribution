@@ -1,0 +1,317 @@
+---
+title: Simart Template
+format:
+  simart-pdf:  
+    keep-tex: true  
+    header-includes: | 
+      \usepackage{lipsum}
+  simart-html: default
+author:
+  - name: Sarah Malloc
+    affiliations:
+      - name: An Organization
+        department: The Department
+        address: 1 Main St
+        city: Boston
+        country: USA
+        postal-code: 02210-1022
+      - A second affiliation
+    orcid: 0000-0000-0000-0000
+    email: sm@example.org
+    url: https://example.org/
+    attributes:
+      corresponding: true 
+  - name: Eliza Dealloc
+    affiliations:
+      - Another Affiliation
+abstract: |
+  This document is a template demonstrating the Simart format.
+  In addition to few tips on how to use quarto for producing articles.    
+keywords: [template, demo]
+jelcodes: [J11, A1]
+bibliography: bibliography.bib  
+---
+
+# Introduction {#sec-intro}
+
+This is a very simple template for the creation of academic articles. It is based on the documentclass article. It has also been adapted so it includes the information of authors, thank you note, corresponding author information, etc. Using APA7th for citations. 
+
+It also provides a quick review of some of the options I learn to use to create sections of interest. Just for fun, it also generates LIPSUM text, to fill the rest of the text.
+
+# Citing documents {#sec-cite}
+
+There are two ways to cite documents. One is using standard author(year) format, as well as a (author, year) format. 
+
+In the first case you use `@CameronTrivedi2013` to obtain @CameronTrivedi2013.
+
+In the second case you use `[@CameronTrivedi2013]` to obtain [@CameronTrivedi2013].
+
+# Authors, Keywords, JEL codes 
+
+The template has been prepared and coded so you include the email, name of the one institution affiliation, and the city of that institution. You can also incorporate the attribute of corresponding author. You cannot have more than 1 affiliation.
+
+```markdown
+  - name: Jon Dean
+    email: jdean@jdean.org
+    affiliations: 
+        - name: Jdean  
+          city: Somewhere, NU
+    attributes:
+        corresponding: true 
+```
+
+For Keywords and JEL codes you can simply use the following:
+
+```markdown
+keywords: [word1, word2, word3]
+jelcodes: [jel1, jel2, jel4]
+```
+
+Make sure that you use square brackets `[]` when listing the keywords and jelcodes.
+
+# Math
+
+You can write math in-line using latex standard syntax. For example `$\beta$` would create $\beta$. 
+
+To write longer equations you need to use `$$` before and after the expression. I find it useful to start a new line to do so. As in the following example:
+
+```latex
+$$y = \beta X + \varepsilon
+$$
+```
+
+$$y = \beta X + \varepsilon
+$$
+
+For multiple equation formulas, it may be convinient to use `\begin{aligned}` and `\end{aligned}`.
+
+```latex
+$$
+\begin{aligned}
+y &= \beta X + \varepsilon \\
+\varepsilon &\sim N(0,\sigma^2)
+\end{aligned}
+$$
+```
+
+$$
+\begin{aligned}
+y &= \beta X + \varepsilon \\
+\varepsilon &\sim N(0,\sigma^2)
+\end{aligned}
+$$
+
+These equations can be easily cross referenced using `{#eq-something}` after `$$`. Instead of something, we just need a unique id to call to. For example:
+
+```latex
+$$
+\begin{aligned}
+y &= \beta X + \varepsilon \\
+\varepsilon &\sim N(0,\sigma^2)
+\end{aligned}
+$${#eq-ols}
+```
+
+$$
+\begin{aligned}
+y &= \beta X + \varepsilon \\
+\varepsilon &\sim N(0,\sigma^2)
+\end{aligned}
+$${#eq-ols}
+
+This can now be referenced using `@eq-ols`, this will provide @eq-ols. 
+
+# Tables and cross-references
+
+Starting with Quarto 1.4 it is really simple to add tables and cross-reference in text.
+
+## Adding pictures as tables
+
+
+```markdown
+::: {#tbl-table1 tbl-pos="H"}
+![](pic_table.png){fig-align=center}
+
+Note: This was a png figure
+
+Table made with a picture
+
+:::
+```
+
+::: {#tbl-table1  tbl-pos="H"}
+![](pic_table.png){fig-align=center}
+
+Note: This was a png figure
+
+Table made with a picture
+:::
+
+
+`@tbl-table1`: @tbl-table1 is a table that was constructed in Excel, saved as figure, and reused in quarto.
+Notice that the code `tbl-pos="H"` allows the table to be rendered close to where the code was provided. Otherwise, in latex style, it would be possitioned elsewhere.
+
+Notice as well that after the "table" was declared, the first line will correspond to the notes you add to your table, and the second one to the title of the table.
+
+## Adding Mark down as tables
+
+Something that has been standard in quarto is to utilize markdown code to create tables. Adding them is straigh forward, as you simply need to include the code in text. But, to keep formatting standard, I will use the same syntax as earlier.
+
+The main difference is the use of `include` code. One advantage is that the main document would be cleaner. Also, when using Markdown tables, those will be rendered wherever the code was added.
+
+```markdown
+::: {#tbl-table2}
+
+{{{< include md_table.md >}}}
+
+Note: Random note
+
+Table using Markdown code
+
+:::
+```
+
+::: {#tbl-table2}
+
+{{< include md_table.md >}}
+
+Note: Random note
+
+Table using Markdown code
+:::
+
+`@tbl-table2` can be used to refer to @tbl-table2. 
+
+## Adding HTML as tables
+
+Using HTML code is just as simple. However, one needs to make sure that, in addition to the code that produces the table of interest, that table is fenced using ` ```{=html}`. This makes a explicit request to interpret HTML code as RAW code.
+
+As with the example with a picture code, however, you may want to use `tbl-pos="H"` to render the table where you want.
+
+````markdown
+::: {#tbl-table3 tbl-pos="H"}
+```{=html}
+{{{< include html_table.html >}}}
+```
+
+Note: Random note
+
+Table using HTML code  
+:::
+````
+
+::: {#tbl-table3 tbl-pos="H"}
+
+```{=html}
+{{< include html_table.html >}}
+```
+
+Note: Random note
+
+Table using HTML code
+:::
+
+`@tbl-table3` is used now to render @tbl-table3.
+
+
+## Adding Latex as tables
+
+Last but not least, Latex tables. They can also be rendered using the same strategy as before. Perhaps one important difference is that you could modify the Latex code directly to decide where to position the tables. 
+
+```markdown
+::: {#tbl-table4 tbl-pos="H"}
+{{{< include latex_table.tex >}}} 
+
+Note: Random note
+
+Table using Latex code
+:::
+```
+
+::: {#tbl-table4 tbl-pos="H"}
+ {{< include latex_table.tex >}} 
+
+Note: Random note
+
+Table using Latex code
+:::
+
+`@tbl-table4` is used to reference @tbl-table4
+
+# Adding References section
+
+to add reference section at the end of your document, you can use the following code:
+
+```md
+# References {.unnumbered}
+
+::: {#refs}
+:::
+```
+
+The option `{.unnumbered}` request not to add a number to the section. whereas the fenced code request to add the references in the section of your choice.  
+
+\lipsum[1-4]
+
+# References {.unnumbered}
+
+::: {#refs}
+:::
+
+
+{{< pagebreak >}}
+
+\appendix
+\pagenumbering{arabic}
+\renewcommand{\thepage}{\thesection\arabic{page}}
+
+# Appendix on how to add an appendix
+
+I find that adding an appendix requires two pieces of code. First, after reference one may add `{{< pagebreak >}}` to start a new page. And use the latex code `\appendix`, to start the appendix section.
+
+Now, to re-start numnering, one needs to add `\setcounter{page}{1}` right after `\appendix`. However, if one wants to create new pages for every appendix section, that is possible using the following commands:
+
+```
+\pagenumbering{arabic}
+\renewcommand{\thepage}{\thesection\arabic{page}}
+```
+
+To add Appendix Figures and Tables, one can just create them as usual.
+
+## Subsection Appendix
+
+Just an example.
+
+\lipsum[1-4]
+
+::: {#tbl-atable1 tbl-pos="H"}
+ {{< include latex_table.tex >}} 
+
+Note: Random note
+
+Appendix using Latex code
+:::
+
+\lipsum[2-4]
+
+{{< pagebreak >}}
+
+\setcounter{page}{1}
+
+# second appendix
+
+Or a Second picture 
+
+::: {#tbl-atable2 tbl-pos="H"}
+ {{< include latex_table.tex >}} 
+
+Note: Random note
+
+Appendix using Latex code
+:::
+
+\lipsum[1-2]
+
+## sub appendix
+
+\lipsum[1-4]
