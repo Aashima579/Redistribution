@@ -1,6 +1,5 @@
 ---
-title: "Impact of Redistributing Household Production on Income and Time Poverty: "
-subtitle: "The Case of the United States"
+title: "The Hidden Poor: Solving Time Poverty through Redistribution of Household Production"
 format:
   simart-pdf:  
     keep-tex: true  
