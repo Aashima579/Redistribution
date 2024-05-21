@@ -32,7 +32,8 @@ abstract: |
 
 bibliography: biblio.bib
 ---
-# Introduction
+
+ # Introduction
 
  Redistribution of household production has been identified as an important tool to achieve gender equality (Elson 1995; xx())he The incorporation of the 3R (recognizition, reduction adn redistribution) strategy as a target in the sustainable development goals, is a testament to the decades of activism and advocacy emphasizing that inequality on this front is not purely or even primarily a “private family matter” but a matter of public policy. 
  While redistribution of household production responsibilities from females to males is important intrsinsically for human rights and fairness concerns, it is also instrumental in achieving gender equality in labor market outcomes (Bruyn-Hundt 1996; Elson 2017; Esquivel 2016). Yet, difficult questions remain about public policies and collective actions that would reduce inequality, especially in poorer countries. A limited consensus seems to have emerged regarding the effectiveness of certain policy initiatives (e.g., paid paternity leave). But, many of them are likely to have only limited efficacy in the poorer countries due to their structural features such as the widespread absence of formal wage labor and weak welfare states.
@@ -44,10 +45,33 @@ bibliography: biblio.bib
 - Describe the LIMTIP measure and how it is constructed: Methods paper
 - Brief description of the LIMTIP measure and the Hidden Poor in the US. Small section
 
+Poverty is a multidimensional concept that goes beyond the simple notion of lack of income. In addition to income, poverty can be understood as a lack of access to resources, including time. LIMTIP is a metric that incorporates in addition to income poverty, aspects of time poverty. Time poverty refers to  a scenarion wherein people may not have any time left after engaging in activities that are essential for taking care of the household, its members, self-care, and paid work (when appropriate).
+
+As with any other measures of poverty, it is necessary to identify a threshold to determine if given the resources available to a person or household, they should be classified as poor or non-poor. In the case of time, however, thinking about a threshold is less intuitive because all individuals have the same amount of time available to them i.e 24 hours in a day. Instead, the approach used for the construction of the LIMTIP has been to identify the time balance people would potentially face after considering the necessary time spent on essential activities and household responsabilities. In this framework, people with a negative balance are considered time-poor. We express the weekly time balance of individual $i$ in household $j$, $X_{ij}$, as:
+
+$$X_{ij} = 168 - M - \alpha_{ij}R_j-D_{ij}^0(L_{ij}+T_{ij})
+$$ {#eq-bal}
+
+where 168 is the number of hours in a week, $M$ is the sum of personal care and non-substitutable household production requirements, $R_j$ is the required time of household production that a family $j$ needs to maintain the household, $\alpha_{ij}$ is the share of individual $i$ in the household production requirements. To account for required time due to working, the @eq-bal also includes $D_{ij}$, a dummy variable that takes a value of 1 if the person is employed and zero otherwise. Thus, for those employed, one also accounts for hours of employment $L_{ij}$ , the hours of commuting $T_{ij}$.
+
+To construct this measure, we need a dataset that contains information on individuals' time use, in addition to standard information required for poverty analysis. The main source of information for time use comes from the American Time Use Survey (ATUS), which only provides information for a single person in the household and a single day. It is necessary to combine the ATUS with the ASEC data to construct a synthetic dataset that contains information on time use for all household members, which will allow us to impute all required variables for @eq-bal.
+
 Using ATUS and ASEC data and utilzing statitical matching we develop income and time poverty estimates for the United States 
-for the years 2005 to 2022. In this policy brief we focus on discussing the limptip estimates for the year 2022. Further, 
-we develop three redistribution scenarios wherein we alter the share of household production among household memeber and examine
-if limtip estiamtes change for individuals and housheolds.
+for the years 2005 to 2022. In this policy brief we focus on discussing the LIMTIP estimates for the year 2022.
+
+
+The LIMTIP 
+$$P_{j}^L* = P_{j}^O- p_{j}*X_{j}
+$$ {#eq-limtip}
+
+The underlying idea is that if we were to monetize the time deficits of individuals and add those to the offical income poverty thresholds, we get an adjusted poverty line - LIMTIP.
+The estimation of LIMTIP helps us calculate the number of hidden poor, i.e time poor indivuals who are left outside the scope of official income poverty estimates. The difference between the LIMTIP measure of poverty and the official poverty estimates give us the number of hidden poor. 
+For our US estimates, we find that xx number of individuals are hidden poor in 2022. The time trend shows that hidden poor has xxxx over time. 
+Further, in Table xx and yy we present the distribution of individuals and hh respectively across the four-way classification of LIMTIP (time poor and i) for the year 2022.
+
+Next,  we develop three redistribution scenarios wherein we redistribute the share of household production responsibilities among the household’s working-age persons while all else remains. In other words, we examine the effects of a new set of values of $\alpha_{ij}$. Redistribution will change the magnitude of the time balanace in @eq-bal and, depending on the extent and direction of the change, may result in a time-poor person becoming time-nonpoor or a time-nonpoor person experiencing time poverty. We focus on the subsample of households for which redistribution is possible and efficient. For example redistributing househodd prod in a hh with atleast one time poor and one time non poor individual along with the constraint that redistribution can take place to adults belonging to 18-64 years and who are able. This allows for us to not redistribute hh pro to children and/or those with ddisability. 
+
+
 
 # Identifying the Problem
 
@@ -68,6 +92,37 @@ We could even look at Who are this individuals who are living in time poverty, b
 - Here we would describe the three redistribution scenarios we have developed. This would be "realistic" scenarios. 
 
 - Describe the scenarios and the assumptions behind them.
+
+Intrahousehold redistribution can potentially reduce time deficits. We construct three redistrubution scenarios based on different guiding principles udnerlying the mechanism of redistribution. The extent of the reduction would depend on the principle that we use in distributing household responsibilities among the members. 
+First, we use the simple egalitarianism principle that involves an equal division. B
+
+xxxx
+We also briefly outline the methods used for implementing the principles in our data, with the detailed explanation of some aspects provided in Appendix xx. Next, we provide an assessment of the different principles in terms of how far they improve the position of women and how much such improvements are congruent with the betterment of the economic well-being of their families. In the subsequent section, we compare and contrast the joint distribution of time and consumption poverty among families and individuals that would result from each principle.
+
+
+
+## Distribution Rules for Household Production
+Alternative values of $\alpha_{ij}$ indicate how household production requirements, net of the portion met by household members that are not of working age or are physically unable to take on more work, are shared between working-age persons in the household. 
+Below we discuss the three principles.
+### 1. Equal Shares Scenario
+The procedure for the equal shares scenario is relatively simple. Recall that the shares of those in the redistribution simulation in this scenario are simply:
+ As before, denoting the number of working-age persons in household $j$ as $I^j$, we can express the rule as:
+xxx
+
+$$$\alpha_{ij}$^E= 1/$I^j$ 
+$$ {#eq-r1}
+
+### 2. Time Available Scenario (WIP editing)
+The time available scenario is based on the principle that household members should split up the required household production time based on the time each one has available, i.e based on an equity criteria. The time available ($Z_{ij}$)) is defined as the time left over after the minimum personal maintenance and time spent on income generation (including commuting time) have been subtracted from the total weekly hours. To calculate the shares for each individual based on this principle, we first calculate the time available for each individual, then add up the total among the household for those individuals that have positive time available. We then divide each individual’s time available by the total and apply that fraction to the redistributable share of household production time. 
+
+The second principle is based on equity such that the redistrubted shares are based on the time that is available after setting aside the time for personal maintenance requirements and income generation. This principle accounts for the time available to individuals, fo eg: some people may have such exceptionally long hours at the job that after meeting the minimum personal maintenance requirements they are left with no time to devote to household production requirements. We described them as being in purely job-induced time poverty. Because we are assuming that the time spent on employment remains constant, the logical approach would be to set the value of time available to zero for those in job-induced time poverty in figuring out the time available to the household as a whole and individuals shares:
+
+
+
+The third possibility is based on the idea of opportunity costs along marginalist lines. The sharing rule depends on the relative actual (potential) wage. For example, if there are only two working-age adults, say husband and wife, and if the husband’s wage is twice as much as the wife, the wife’s share would be two-thirds and the husband’s share would be one-third. Thus:
+
+
+We simulate each of these principles of redistribution and recalculate individual and household time and consumption poverty using the LIMTP framework described above. 
 
 # Results
 
