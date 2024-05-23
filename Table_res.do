@@ -1,5 +1,5 @@
 cd "J:\Shared drives\levy_distribution\Time Poverty\US\LIMTIP\limtip\"
-matrix drop bb
+capture matrix drop  bb
 forvalues i = 2005/2023 {
     use limtip_us_`i', clear
     bysort spmfamunit:egen htpoor=max(tpoor)
@@ -30,7 +30,7 @@ frame toplot: {
 **
 
 cd "J:\Shared drives\levy_distribution\Time Poverty\US\LIMTIP\redistribution_simulation\"
-matrix drop _all
+capture matrix drop  _all
 forvalues i = 2005 / 2023 {
 use red_scenarios_`i'.dta, clear
  
@@ -87,7 +87,7 @@ two (rbar bb543 bb0 bb1, barw(0.9)) (rbar bb54 bb0 bb1, barw(0.9)) (rbar bb5 bb0
  
 *** Profile of Time Povery and Redistribution
 replace tpoor = .  if !inrange(age,18,64)
-bysort spmfamunit:egen htpoor=max(tpoor)
+*bysort spmfamunit:egen htpoor=max(tpoor)
 
 drop2 any_tpoor any_npoor net_bal 
 bysort spmfamunit: egen any_tpoor = max(tpoor      *inrange(age,18,64)) 
@@ -103,8 +103,8 @@ gen itpoor = tpoor_type * tpoor
 mean i.itpoor  [pw=asecwt] if inrange(age,18,64)   
 
 tab itpoor tpoor_sc1  if itpoor>=2 [iw=asecwt], row nofreq
-tab itpoor tpoor_sc2   if itpoor>=2 [iw=asecwt], row nofreq
-tab itpoor tpoor_sc3   if itpoor>=2 [iw=asecwt], row nofreq
+tab itpoor tpoor_sc2  if itpoor>=2 [iw=asecwt], row nofreq
+tab itpoor tpoor_sc3  if itpoor>=2 [iw=asecwt], row nofreq
 
 ** HH 
 bysort spmfamunit:egen htpoor_sc1=max(tpoor_sc1)
@@ -114,3 +114,10 @@ bysort spmfamunit:egen htpoor_sc3=max(tpoor_sc3)
 tab tpoor_type htpoor_sc1 if tpoor_type>=2 [iw=asecwt], row nofreq
 tab tpoor_type htpoor_sc2 if tpoor_type>=2 [iw=asecwt], row nofreq
 tab tpoor_type htpoor_sc3 if tpoor_type>=2 [iw=asecwt], row nofreq
+
+tab itpoor tpoor_sc1  if itpoor==0 [iw=asecwt], row nofreq
+tab itpoor tpoor_sc2  if itpoor==0 [iw=asecwt], row nofreq
+tab itpoor tpoor_sc3  if itpoor==0 [iw=asecwt], row nofreq
+
+tab itpoor tpoor_sc2  if itpoor>=2 [iw=asecwt], row nofreq
+tab itpoor tpoor_sc3  if itpoor>=2 [iw=asecwt], row nofreq
