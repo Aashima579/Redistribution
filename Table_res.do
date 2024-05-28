@@ -86,8 +86,9 @@ two (rbar bb543 bb0 bb1, barw(0.9)) (rbar bb54 bb0 bb1, barw(0.9)) (rbar bb5 bb0
  
  
 *** Profile of Time Povery and Redistribution
-replace tpoor = .  if !inrange(age,18,64)
-*bysort spmfamunit:egen htpoor=max(tpoor)
+ *bysort spmfamunit:egen htpoor=max(tpoor)
+ drop2 htpoor
+bysort spmfamunit:egen htpoor=max(tpoor)
 
 drop2 any_tpoor any_npoor net_bal 
 bysort spmfamunit: egen any_tpoor = max(tpoor      *inrange(age,18,64)) 
@@ -95,10 +96,11 @@ bysort spmfamunit: egen any_npoor = max((1 - tpoor)*inrange(age,18,64))
 bysort spmfamunit: egen net_bal   = sum(tbalance   *inrange(age,18,64))
 drop2   tpoor_type   
 gen     tpoor_type = .
-replace tpoor_type = 1 if net_bal   <  0                // Everyone is Time Poor
+replace tpoor_type = 1 if any_npoor ==  0                // Everyone is Time Poor
 replace tpoor_type = 2 if any_npoor ! =0 & htpoor == 1  // Not enough to Lift them out of Poverty
 replace tpoor_type = 3 if net_bal   >  0 & htpoor == 1  // Can be lift out of poverty
 replace tpoor_type = 0 if htpoor    == 0                // is not Time poor
+drop2 itpoor
 gen itpoor = tpoor_type * tpoor
 mean i.itpoor  [pw=asecwt] if inrange(age,18,64)   
 
@@ -111,13 +113,39 @@ bysort spmfamunit:egen htpoor_sc1=max(tpoor_sc1)
 bysort spmfamunit:egen htpoor_sc2=max(tpoor_sc2)
 bysort spmfamunit:egen htpoor_sc3=max(tpoor_sc3)
 
-tab tpoor_type htpoor_sc1 if tpoor_type>=2 [iw=asecwt], row nofreq
-tab tpoor_type htpoor_sc2 if tpoor_type>=2 [iw=asecwt], row nofreq
-tab tpoor_type htpoor_sc3 if tpoor_type>=2 [iw=asecwt], row nofreq
+tab tpoor_type htpoor_sc1 [iw=asecwt], row  
+tab tpoor_type htpoor_sc2 [iw=asecwt], row  
+tab tpoor_type htpoor_sc3 [iw=asecwt], row  
 
-tab itpoor tpoor_sc1  if itpoor==0 [iw=asecwt], row nofreq
-tab itpoor tpoor_sc2  if itpoor==0 [iw=asecwt], row nofreq
-tab itpoor tpoor_sc3  if itpoor==0 [iw=asecwt], row nofreq
+tab tpoor tpoor_sc1  if itpoor==0 [iw=asecwt], row nofreq
+tab tpoor tpoor_sc2  if itpoor==0 [iw=asecwt], row nofreq
+tab tpoor tpoor_sc3  if itpoor==0 [iw=asecwt], row nofreq
 
-tab itpoor tpoor_sc2  if itpoor>=2 [iw=asecwt], row nofreq
-tab itpoor tpoor_sc3  if itpoor>=2 [iw=asecwt], row nofreq
+tab tpoor tpoor_sc1  if itpoor==1 [iw=asecwt], row nofreq
+tab tpoor tpoor_sc2  if itpoor==1 [iw=asecwt], row nofreq
+tab tpoor tpoor_sc3  if itpoor==1 [iw=asecwt], row nofreq
+
+tab tpoor tpoor_sc1  if itpoor==2 [iw=asecwt], row nofreq
+tab tpoor tpoor_sc2  if itpoor==2 [iw=asecwt], row nofreq
+tab tpoor tpoor_sc3  if itpoor==2 [iw=asecwt], row nofreq
+
+tab tpoor tpoor_sc1  if itpoor==3 [iw=asecwt], row nofreq
+tab tpoor tpoor_sc2  if itpoor==3 [iw=asecwt], row nofreq
+tab tpoor tpoor_sc3  if itpoor==3 [iw=asecwt], row nofreq
+
+
+tab tpoor tpoor_sc1  if tpoor_type==0 [iw=asecwt], row nofreq
+tab tpoor tpoor_sc2  if tpoor_type==0 [iw=asecwt], row nofreq
+tab tpoor tpoor_sc3  if tpoor_type==0 [iw=asecwt], row nofreq
+
+tab tpoor tpoor_sc1  if tpoor_type==1 [iw=asecwt], row nofreq
+tab tpoor tpoor_sc2  if tpoor_type==1 [iw=asecwt], row nofreq
+tab tpoor tpoor_sc3  if tpoor_type==1 [iw=asecwt], row nofreq
+
+tab tpoor tpoor_sc1  if tpoor_type==2 [iw=asecwt], row nofreq
+tab tpoor tpoor_sc2  if tpoor_type==2 [iw=asecwt], row nofreq
+tab tpoor tpoor_sc3  if tpoor_type==2 [iw=asecwt], row nofreq
+
+tab tpoor tpoor_sc1  if tpoor_type==3 [iw=asecwt], row nofreq
+tab tpoor tpoor_sc2  if tpoor_type==3 [iw=asecwt], row nofreq
+tab tpoor tpoor_sc3  if tpoor_type==3 [iw=asecwt], row nofreq
