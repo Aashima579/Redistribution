@@ -1,4 +1,4 @@
-cd "J:\Shared drives\levy_distribution\Time Poverty\US\LIMTIP\limtip\"
+cd "g:\Shared drives\levy_distribution\Time Poverty\US\LIMTIP\limtip\"
 capture matrix drop  bb
 forvalues i = 2005/2023 {
     use limtip_us_`i', clear
@@ -29,7 +29,7 @@ frame toplot: {
 
 **
 
-cd "J:\Shared drives\levy_distribution\Time Poverty\US\LIMTIP\redistribution_simulation\"
+cd "g:\Shared drives\levy_distribution\Time Poverty\US\LIMTIP\redistribution_simulation\"
 capture matrix drop  _all
 forvalues i = 2005 / 2023 {
 use red_scenarios_`i'.dta, clear
@@ -41,111 +41,165 @@ drop2 any_tpoor any_npoor net_bal
 bysort spmfamunit: egen any_tpoor = max(tpoor      *inrange(age,18,64)) 
 bysort spmfamunit: egen any_npoor = max((1 - tpoor)*inrange(age,18,64)) 
 bysort spmfamunit: egen net_bal   = sum(tbalance   *inrange(age,18,64))
+bysort spmfamunit: egen spm_nobs   = sum(inrange(age,18,64))
 
 ** Reclass of Time Poor
 drop2   tpoor_type   
 gen     tpoor_type = .
-replace tpoor_type = 1 if net_bal   <  0                // Everyone is Time Poor
-replace tpoor_type = 2 if any_npoor ! =0 & htpoor == 1  // Not enough to Lift them out of Poverty
-replace tpoor_type = 3 if net_bal   >  0 & htpoor == 1  // Can be lift out of poverty
+replace tpoor_type = 2 if net_bal   <  0                // Everyone is Time Poor
+replace tpoor_type = 3 if any_npoor ! =0 & htpoor == 1  // Not enough to Lift them out of Poverty
+replace tpoor_type = 4 if net_bal   >  0 & htpoor == 1  // Can be lift out of poverty
+replace tpoor_type = 1 if spm_nobs  == 1                // Single person Household
 replace tpoor_type = 0 if htpoor    == 0                // is not Time poor
 gen itpoor = tpoor_type * tpoor
 mean i.itpoor  [pw=asecwt] if inrange(age,18,64)   
 matrix bb = nullmat(bb)\[`i',e(b)]
 }
-
+capture frame create toplot
 frame toplot:clear
 frame toplot:lbsvmat bb
 
 frame toplot:  {
-      foreach i in bb5 bb4 bb3 { 
+      foreach i in bb6 bb5 bb4 bb3 { 
         gen v`i' = `i'*100
         replace `i' = `i'*100
     }
        
- gen bb54 =bb5+bb4
- gen bb543=bb5+bb4+bb3
+ gen bb65  =bb6+bb5
+ gen bb654 =bb6+bb5+bb4
+ gen bb6543=bb6+bb5+bb4+bb3
  gen bb0  =0
  drop2 sct*
- gen sct5  = bb5/2
- gen sct54 = bb5 +(bb4/2)
- gen sct543 = bb54+(bb3/2)
+ gen sct6  = bb6/2
+ gen sct65 = bb6 +(bb5/2)
+ gen sct654 = bb65+(bb4/2)
+ gen sct6543 = bb654+(bb3/2)
  
-
-two (rbar bb543 bb0 bb1, barw(0.9)) (rbar bb54 bb0 bb1, barw(0.9)) (rbar bb5 bb0 bb1, barw(0.9)) ///
-  (scatter sct5   sct54  sct543 bb1, mcolor(%0 %0 %0) mlabsize(11pt 11pt 11pt) mlabel(vbb5 vbb4 vbb3) ///
-  mlabformat(%3.1f %3.1f %3.1f) mlabpos(0 0 0) mlabangle(90 90 90)), xlabel(2005/2023 , alt noticks   ) ///
+set scheme white2
+color_style bay
+two (rbar bb6543 bb0 bb1, barw(0.9)) (rbar bb654 bb0 bb1, barw(0.9)) (rbar bb65 bb0 bb1, barw(0.9)) (rbar bb6 bb0 bb1, barw(0.9)) ///
+  (scatter sct6   sct65  sct654 sct6543 bb1, mcolor(%0 %0 %0 %0) mlabsize(10pt  10pt 10pt 10pt) mlabel(vbb6 vbb5 vbb4 vbb3) ///
+  mlabformat(%3.1f %3.1f %3.1f %3.1f) mlabpos(0 0 0 0 )  ), xlabel(2005/2023 , alt noticks   ) ///
   scale(1.3) xscale( axis(none)) ysize(5) xsize(10) xtitle("") ytitle("Poverty Rate") ///
   graphregion(margin(small)) plotregion(margin(small))  ///
-  legend(order(1 "Irreducible T.Poverty" 2 "Reducible Ind. T.Poverty" 3 "Reducible Hld. T.Povery") pos(6) col(3)) 
+  legend(order(1 "Single Person" 2 "Irreducible H.T.Poverty" 3 "Reducible I.T.Poverty" 4 "Reducible Hld. T.Povery") pos(6) col(4)) 
  
    graph export "C:\Users\Fernando\Documents\GitHub\Redistribution\resources\tpov_type.pdf", replace
   graph export "C:\Users\Fernando\Documents\GitHub\Redistribution\resources\tpov_type.png", replace width(1500)
 } 
 
- 
+
+capture matrix drop  _all
+forvalues i = 2005 / 2023 {
+    tempfile `i'
+    use red_scenarios_`i'.dta, clear
+    keep if inrange(age,18,64)
+    compress 
+    bysort spmfamunit:egen htpoor=max(tpoor)
+
+    drop2 any_tpoor any_npoor net_bal 
+    bysort spmfamunit: egen any_tpoor = max(tpoor      *inrange(age,18,64)) 
+    bysort spmfamunit: egen any_npoor = max((1 - tpoor)*inrange(age,18,64)) 
+    bysort spmfamunit: egen net_bal   = sum(tbalance   *inrange(age,18,64))
+    bysort year spmfamunit:gen spm_nobs = _N
+
+    ** Reclass of Time Poor
+    drop2   tpoor_type   
+    gen     tpoor_type = .
+    replace tpoor_type = 2 if net_bal   <  0                // Everyone is Time Poor
+    replace tpoor_type = 3 if any_npoor ! =0 & htpoor == 1  // Not enough to Lift them out of Poverty
+    replace tpoor_type = 4 if net_bal   >  0 & htpoor == 1  // Can be lift out of poverty
+    replace tpoor_type = 1 if spm_nobs ==1                  // Single Person HH
+
+    replace tpoor_type = 0 if htpoor    == 0                // is not Time poor
+    gen itpoor = tpoor_type * tpoor
+    save ``i''
+}
+
+clear
+forvalues i = 2005 / 2023 {
+    append using ``i''
+    capture gen year = `i'
+    capture replace year = `i' if year ==.
+} 
  
 *** Profile of Time Povery and Redistribution
  *bysort spmfamunit:egen htpoor=max(tpoor)
- drop2 htpoor
-bysort spmfamunit:egen htpoor=max(tpoor)
+ 
+*************************************************************
+label var tpoor_type "Household T. Poverty type"
+label define tpoor_type 0 "Not Time Poor", modify
+label define tpoor_type 1 "Single Person", modify
+label define tpoor_type 2 "Everyone is Time Poor", modify
+label define tpoor_type 3 "Time poor/Not poor: Household Remains T. poor", modify
+label define tpoor_type 4 "Time poor/Not poor: Household can exit T. poverty", modify
+label values tpoor_type tpoor_type
 
-drop2 any_tpoor any_npoor net_bal 
-bysort spmfamunit: egen any_tpoor = max(tpoor      *inrange(age,18,64)) 
-bysort spmfamunit: egen any_npoor = max((1 - tpoor)*inrange(age,18,64)) 
-bysort spmfamunit: egen net_bal   = sum(tbalance   *inrange(age,18,64))
-drop2   tpoor_type   
-gen     tpoor_type = .
-replace tpoor_type = 1 if any_npoor ==  0                // Everyone is Time Poor
-replace tpoor_type = 2 if any_npoor ! =0 & htpoor == 1  // Not enough to Lift them out of Poverty
-replace tpoor_type = 3 if net_bal   >  0 & htpoor == 1  // Can be lift out of poverty
-replace tpoor_type = 0 if htpoor    == 0                // is not Time poor
-drop2 itpoor
-gen itpoor = tpoor_type * tpoor
-mean i.itpoor  [pw=asecwt] if inrange(age,18,64)   
+label var    itpoor "Individual T. Poverty type"
+label define itpoor 0 "Not Time Poor", modify
+label define itpoor 1 "Single Person", modify
+label define itpoor 2 "Lives in T-I   household", modify
+label define itpoor 3 "Lives in T-II  household", modify
+label define itpoor 4 "Lives in T-III household", modify
+label values itpoor itpoor
 
-tab itpoor tpoor_sc1  if itpoor>=2 [iw=asecwt], row nofreq
-tab itpoor tpoor_sc2  if itpoor>=2 [iw=asecwt], row nofreq
-tab itpoor tpoor_sc3  if itpoor>=2 [iw=asecwt], row nofreq
-
-** HH 
-bysort spmfamunit:egen htpoor_sc1=max(tpoor_sc1)
-bysort spmfamunit:egen htpoor_sc2=max(tpoor_sc2)
-bysort spmfamunit:egen htpoor_sc3=max(tpoor_sc3)
-
-tab tpoor_type htpoor_sc1 [iw=asecwt], row  
-tab tpoor_type htpoor_sc2 [iw=asecwt], row  
-tab tpoor_type htpoor_sc3 [iw=asecwt], row  
-
-tab tpoor tpoor_sc1  if itpoor==0 [iw=asecwt], row nofreq
-tab tpoor tpoor_sc2  if itpoor==0 [iw=asecwt], row nofreq
-tab tpoor tpoor_sc3  if itpoor==0 [iw=asecwt], row nofreq
-
-tab tpoor tpoor_sc1  if itpoor==1 [iw=asecwt], row nofreq
-tab tpoor tpoor_sc2  if itpoor==1 [iw=asecwt], row nofreq
-tab tpoor tpoor_sc3  if itpoor==1 [iw=asecwt], row nofreq
-
-tab tpoor tpoor_sc1  if itpoor==2 [iw=asecwt], row nofreq
-tab tpoor tpoor_sc2  if itpoor==2 [iw=asecwt], row nofreq
-tab tpoor tpoor_sc3  if itpoor==2 [iw=asecwt], row nofreq
-
-tab tpoor tpoor_sc1  if itpoor==3 [iw=asecwt], row nofreq
-tab tpoor tpoor_sc2  if itpoor==3 [iw=asecwt], row nofreq
-tab tpoor tpoor_sc3  if itpoor==3 [iw=asecwt], row nofreq
+label var    age_g "Age Group"
+label define age_g 1 "18/30" 2 "31/45" 3 "46/64", modify
+label values age_g age_g 
 
 
-tab tpoor tpoor_sc1  if tpoor_type==0 [iw=asecwt], row nofreq
-tab tpoor tpoor_sc2  if tpoor_type==0 [iw=asecwt], row nofreq
-tab tpoor tpoor_sc3  if tpoor_type==0 [iw=asecwt], row nofreq
+bysort year spmfamunit:egen htpoor_sc1=max(tpoor_sc1)
 
-tab tpoor tpoor_sc1  if tpoor_type==1 [iw=asecwt], row nofreq
-tab tpoor tpoor_sc2  if tpoor_type==1 [iw=asecwt], row nofreq
-tab tpoor tpoor_sc3  if tpoor_type==1 [iw=asecwt], row nofreq
+bysort year spmfamunit:egen htpoor_sc2=max(tpoor_sc2)
 
-tab tpoor tpoor_sc1  if tpoor_type==2 [iw=asecwt], row nofreq
-tab tpoor tpoor_sc2  if tpoor_type==2 [iw=asecwt], row nofreq
-tab tpoor tpoor_sc3  if tpoor_type==2 [iw=asecwt], row nofreq
+bysort year spmfamunit:egen htpoor_sc3=max(tpoor_sc3)
 
-tab tpoor tpoor_sc1  if tpoor_type==3 [iw=asecwt], row nofreq
-tab tpoor tpoor_sc2  if tpoor_type==3 [iw=asecwt], row nofreq
-tab tpoor tpoor_sc3  if tpoor_type==3 [iw=asecwt], row nofreq
+ 
+replace spm_nobs = min(4,spm_nobs)
+
+ 
+** Three Scenarios: First Analyzing on Time Poverty
+tab itpoor [iw=asecwt], 
+tab itpoor sex [iw=asecwt], col nofreq
+tab itpoor educ [iw=asecwt], col nofreq
+tab itpoor age_g [iw=asecwt], col  nofreq
+tab itpoor spmpov [iw=asecwt], col  nofreq
+tab itpoor spm_nobs [iw=asecwt], col  nofreq
+
+
+tab itpoor tpoor_sc1  [iw=asecwt], row nofreq
+tab itpoor tpoor_sc2  [iw=asecwt], row nofreq
+tab itpoor tpoor_sc3  [iw=asecwt], row nofreq
+
+** Then Household Poverty: Only class 3 can exit
+
+tab tpoor_type htpoor_sc1  [iw=asecwt], row nofreq
+tab tpoor_type htpoor_sc2  [iw=asecwt], row nofreq
+tab tpoor_type htpoor_sc3  [iw=asecwt], row nofreq
+
+** by groups
+
+
+bysort sex:tab itpoor tpoor_sc1  [iw=asecwt], row nofreq
+bysort sex:tab itpoor tpoor_sc2  [iw=asecwt], row nofreq
+bysort sex:tab itpoor tpoor_sc3  [iw=asecwt], row nofreq
+
+bysort educ:tab itpoor tpoor_sc1  [iw=asecwt], row nofreq
+bysort educ:tab itpoor tpoor_sc2  [iw=asecwt], row nofreq
+bysort educ:tab itpoor tpoor_sc3  [iw=asecwt], row nofreq
+
+bysort age_g:tab itpoor tpoor_sc1  [iw=asecwt], row nofreq
+bysort age_g:tab itpoor tpoor_sc2  [iw=asecwt], row nofreq
+bysort age_g:tab itpoor tpoor_sc3  [iw=asecwt], row nofreq
+
+bysort emp:tab itpoor tpoor_sc1  [iw=asecwt], row nofreq
+bysort emp:tab itpoor tpoor_sc2  [iw=asecwt], row nofreq
+bysort emp:tab itpoor tpoor_sc3  [iw=asecwt], row nofreq
+
+bysort spmpov:tab itpoor tpoor_sc1  [iw=asecwt], row nofreq
+bysort spmpov:tab itpoor tpoor_sc2  [iw=asecwt], row nofreq
+bysort spmpov:tab itpoor tpoor_sc3  [iw=asecwt], row nofreq
+
+bysort spm_nobs:tab itpoor tpoor_sc1  [iw=asecwt], row nofreq
+bysort spm_nobs:tab itpoor tpoor_sc2  [iw=asecwt], row nofreq
+bysort spm_nobs:tab itpoor tpoor_sc3  [iw=asecwt], row nofreq 
