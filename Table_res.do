@@ -1,4 +1,4 @@
-cd "g:\Shared drives\levy_distribution\Time Poverty\US\LIMTIP\limtip\"
+/*cd "g:\Shared drives\levy_distribution\Time Poverty\US\LIMTIP\limtip\"
 capture matrix drop  bb
 forvalues i = 2005/2023 {
     use limtip_us_`i', clear
@@ -87,7 +87,8 @@ two (rbar bb6543 bb0 bb1, barw(0.9)) (rbar bb654 bb0 bb1, barw(0.9)) (rbar bb65 
    graph export "C:\Users\Fernando\Documents\GitHub\Redistribution\resources\tpov_type.pdf", replace
   graph export "C:\Users\Fernando\Documents\GitHub\Redistribution\resources\tpov_type.png", replace width(1500)
 } 
-
+*/
+****************************************************************************************************
 
 capture matrix drop  _all
 forvalues i = 2005 / 2023 {
@@ -147,6 +148,12 @@ label var    age_g "Age Group"
 label define age_g 1 "18/30" 2 "31/45" 3 "46/64", modify
 label values age_g age_g 
 
+gen tx_sc1 = tpoor_sc1
+gen tx_sc2 = tpoor_sc2 
+gen tx_sc3 = tpoor_sc3
+replace tx_sc1 = 1-tpoor_sc1 if itpoor!=0
+replace tx_sc2 = 1-tpoor_sc2 if itpoor!=0
+replace tx_sc3 = 1-tpoor_sc3 if itpoor!=0
 
 bysort year spmfamunit:egen htpoor_sc1=max(tpoor_sc1)
 
@@ -157,49 +164,81 @@ bysort year spmfamunit:egen htpoor_sc3=max(tpoor_sc3)
  
 replace spm_nobs = min(4,spm_nobs)
 
- 
+recode rel_income (-99/1 = 1 "SPM Poor")  (-99/1 = 1 "SPM Poor") (1/2=2 "Non Poor <2 Pl") (2/4 =3 "2-4 Times PL") (4/100 =4 "4+ Times PL"), gen(rel_q)
+
+capture progra drop  tabmean
+program tabmean, rclass
+    syntax varlist [if] [aw], mvar(varlist) scale(str)
+    marksample touse
+    gettoken v1 v2:varlist
+    levelsof `v1' if `touse', local(lv1)
+    tempname mt1 mt2 mtx
+    if "`v2'"=="" {
+        foreach i of local lv1 {
+            sum `mvar' [`weight'`exp'] if `touse' & `v1' == `i', meanonly
+            matrix `mt1' = nullmat(`mt1')\r(mean)*`scale'
+            local rname `rname'  `i'.`v1'
+        }
+    }
+    else {  
+        local v2 = strtrim("`v2'")
+        levelsof `v2' if `touse', local(lv2)
+        foreach i of local lv1 {
+            capture matrix drop `mtx'
+            foreach j of local lv2 {
+                sum `mvar' [`weight'`exp'] if `touse' & `v1' == `i' & `v2' == `j', meanonly
+                matrix `mtx' = nullmat(`mtx'),r(mean)*`scale'
+            }
+            matrix `mt1' = nullmat(`mt1') \ `mtx'
+            local rname `rname'  `i'.`v1'
+        }
+        
+        foreach j of local lv2 {
+            local cname `cname' `j'.`v2'
+        }
+    }
+    capture matrix rowname `mt1'=`rname'
+    capture matrix colname `mt1'=`cname'
+    return matrix ret = `mt1'
+end
+
 ** Three Scenarios: First Analyzing on Time Poverty
 tab itpoor [iw=asecwt], 
-tab itpoor sex [iw=asecwt], col nofreq
-tab itpoor educ [iw=asecwt], col nofreq
-tab itpoor age_g [iw=asecwt], col  nofreq
-tab itpoor spmpov [iw=asecwt], col  nofreq
-tab itpoor spm_nobs [iw=asecwt], col  nofreq
+tab tpoor_type [iw=asecwt], 
+tab itpoor if tpoor_type >=2 [iw=asecwt], 
 
+tabmean itpoor   if tpoor_type >=2 [w=asecwt], mvar(tx_sc1)
+matrix mres1 = r(ret)
+tabmean itpoor   if tpoor_type >=2 [w=asecwt], mvar(tx_sc2)
+matrix mres1 = mres1,r(ret)
+tabmean itpoor   if tpoor_type >=2 [w=asecwt], mvar(tx_sc3)
+matrix mres1 = mres1,r(ret)
 
-tab itpoor tpoor_sc1  [iw=asecwt], row nofreq
-tab itpoor tpoor_sc2  [iw=asecwt], row nofreq
-tab itpoor tpoor_sc3  [iw=asecwt], row nofreq
+** By X
 
-** Then Household Poverty: Only class 3 can exit
+forvalues qq = 1/3 {
+tabmean itpoor    if tpoor_type >=2 [w=asecwt], mvar(tx_sc`qq')
+matrix mres_sc`qq' = r(ret)
 
-tab tpoor_type htpoor_sc1  [iw=asecwt], row nofreq
-tab tpoor_type htpoor_sc2  [iw=asecwt], row nofreq
-tab tpoor_type htpoor_sc3  [iw=asecwt], row nofreq
+tabmean itpoor  sex if tpoor_type >=2 [w=asecwt], mvar(tx_sc`qq')
+matrix mres_sc`qq' = mres_sc`qq',r(ret)
 
-** by groups
+tabmean itpoor  haschildren if tpoor_type >=2 [w=asecwt], mvar(tx_sc`qq')
+matrix mres_sc`qq' = mres_sc`qq',r(ret)
 
+tabmean itpoor  emp if tpoor_type >=2 [w=asecwt], mvar(tx_sc`qq')
+matrix mres_sc`qq' = mres_sc`qq',r(ret)
 
-bysort sex:tab itpoor tpoor_sc1  [iw=asecwt], row nofreq
-bysort sex:tab itpoor tpoor_sc2  [iw=asecwt], row nofreq
-bysort sex:tab itpoor tpoor_sc3  [iw=asecwt], row nofreq
+tabmean itpoor  educ if tpoor_type >=2 [w=asecwt], mvar(tx_sc`qq')
+matrix mres_sc`qq' = mres_sc`qq',r(ret)
 
-bysort educ:tab itpoor tpoor_sc1  [iw=asecwt], row nofreq
-bysort educ:tab itpoor tpoor_sc2  [iw=asecwt], row nofreq
-bysort educ:tab itpoor tpoor_sc3  [iw=asecwt], row nofreq
+tabmean itpoor  age_g if tpoor_type >=2 [w=asecwt], mvar(tx_sc`qq')
+matrix mres_sc`qq' = mres_sc`qq',r(ret)
 
-bysort age_g:tab itpoor tpoor_sc1  [iw=asecwt], row nofreq
-bysort age_g:tab itpoor tpoor_sc2  [iw=asecwt], row nofreq
-bysort age_g:tab itpoor tpoor_sc3  [iw=asecwt], row nofreq
+tabmean itpoor  rel_q if tpoor_type >=2 [w=asecwt], mvar(tx_sc`qq')
+matrix mres_sc`qq' = mres_sc`qq',r(ret)
+}
+ 
+matrix tot =  mres_sc1',mres_sc2',mres_sc3'
+matrix coleq tot = scen1 scen1 scen1 scen2 scen2 scen2 scen3 scen3 scen3 
 
-bysort emp:tab itpoor tpoor_sc1  [iw=asecwt], row nofreq
-bysort emp:tab itpoor tpoor_sc2  [iw=asecwt], row nofreq
-bysort emp:tab itpoor tpoor_sc3  [iw=asecwt], row nofreq
-
-bysort spmpov:tab itpoor tpoor_sc1  [iw=asecwt], row nofreq
-bysort spmpov:tab itpoor tpoor_sc2  [iw=asecwt], row nofreq
-bysort spmpov:tab itpoor tpoor_sc3  [iw=asecwt], row nofreq
-
-bysort spm_nobs:tab itpoor tpoor_sc1  [iw=asecwt], row nofreq
-bysort spm_nobs:tab itpoor tpoor_sc2  [iw=asecwt], row nofreq
-bysort spm_nobs:tab itpoor tpoor_sc3  [iw=asecwt], row nofreq 
