@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999996 (TeX Live 2024) (preloaded format=xelatex 2024.5.8)  21 MAY 2024 11:15
+This is XeTeX, Version 3.141592653-2.6-0.999996 (TeX Live 2024) (preloaded format=xelatex 2024.5.8)  3 JUN 2024 14:48
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -881,48 +881,48 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 ) [1
 
-]
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 7.665pt on input line 253.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 5.475pt on input line 253.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 10.95099pt on input line 253.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 7.66568pt on input line 253.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 5.4755pt on input line 253.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 10.94882pt on input line 253.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 7.66417pt on input line 253.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 5.47441pt on input line 253.
-
-LaTeX Warning: Reference `eq-bal' on page 1 undefined on input line 263.
-
-[1
+] [1
 
 ]
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
+(Font)              scaled to size 7.665pt on input line 299.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
+(Font)              scaled to size 5.475pt on input line 299.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
+(Font)              scaled to size 10.95099pt on input line 299.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
+(Font)              scaled to size 7.66568pt on input line 299.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
+(Font)              scaled to size 5.4755pt on input line 299.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
+(Font)              scaled to size 10.94882pt on input line 299.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
+(Font)              scaled to size 7.66417pt on input line 299.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
+(Font)              scaled to size 5.47441pt on input line 299.
 
-LaTeX Warning: Reference `eq-bal' on page 2 undefined on input line 276.
+LaTeX Warning: Reference `eq-bal' on page 2 undefined on input line 309.
 
 
-LaTeX Warning: Reference `eq-bal' on page 2 undefined on input line 304.
+LaTeX Warning: Reference `eq-bal' on page 2 undefined on input line 322.
 
-[2] [3]
+[2]
+
+LaTeX Warning: Reference `eq-bal' on page 3 undefined on input line 350.
+
+[3]
 ! Missing } inserted.
 <inserted text> 
                 }
-l.388 ...n{equation}\phantomsection\label{eq-r1}{$
+l.434 ...n{equation}\phantomsection\label{eq-r1}{$
                                                   \alpha_{ij}$^E= 1/$I^j$ 
 Here is how much of TeX's memory you used:
  21868 strings out of 476644
  402927 string characters out of 5797729
- 1933403 words of memory out of 5000000
+ 1934403 words of memory out of 5000000
  43668 multiletter control sequences out of 15000+600000
  564494 words of font info for 86 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 90i,6n,119p,1016b,409s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 90i,6n,119p,1016b,336s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
 Output written on redist_limtip.pdf (4 pages).
