@@ -51,7 +51,7 @@ U.S. that incorporates time deficits, known as the Levy Institute Measure of Tim
 - Describe the LIMTIP measure and how it is constructed: Methods paper
 - Brief description of the LIMTIP measure and the Hidden Poor in the US. Small section
 
-Poverty is a multidimensional concept that goes beyond the simple notion of lack of income. In addition to income, poverty can be understood as a lack of access to resources, including time. LIMTIP is a metric that incorporates in addition to income poverty, aspects of time poverty. Time poverty refers to  a scenarion wherein people may not have any time left after engaging in activities that are essential for taking care of the household, its members, self-care, and paid work (when appropriate).
+Poverty is a multidimensional concept that goes beyond the simple notion of lack of income. In addition to income, poverty can be understood as a lack of access to resources, including time. The LIMTIP is a metric that incorporates in addition to income poverty, aspects of time poverty. Time poverty refers to  a scenarion wherein people may not have any time left after engaging in activities that are essential for taking care of the household, its members, self-care, and paid work. 
 
 As with any other measures of poverty, it is necessary to identify a threshold to determine if given the resources available to a person or household, they should be classified as poor or non-poor. In the case of time, however, thinking about a threshold is less intuitive because all individuals have the same amount of time available to them i.e 24 hours in a day. Instead, the approach used for the construction of the LIMTIP has been to identify the time balance people would potentially face after considering the necessary time spent on essential activities and household responsabilities. In this framework, people with a negative balance are considered time-poor. We express the weekly time balance of individual $i$ in household $j$, $X_{ij}$, as:
 
@@ -62,8 +62,7 @@ where 168 is the number of hours in a week, $M$ is the sum of personal care and 
 
 To construct this measure, we need a dataset that contains information on individuals' time use, in addition to standard information required for poverty analysis. The main source of information for time use comes from the American Time Use Survey (ATUS), which only provides information for a single person in the household and a single day. It is necessary to combine the ATUS with the ASEC data to construct a synthetic dataset that contains information on time use for all household members, which will allow us to impute all required variables for @eq-bal.
 
-Using ATUS and ASEC data and utilzing statitical matching we develop income and time poverty estimates for the United States 
-for the years 2005 to 2022. In this policy brief we focus on discussing the LIMTIP estimates for the year 2022(!TBD).
+Using ATUS and ASEC data and utilzing statitical matching we develop income and time poverty estimates for the United States for the years 2005 to 2022. In this policy brief we focus on discussing the LIMTIP estimates for the year 2022(!TBD).
 
 
 The LIMTIP is finally measured as: 
@@ -84,8 +83,7 @@ In the next section, we identify the subsample that can potentially be brought o
 
 
 # Identifying the Problem
-The scope of the redistribution of household production responsibilities in reducing time poverty depends on the living arrangements of individuals. If the time-poor household consists only of one working-age individual, no redistribution is possible. For example, a family of an employed single mother and her young children is an important type of family that is quite vulnerable to time poverty yet falls outside the scope of redistribution. Households with two or more working-age persons can vary in terms of the characteristics relevant to time poverty and redistribution.
-Further, time-poor households in which all working-age persons are time-poor represent a case where individual and collective interests may not coincide. In these households, redistribution is possible but ineffective in reducing the household’s time deficit. Hence, redistribution cannot change the household’s status of time or consumption poverty. A married (cohabitating) couple with young children where both spouses encounter time deficits while managing their jobs and household responsibilities fits this description. However, redistribution can make time deficits less unequal between the time-poor persons in this group of households, even potentially facilitating the transition out of time poverty for some individuals. Greater gender equality in the division of household responsibilities is desirable in this group, too, because gender equality is intrinsically important, irrespective of whether it affects the household’s consumption poverty or time poverty status.
+The scope of the redistribution of household production responsibilities in reducing time poverty depends on the living arrangements of individuals. If the time-poor household consists only of one working-age individual, no redistribution is possible. For example, a family of an employed single mother and her young children is an important type of family that is quite vulnerable to time poverty yet falls outside the scope of redistribution. Households with two or more working-age persons can vary in terms of the characteristics relevant to time poverty and redistribution. A household is classified as time-poor if atleatst one working age member is time-poor. A time-poor households in which all working-age members are time-poor represent a case where individual and collective interests may not coincide. In these households, redistribution is possible but ineffective in reducing the household’s time deficit. Hence, redistribution cannot change the household’s status of time or income poverty. A married (cohabitating) couple with young children where both spouses encounter time deficits while managing their jobs and household responsibilities fits this description. However, redistribution can make time deficits less unequal between the time-poor persons in this group of households, even potentially facilitating the transition out of time poverty for some individuals. Greater gender equality in the division of household responsibilities is desirable in this group, too, because gender equality is intrinsically important, irrespective of whether it affects the household’s income or time poverty status.
 
 
 We specify our problem statement to bring households out of poverty and focus on only those households which can be brought of poverty. For this purpose, we identify the households with atleast one time poor and one time non-poor adult individual for us to redistribute effectively so that the hh can fall out of poverty. This excludes:
@@ -119,18 +117,18 @@ Next,  we develop three redistribution scenarios wherein we redistribute the sha
 - Describe the scenarios and the assumptions behind them.
 
 Intrahousehold redistribution can potentially reduce time deficits. We construct three redistrubution scenarios based on different guiding principles. The extent of the reduction would depend on the principle that we use in distributing household responsibilities among the members. 
-First, we use the simple egalitarianism principle that involves an equal division of total household productiom time among all working age members. Second, we 
+First, we use the simple egalitarianism principle that involves an equal division of total household productiom time among all working age members. Second, we redistribute conditional on the available time people have. In the thord scenario, we redsitribute based on the opportunity cost of time for people. 
 
 xxxx
-We also briefly outline the methods used for implementing the principles in our data, with the detailed explanation of some aspects provided in Appendix xx. Next, we provide an assessment of the different principles in terms of how far they improve the position of women and how much such improvements are congruent with the betterment of the economic well-being of their families. In the subsequent section, we compare and contrast the joint distribution of time and consumption poverty among families and individuals that would result from each principle.
-
+In the next section, we outline the methods used for implementing the principles in our data, with the detailed explanation of some aspects below:
 
 
 ## Distribution Rules for Household Production
-Alternative values of $\alpha_{ij}$ indicate how household production requirements, net of the portion met by household members that are not of working age or are physically unable to take on more work, are shared between working-age persons in the household. 
-Below we discuss the three principles.
+Alternative values of $\alpha_{ij}$ indicate how household production requirements, net of the portion met by household members that are not of working age or are physically unable to take on more work, are shared between working-age persons in the household.  Below we discuss the three principles.
+
 ### 1. Equal Shares Scenario
 The procedure for the equal shares scenario is relatively simple. Recall that the shares of those in the redistribution simulation in this scenario are simply:
+
 
  As before, denoting the number of working-age persons in household $j$ as $I^j$, we can express the rule as:
 
@@ -146,29 +144,41 @@ The time available scenario is based on equity such that the redistrubted shares
 
 
 
+
+
 ### 3. Opportunity costs
 
-The third possibility is based on the idea of opportunity costs along marginalist lines. The sharing rule depends on the relative actual (potential) wage. For example, if there are only two working-age adults, say husband and wife, and if the husband’s wage is twice as much as the wife, the wife’s share would be two-thirds and the husband’s share would be one-third. Thus:
+The third possibility is based on the idea of opportunity costs along marginalist lines. The sharing rule depends on the relative actual (potential) wage. For example, if there are only two working-age adults, say husband and wife, and if the husband’s wage is twice as much as the wife, the wife’s share would be two-thirds and the husband’s share would be one-third. We use the actual or shadow wage for the employed and the potential wage for the nonemployed.
+Redistribution takes place based on the following equalition:
 
 
-For the opportunity cost scenario, we imputed wages for all of those not currently working for pay. In order to do this, we used a two-stage Heckman selection model (Heckman 1979), also known as the Heckit procedure, which we outline below. Once done, we used the imputed wages of those that are not currently working for pay and the actual wages of those that are to divide up the redistributable share of required household production:
+
+ First, we imputed wages for all of those not currently working for pay. In order to do this, we used a two-stage Heckman selection model (Heckman 1979), also known as the Heckit procedure, which we outline below. Once done, we used the imputed wages of those that are not currently working for pay and the actual wages of those that are working to divide up the redistributable share of required household production:
 
 
 As the share of required household production needs to be inversely proportional to the individual’s share of the sum of wages, we subtract their share of this sum from one. To ensure that the resulting shares sum up to unity, we divide by the number of individuals in the simulation minus one. We then apply this share to the redistributable share of required household production as in previous steps.
-In order to impute wages for those not currently employed for wages, we first impute the likeliest industry and occupation for each individual using a multinomial probit procedure. Industry and occupation are regressed on age, age squared, sex, rural/urban status, education, and geographic region on all those employed for wages. The likelihood for each industry and occupation is then predicted for everyone, using the results of the multinomial probit. Then each individual not currently working for wages is assigned the industry and occupation corresponding to the largest predicted likelihoods for that individual.
+In order to impute wages for those not currently employed for wages, we first impute the likeliest industry and occupation for each individual using a multinomial probit procedure. Industry and occupation are regressed on age, age squared, sex, race, education, and geographic region on all those in the working age population (18-64). The likelihood for each industry and occupation is then predicted for everyone, using the results of the multinomial probit. Then each individual not currently working for wages is assigned the industry and occupation corresponding to the xxxx/ largest predicted likelihoods for that individual.
+
+Next, we move on to the first stage of the Heckit procedure, a probit estimation of a dummy variable for being employed in wage work (paid):
+
+
+where F is the cumulative density function of a normal distribution. The vector of explanatory variables, 𝑋, comprises the individual’s age, sex, race, disability, number of kids across age groups (0 to 5, 6 to 14, 15-17), presence of spouse and spouse's age, education and employment status education. The regression is run on the universe of all eligible adults separately by age (divided into four categories: 18 to 30 years old; 31 to 45 years old; and 46 to 64 years old) and sex. The Mills ratio, 𝜆, is calculated for all individuals using the results of the first stage regression:
+
+
+
+where 𝑓 and 𝐹 are, respectively, the probability and cumulative density function of a normal distribution, and 𝛽􏱞 is the vector of estimated coefficients from the probit model.
+The second stage is an ordinary least squares (OLS) estimate of the log of hourly wage:
+
+
+This regression is run only on those that are actually employed for pay (!FRA). The vector of explanatory variables, [], includes age, sex, race, education, geographical region, disability, industry, occupation, presence of spouse, spouse's employment status, and, finally, λ, the Mills ratio calculated in the first stage. Inclusion of the Mills ratio corrects for the selection bias induced by limiting the regression to those in paid employment. The imputed log of wage is predicted for those not working for wages from the results of the regression, with industry and occupation replaced by the industries and occupations assigned in the previous step.
 
 
 Describe our procedue : 2 stages
 
 
-
-
-
-
-
-
-
 We simulate each of these principles of redistribution and recalculate individual and household time and income poverty using the LIMTP framework described above. 
+
+ Next, we provide an assessment of the different principles in terms of how far they improve the position of women and how much such improvements are congruent with the betterment of the economic well-being of their families. In the subsequent section, we compare and contrast the joint distribution of time and income poverty among families and individuals that would result from each principle.
 
 # Results
 
