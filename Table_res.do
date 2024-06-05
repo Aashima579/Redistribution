@@ -1,4 +1,4 @@
-cd "g:\Shared drives\levy_distribution\Time Poverty\US\LIMTIP\limtip\"
+cd "j:\Shared drives\levy_distribution\Time Poverty\US\LIMTIP\limtip\"
 capture matrix drop  bb
 forvalues i = 2005/2023 {
     use limtip_us_`i', clear
@@ -29,7 +29,7 @@ frame toplot: {
 
 **
 
-cd "g:\Shared drives\levy_distribution\Time Poverty\US\LIMTIP\redistribution_simulation\"
+cd "j:\Shared drives\levy_distribution\Time Poverty\US\LIMTIP\redistribution_simulation\"
 capture matrix drop  _all
 forvalues i = 2005 / 2023 {
 use red_scenarios_`i'.dta, clear
@@ -132,13 +132,8 @@ forvalues i = 2005 / 2023 {
  *bysort spmfamunit:egen htpoor=max(tpoor)
  
 *************************************************************
-label var tpoor_type "Household T. Poverty type"
-label define tpoor_type 0 "Not Time Poor", modify
-label define tpoor_type 1 "Single Person", modify
-label define tpoor_type 2 "Everyone is Time Poor", modify
-label define tpoor_type 3 "Time poor/Not poor: Household Remains T. poor", modify
-label define tpoor_type 4 "Time poor/Not poor: Household can exit T. poverty", modify
-label values tpoor_type tpoor_type
+** 
+drop if htpoor == 0
 
 label var    itpoor "Individual T. Poverty type"
 label define itpoor 0 "Not Time Poor", modify
@@ -146,6 +141,7 @@ label define itpoor 1 "Single Person", modify
 label define itpoor 2 "Lives in T-I   household", modify
 label define itpoor 3 "Lives in T-II  household", modify
 label define itpoor 4 "Lives in T-III household", modify
+label define itpoor 5 "Not Time poor", modify
 label values itpoor itpoor
 
 label var    age_g "Age Group"
@@ -167,7 +163,7 @@ bysort year spmfamunit:egen htpoor_sc3=max(tpoor_sc3)
 
  
 replace spm_nobs = min(4,spm_nobs)
-
+drop if spm_nobs ==1
 recode rel_income (-99/1 = 1 "SPM Poor")  (-99/1 = 1 "SPM Poor") (1/2=2 "Non Poor <2 Pl") (2/4 =3 "2-4 Times PL") (4/100 =4 "4+ Times PL"), gen(rel_q)
 
 capture progra drop  tabmean
