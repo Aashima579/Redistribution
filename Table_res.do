@@ -1,4 +1,4 @@
-/*cd "g:\Shared drives\levy_distribution\Time Poverty\US\LIMTIP\limtip\"
+cd "g:\Shared drives\levy_distribution\Time Poverty\US\LIMTIP\limtip\"
 capture matrix drop  bb
 forvalues i = 2005/2023 {
     use limtip_us_`i', clear
@@ -17,10 +17,10 @@ frame toplot: {
         replace `i' = `i'*100
     }
   gen pbb2 = 12  
-  scatter   bb2 bb4 bb5 bb1 , connect(l l l l) ///
+  scatter   bb2   bb4 bb5 bb1 , connect(l l l l)  ///
     legend(order(1 "I. Time Poverty" 2 "LIMTIP" 3 "Base-Income Poverty") pos(6) col(3)) ///
     xtitle("") ytitle("Povery Rate") ylabel(,format(%3.0f) ) ///
-    mlabel(bb2 bb3 bb4) mlabformat(%3.1f %3.1f %3.1f) mlabpos(12 6 6)  ///
+    mlabel(bb2    bb4 bb5) mlabformat(%3.1f %3.1f %3.1f %3.1f) mlabpos(12 12 6 6)  ///
     yscale(range(5/30)) xscale(range(2003/2025)) ysize(5)  xsize(10) scale(1.5) ///
     graphregion(margin(small)) plotregion(margin(small)) xlabel(2005(5)2020 2023)
   graph export "C:\Users\Fernando\Documents\GitHub\Redistribution\resources\trend.pdf", replace
@@ -52,6 +52,7 @@ replace tpoor_type = 4 if net_bal   >  0 & htpoor == 1  // Can be lift out of po
 replace tpoor_type = 1 if spm_nobs  == 1                // Single person Household
 replace tpoor_type = 0 if htpoor    == 0                // is not Time poor
 gen itpoor = tpoor_type * tpoor
+replace itpoor = 5 if tpoor == 0 & htpoor!=0
 mean i.itpoor  [pw=asecwt] if inrange(age,18,64)   
 matrix bb = nullmat(bb)\[`i',e(b)]
 }
@@ -60,29 +61,32 @@ frame toplot:clear
 frame toplot:lbsvmat bb
 
 frame toplot:  {
-      foreach i in bb6 bb5 bb4 bb3 { 
+      foreach i in bb7 bb6 bb5 bb4 bb3 { 
         gen v`i' = `i'*100
         replace `i' = `i'*100
     }
-       
- gen bb65  =bb6+bb5
- gen bb654 =bb6+bb5+bb4
- gen bb6543=bb6+bb5+bb4+bb3
+ 
+ gen bb76   =bb7+bb6
+ gen bb765  =bb7+bb6+bb5
+ gen bb7654 =bb7+bb6+bb5+bb4
+ gen bb76543=bb7+bb6+bb5+bb4+bb3
+ 
+ 
  gen bb0  =0
  drop2 sct*
- gen sct6  = bb6/2
- gen sct65 = bb6 +(bb5/2)
- gen sct654 = bb65+(bb4/2)
- gen sct6543 = bb654+(bb3/2)
- 
+ gen sct7     = bb7/2
+ gen sct76    = bb7 +(bb6/2)
+ gen sct765   = bb76+(bb5/2)
+ gen sct7654  = bb765+(bb4/2)
+ gen sct76543 = bb7654+(bb3/2)
 set scheme white2
 color_style bay
-two (rbar bb6543 bb0 bb1, barw(0.9)) (rbar bb654 bb0 bb1, barw(0.9)) (rbar bb65 bb0 bb1, barw(0.9)) (rbar bb6 bb0 bb1, barw(0.9)) ///
-  (scatter sct6   sct65  sct654 sct6543 bb1, mcolor(%0 %0 %0 %0) mlabsize(10pt  10pt 10pt 10pt) mlabel(vbb6 vbb5 vbb4 vbb3) ///
-  mlabformat(%3.1f %3.1f %3.1f %3.1f) mlabpos(0 0 0 0 )  ), xlabel(2005/2023 , alt noticks   ) ///
-  scale(1.3) xscale( axis(none)) ysize(5) xsize(10) xtitle("") ytitle("Poverty Rate") ///
+two (rbar bb76543 bb0 bb1, barw(0.9)) (rbar bb7654 bb0 bb1, barw(0.9)) (rbar bb765 bb0 bb1, barw(0.9)) (rbar bb76 bb0 bb1, barw(0.9)) (rbar bb7 bb0 bb1, barw(0.9)) ///
+  (scatter sct7   sct76  sct765 sct7654 sct76543 bb1, mcolor(%0 %0 %0 %0 %0) mlabsize(9pt  9pt 9pt  9pt 9pt) mlabel(vbb7 vbb6 vbb5 vbb4 vbb3) ///
+  mlabformat(%3.1f %3.1f %3.1f %3.1f %3.1f) mlabpos(0 0 0 0 0)  ), xlabel(2005/2023 , alt noticks   ) ///
+  scale(1.3) xscale( axis(none)) ysize(5) xsize(13) xtitle("") ytitle("Poverty Rate") ///
   graphregion(margin(small)) plotregion(margin(small))  ///
-  legend(order(1 "Single Person" 2 "Irreducible H.T.Poverty" 3 "Reducible I.T.Poverty" 4 "Reducible Hld. T.Povery") pos(6) col(4)) 
+  legend(order(1 "Single Person" 2 "Time Poor in H.Type I" 3 "Time Poor in H.Type II" 4 "Time poor in H.Type III" 5 "Not Time Poor in T.P.H.") pos(3) col(1) ring(1) ) 
  
    graph export "C:\Users\Fernando\Documents\GitHub\Redistribution\resources\tpov_type.pdf", replace
   graph export "C:\Users\Fernando\Documents\GitHub\Redistribution\resources\tpov_type.png", replace width(1500)
