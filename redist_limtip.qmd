@@ -37,9 +37,9 @@ bibliography: biblio.bib
  # Introduction
 
  Redistribution of household production has been identified as an important tool to achieve gender equality (Elson  The incorporation of the 3R (recognizition, reduction adn redistribution) strategy as a target in the sustainable development goals, is a testament to the decades of activism and advocacy emphasizing that inequality on this front cannot be justified in the name of “private family matter” rather is a matter of public policy. 
- While redistribution of household production responsibilities from females to males is important intrsinsically for human rights and fairness concerns, it is also instrumental in achieving gender equality in labor market outcomes (Bruyn-Hundt 1996; Elson 2017; Esquivel 2016). Yet, difficult questions remain about public policies and collective actions that would reduce inequality, especially in poorer countries. A limited consensus seems to have emerged regarding the effectiveness of certain policy initiatives (e.g., paid paternity leave). But, many of them are likely to have only limited efficacy in the poorer countries due to their structural features such as the widespread absence of formal wage labor and weak welfare states.
+ While redistribution of household production responsibilities from females to males is important intrsinsically for human rights and fairness concerns, it is also instrumental in achieving gender equality in labor market outcomes [@hundt1996; @elson2017; @valeria2016]. Yet, difficult questions remain about public policies and collective actions that would reduce inequality, especially in poorer countries. A limited consensus seems to have emerged regarding the effectiveness of certain policy initiatives (e.g., paid paternity leave). But, many of them are likely to have only limited efficacy in the poorer countries due to their structural features such as the widespread absence of formal wage labor and weak welfare states.
 In the case of the US, issues related to lack of public prpovisioning of care infrastructure and services, persistence of childcare deserts, lack of paid parental leave laws among others have gained momentum. 
-In 2021, the value of unpaid care work in the U.S. amounted to $600 billion, constituting approximately 2.6% of the GDP (Reinhard et al. 2023). Moreover, like most other countries, we observe gender disparity in sharing  of household work such that women disproportionately shoulder the burden. According to the 2018 American Time Use Survey, among adults aged 15 and older, women on average spent 5.7 hours per day on unpaid household and care work, compared with 3.6 hours for men. In other words, women spent 37 percent more time on unpaid household and care work than men (Hess & Hayes 2020). Additionally, the U.S. falls behind many OECD countries in childcare policies and outcomes, spending only 0.4% of GDP on early childhood education and care (ECEC), compared to the OECD average of 0.8% (OECD 2020). Notably, the U.S. lacks federal laws granting paid parental leave, setting it apart from other OECD nations. Around 51% of the U.S. population resides in childcare deserts, defined as census tracts with more than 50 children under the age of 5 and either no childcare providers or significantly limited options, resulting in a severe shortage of licensed child care slots (Malik et al. (2018)). 
+In 2021, the value of unpaid care work in the U.S. amounted to $600 billion, constituting approximately 2.6% of the GDP (Reinhard et al. 2023). Moreover, like most other countries, we observe gender disparity in sharing  of household work such that women disproportionately shoulder the burden. According to the 2018 American Time Use Survey, among adults aged 15 and older, women on average spent 5.7 hours per day on unpaid household and care work, compared with 3.6 hours for men. In other words, women spent 37 percent more time on unpaid household and care work than men (@hess2020). Additionally, the U.S. falls behind many OECD countries in childcare policies and outcomes, spending only 0.4% of GDP on early childhood education and care (ECEC), compared to the OECD average of 0.8% (@oecd2020). Notably, the U.S. lacks federal laws granting paid parental leave, setting it apart from other OECD nations. Around 51% of the U.S. population resides in childcare deserts, defined as census tracts with more than 50 children under the age of 5 and either no childcare providers or significantly limited options, resulting in a severe shortage of licensed child care slots [@malik2018]. 
 In the above setting, care demand falls onto the households, partculalrly women. This in turn restricts care providers allocation of time to other activities including employment, leisure, socializing and self care. Time-trade off are crucial determines individual's well-being. While some hosuheolds may be able to outsource some of these care needs, other income-constraint hosuehodls may not be able to. In the last two decades, there has been growing interest in studying time and income poverty and in developing their linkages (xx). 
 
 Time constraints that stem from the overlapping domains of paid and unpaid work are of central concern to the debates surrounding economic development and gender equality. In this backdrop, we develop a novel measure of poverty for the 
@@ -132,8 +132,8 @@ The procedure for the equal shares scenario is relatively simple. Recall that th
 
  As before, denoting the number of working-age persons in household $j$ as $I^j$, we can express the rule as:
 
-$$\alpha_{ij}^E= 1/I_j*(1-\alpha_{j}^{nw'})
-$$ {#eq-r1}
+$$\alpha_{ij}^E= (1/I_j)*(1-\alpha_{j}^{nw'})
+$$ {#eq-s1}
 
 We need to count how many people are in the redistribution simulation in each household and then assign them the appropriate fraction (1 for households with one person in the simulation, 1⁄2 for households with two people in the simulation, and so on) and apply that fraction to the redistributable share of required household production time. 
 
@@ -156,8 +156,8 @@ Redistribution takes place based on the following equation:
  First, we imputed wages for all of those not currently working for pay. In order to do this, we used a two-stage Heckman selection model (Heckman 1979), also known as the Heckit procedure, which we outline below. Once done, we used the imputed wages of those that are not currently working for pay and the actual wages of those that are working to divide up the redistributable share of required household production:
 
 
-$$\alpha_{ij}^O= (1/{I_j-1})*(1-w_{ij}/w_{ij} ) (1-\alpha_{j}^{nw'})
-$$ {#eq-r3}
+$$\alpha_{ij}^O= (1/{I_j-1})(1-w_{ij}/\sum\w_{ij} ) (1-\alpha_{j}^{nw'})
+$$ {#eq-s3}
 
 
 As the share of required household production needs to be inversely proportional to the individual’s share of the sum of wages, we subtract their share of this sum from one. To ensure that the resulting shares sum up to unity, we divide by the number of individuals in the simulation minus one. We then apply this share to the redistributable share of required household production as in previous steps.
@@ -165,7 +165,7 @@ In order to impute wages for those not currently employed for wages, we first im
 
 Next, we move on to the first stage of the Heckit procedure, a probit estimation of a dummy variable for being employed in wage work (paid):
 
-$$P(paid=1|X)=F(X* \beta)
+$$P(paid=1|X)=F(X\beta)
 $$ {#eq-probit}
 
 where F is the cumulative density function of a normal distribution. The vector of explanatory variables, 𝑋, comprises the individual’s age, sex, race, disability, number of kids across age groups (0 to 5, 6 to 14, 15-17), presence of spouse and spouse's age, education and employment status education. The regression is run on the universe of all eligible adults separately by age (divided into four categories: 18 to 30 years old; 31 to 45 years old; and 46 to 64 years old) and sex. The Mills ratio, 𝜆, is calculated for all individuals using the results of the first stage regression:
@@ -176,7 +176,8 @@ where 𝑓 and 𝐹 are, respectively, the probability and cumulative density fu
 The second stage is an ordinary least squares (OLS) estimate of the log of hourly wage:
 
 
-$$lnw= (\gamma_2*Z^w) + (\theta_2 * \lamda) + 
+$$lnw= (\gamma_2*Z^w) + (\theta_2*\lambda) + \mu
+$$ {#eq-ols}
 
 This regression is run only on those that are actually employed for pay (!FRA). The vector of explanatory variables, [], includes age, sex, race, education, geographical region, disability, industry, occupation, presence of spouse, spouse's employment status, and, finally, λ, the Mills ratio calculated in the first stage. Inclusion of the Mills ratio corrects for the selection bias induced by limiting the regression to those in paid employment. The imputed log of wage is predicted for those not working for wages from the results of the regression, with industry and occupation replaced by the industries and occupations assigned in the previous step.
 
@@ -203,8 +204,6 @@ Perhaps provide more emphasis on Some of the groups (gender, the employed, paren
 In this section we present the time deficits and LIMTIP poverty estimates by gender. We consider other characteritics of indivdiuals and hh such that employment status and nuber of children, factors which affect time availability. 
 
 Evidence indicates that negative time balance values (i.e., time deficits) occur mostly among employed persons, we look at the heterogenous differences by presentinf limtip estimates by employment status and sex in @tbl_ws. We observe that xxx
-
-
 
 Further, presence of children would demand more caregiving hours thereby putting a pressure on time available, particulalrly for employed couples or single memebr hosuehodls. 
 Add table by sex and children for limtip and discuss results.
