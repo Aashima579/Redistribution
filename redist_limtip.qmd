@@ -35,21 +35,16 @@ bibliography: biblio.bib
 
 
 # Introduction
-
-Redistribution of household production has been identified as an important tool to achieve gender equality (Elson  The incorporation of the 3R (recognizition, reduction adn redistribution) strategy as a target in the sustainable development goals, is a testament to the decades of activism and advocacy emphasizing that inequality on this front cannot be justified in the name of “private family matter” rather is a matter of public policy. 
-
-While redistribution of household production responsibilities from women to men is important intrsinsically for human rights and fairness concerns, it is also instrumental in achieving gender equality in labor market outcomes [@hundt1996; @elson2017; @valeria2016]. Studies have demonstrated that gender gaps in the workforce and the unequal sharing of household responsibilities can severely impede economic growth and development [@elson2009; @berik2009; @duflo2012]. Yet, difficult questions remain about public policies and collective actions that would reduce inequality, especially in poorer countries with constrained fiscal capacity,widespread absence of formal wage labor and weak welfare states. Moreover, in patrirachal contexts, cultural barriers restrict redistribution of household production, particularly unpaid care work from women to men and to the public and private spheres. While in some developed countries such as Norway and Sweden, public policies have been able to promote gender -equitable sharing of household production, for eg: paid paternity leaves in addition to paid maternity leaves , such policies seem to have attained limited consensus in other countries. 
+ Redistribution of household production, which includes unpaid caregiving and domestic chores, has been identified as an important tool to achieve gender equality. The incorporation of the 3R (recognizition, reduction adn redistribution) strategy as a target in the sustainable development goals, is a testament to the decades of activism and advocacy emphasizing that inequality on this front cannot be justified in the name of “private family matter” rather is a matter of public policy. 
+ While redistribution of household production responsibilities from women to men is important intrsinsically for human rights and fairness concerns, it is also instrumental in achieving gender equality in labor market outcomes [@hundt1996; @elson2017; @valeria2016]. Studies have demonstrated that gender gaps in the workforce and the unequal sharing of household responsibilities can severely impede economic growth and development [@elson2009; @berik2009; @duflo2012]). Yet, difficult questions remain about public policies and collective actions that would reduce inequality, especially in poorer countries with constrained fiscal capacity,widespread absence of formal wage labor and weak welfare states. Moreover, in patrirachal contexts, cultural barriers restrict redistribution of household production, particularly unpaid care work from women to men and to the public and private spheres. While in some developed countries such as Norway and Sweden, public policies have been able to promote gender -equitable sharing of household production, for eg: paid paternity leaves in addition to paid maternity leaves , such policies seem to have attained limited consensus in other countries. 
 
 In the case of the US, issues related to lack of public prpovisioning of care infrastructure and services, persistence of childcare deserts, lack of paid parental leave laws among others have gained momentum. 
 
-In 2021, the value of unpaid household work in the U.S. amounted to $600 billion, constituting approximately 2.6% of the GDP (Reinhard et al. 2023). Moreover, like most other countries, we observe gender disparity in sharing  of household work such that women disproportionately shoulder the burden. According to the 2018 American Time Use Survey, among adults aged 15 and older, women on average spent 5.7 hours per day on unpaid household and care work, compared with 3.6 hours for men. In other words, women spent 37 percent more time on unpaid household and care work than men [@hess2020]. Additionally, the U.S. falls behind many OECD countries in effective childcare policies, spending only 0.4% of GDP on early childhood education and care (ECEC), compared to the OECD average of 0.8% [@oecd2020]. Notably, the U.S. lacks federal laws granting paid parental leave, setting it apart from other OECD nations. Around 51% of the U.S. population resides in childcare deserts, defined as census tracts with more than 50 children under the age of 5 and either no childcare providers or significantly limited options, resulting in a severe shortage of licensed child care slots [@malik2018]. 
-
-In the above setting, care demand falls onto the households, partculalrly women. This in turn restricts care providers allocation of time to other activities including employment, leisure, socializing and self care. Time-trade off are crucial in determining individual's well-being. While some hosuheolds may be able to outsource some of these care needs, other income-constraint hosueholds may not be able to. Over the last two decades, there has been growing interest in studying time and income poverty and in developing their linkages (Levy studies). Time constraints that stem from the overlapping domains of paid and unpaid work are of central concern to the debates surrounding economic development and gender equality. In this backdrop, we develop a novel measure of poverty for the U.S. that incorporates time deficits, known as the Levy Institute Measure of Time and Income Poverty (LIMTIP). 
-
+In 2021, the value of unpaid household work in the U.S. amounted to $600 billion, constituting approximately 2.6% of the GDP (Reinhard et al. 2023). Moreover, like most other countries, we observe gender disparity in sharing  of household work such that women disproportionately shoulder the burden. According to the 2018 American Time Use Survey, among adults aged 15 and older, women on average spent 5.7 hours per day on unpaid household and care work, compared with 3.6 hours for men. In other words, women spent 37 percent more time on unpaid household and care work than men [@hess2020]. Additionally, the U.S. falls behind many OECD countries in effective childcare policies, spending only 0.4% of GDP on early childhood education and care (ECEC), compared to the OECD average of 0.8% [@oecd2020]. Notably, the U.S. lacks federal laws granting paid parental leave, setting it apart from other OECD nations. Around 51% of the U.S. population resides in childcare deserts, defined as census tracts with more than 50 children under the age of 5 and either no childcare providers or significantly limited options, resulting in a severe shortage of licensed child care slots [@malik2018].
+In the above setting, care demand falls onto the households, partculalrly women. This in turn restricts care providers allocation of time to other activities including employment, leisure, socializing and self care. Time-trade off are crucial in determining individual's well-being. While some hosuheolds may be able to outsource some of these care needs, other income-constraint hosueholds may not be able to. Over the last two decades, there has been growing interest in studying time and income poverty and in developing their linkages (Levy studies). Time constraints that stem from the overlapping domains of paid and unpaid work are of central concern to the debates surrounding economic development and gender equality. In this backdrop, we develop a novel measure of poverty for the 
+U.S. that incorporates time deficits, known as the Levy Institute Measure of Time and Income Poverty (LIMTIP). 
 The topic of time poverty due to household production is gaining attention in the U.S given the persisting lack of publicly provided care, affordable child and elderly care, and limited paid parental leave benefits. The associated time deficits constrain people’s time allocation in a range of activities, in turn affecting their overall well-being, productivity, labor market participation, and earnings. The consequences are particularly serious for women due to the disproportionate burden of household responsibilities they bear, which are closely intertwined with labor market and well-being outcomes. Standard measures of poverty fail to capture hardships caused by time deficits and thereby do not provide a complete picture for effective poverty-alleviation and welfare programs. Understanding the incidence of time poverty that individuals face and how that may have implications for the study of poverty, gender equality and overall development is therefore important.
 
-Time constraints that stem from the overlapping domains of paid and unpaid work are of central concern to the debates surrounding economic development and gender equality. In this backdrop, we develop a novel measure of poverty for the 
-U.S. that incorporates time deficits, known as the Levy Institute Measure of Time and Income Poverty (LIMTIP). Time deficits due to household production is gaining attention in the U.S given the persisting lack of publicly provided care, affordable child and elderly care, and limited paid parental leave benefits. These time deficits constrain people’s time allocation in a range of activities, in turn affecting their overall well-being, productivity, labor market participation, and earnings. The consequences are particularly serious for women due to the disproportionate burden of household responsibilities they bear, which are closely intertwined with labor market and well-being outcomes. Standard measures of poverty fail to capture hardships caused by time deficits and thereby do not provide a complete picture for effective poverty-alleviation and welfare programs. Understand the incidence of time poverty that individuals face and how that may have implications for the study of poverty, gender equality and overall development is therefore crucial.
 
 
 # LIMTIP: A New Measure of Time Poverty for the United States
@@ -57,18 +52,18 @@ U.S. that incorporates time deficits, known as the Levy Institute Measure of Tim
 - Describe the LIMTIP measure and how it is constructed: Methods paper
 - Brief description of the LIMTIP measure and the Hidden Poor in the US. Small section
 
-Poverty is a multidimensional concept that goes beyond the simple notion of lack of income. In addition to income, poverty can be understood as a lack of access to resources, including time. The LIMTIP is a metric that incorporates in addition to income poverty, aspects of time poverty. Time poverty refers to  a scenarion wherein people may not have any time left after engaging in activities that are essential for taking care of the household, its members, self-care, and paid work. 
+Poverty is a multidimensional concept that goes beyond the simple notion of lack of income. In addition to income, poverty can be understood as a lack of access to resources, including time. The LIMTIP is a metric that incorporates in addition to income poverty, aspects of time poverty. Time poverty refers to  a scenarion wherein people may not have any time left after engaging in activities that are essential for taking care of the household, its members, self-care, and paid work (!leisure also?). 
 
-As with any other measures of poverty, it is necessary to identify a threshold to determine if given the resources available to a person or household, they should be classified as poor or non-poor. In the case of time, however, thinking about a threshold is less intuitive because all individuals have the same amount of time available to them i.e 24 hours in a day. Instead, the approach used for the construction of the LIMTIP has been to identify the time balance people would potentially face after considering the necessary time spent on essential activities and household responsabilities. In this framework, people with a negative balance are considered time-poor. We express the weekly time balance of individual $i$ in household $j$, $X_{ij}$, as:
+As with any other measures of poverty, it is necessary to identify a threshold to determine if given the resources available to a person or household, they should be classified as poor or non-poor. In the case of time, all individuals have the same amount of time available to them i.e 24 hours in a day, therefore, thinking about a threshold is less intuitive. Instead, the approach used for the construction of the LIMTIP has been to identify the time balance people would potentially face after considering the necessary time spent on essential activities and household responsabilities. In this framework, people with a negative balance are considered time-poor. We express the weekly time balance of individual $i$ in household $j$, $X_{ij}$, as:
 
 $$X_{ij} = 168 - M - \alpha_{ij}R_j-D_{ij}^0(L_{ij}+T_{ij})
 $$ {#eq-bal}
 
 where 168 is the number of hours in a week, $M$ is the sum of personal care and non-substitutable household production requirements, $R_j$ is the required time of household production that a family $j$ needs to maintain the household, $\alpha_{ij}$ is the share of individual $i$ in the household production requirements. To account for required time due to working, the eq-bal also includes $D_{ij}$, a dummy variable that takes a value of 1 if the person is employed and zero otherwise. Thus, for those employed, one also accounts for hours of employment $L_{ij}$ , the hours of commuting $T_{ij}$.
 
-To construct this measure, we need a dataset that contains information on individuals' time use, in addition to standard information required for poverty analysis. The main source of information for time use comes from the American Time Use Survey (ATUS), which only provides information for a single person in the household and a single day. It is necessary to combine the ATUS with the ASEC data to construct a synthetic dataset that contains information on time use for all household members, which will allow us to impute all required variables for eq-bal.
+To construct this measure, we need a dataset that contains information on individuals' time use, in addition to standard information required for poverty analysis. The main source of information for time use comes from the American Time Use Survey (ATUS), which only provides information for a single person in the household and a single day. We understook a statitical matching procedure to combine time use data from ATUS to the Annual Social and Economic Supplements (ASEC) data. It is necessary to combine the ATUS with the ASEC data to construct a synthetic dataset that contains information on time use for all household members, which will allow us to impute all required variables for eq-bal.
 
-Using ATUS and ASEC data and utilzing statitical matching we develop income and time poverty estimates for the United States for the years 2005 to 2022. In this policy brief we focus on discussing the LIMTIP estimates for the year 2022(!TBD).
+Using the the matched data we then construct income and time poverty estimates for the individuals and households in the United States for the years 2005 to 2022. Note that we classify a household as time poor, if atleast one working age member experiences time deficit. 
 
 
 The LIMTIP is finally measured as: 
@@ -76,16 +71,33 @@ $$P_{j}^L* = P_{j}^O- p_{j}*X_{j}
 $$ {#eq-limtip}
 
 The underlying idea is that if we were to monetize the time deficits of individuals and add those to the offical income poverty thresholds, we get an adjusted poverty line - LIMTIP.
-The estimation of LIMTIP helps us calculate the number of hidden poor, i.e time poor indivuals who are left outside the scope of official income poverty estimates. The difference between the LIMTIP measure of poverty and the official poverty estimates give us the number of hidden poor. 
+The LIMTIP estimates can be classified into four braod categories: Income poor,time poor, (ii)Income poor, time non-poor; (iii) Income non-poor, time poor; and (iv) Income non-poor, time non-poor.
+In @tbl-limtip and @tbl-limtiph we present the average distribution of individuals and households, respectively, across the four-way classification of LIMTIP for the years from 2005 to 2022.
 
-In fig_trend we present time trend from 2005 to 2023 of time poverty estimates, the offical poverty trend, the LIMTIP poverty trend. We observe that the official poverty estimates shows a slight rising trend between 2005 to 2014 and then starts to decline. The pandemic years show some steep decline from 13.8 % in 2020 to 10% in 2022 before rising back to the pre-pandemic level of around 15%.
-When we adjust for time deficits, as expected our LIMTIP estimates shows a higher level of poverty, around 25 percentage points higher . The gap widened during pandemic years.
-Moreover, it is notable that time poverty peaked around Great recession and Covid-19 pandemic recession. While time poverty rate has remained more or less stabke until 2019, it fell slightly in 2020 before rising again between 2020 to 2023.
-We also observe that in 2022, nearly 33 percent of individuals are hidden poor in 2022. 
-Further, in Table xx and yy we present the distribution of individuals and hh respectively across the four-way classification of LIMTIP (time poor and i) for the year 2022.
+\singlespacing
+:::{#tbl-limtip}
 
+{{< include resources/Tables/tbl_limtip.tex >}}
 
-In the next section, we identify the subsample that can potentially be brought out of poverty. 
+**Four-way classification of Individuals, LIMTIP **
+
+:::
+\onehalfspacing
+
+\singlespacing
+:::{#tbl-limtiph}
+
+{{< include resources/Tables/tbl_limtiph.tex >}}
+
+**Four-way classification of Households, LIMTIP **
+
+:::
+\onehalfspacing
+
+Moreover, the estimation of LIMTIP helps us calculate the number of hidden poor, i.e time poor indivuals who are left outside the scope of official income poverty estimates. The difference between the LIMTIP measure of poverty and the official poverty estimates give us the number of hidden poor. 
+
+In @fig-trend we present time trend from 2005 to 2023 of time poverty estimates, the offical income poverty trend, and the LIMTIP poverty trend. We observe that the official poverty estimates shows a slight rising trend between 2005 to 2014 and then starts to decline. When we adjust for time deficits, as expected our LIMTIP estimates shows a higher level of poverty across all years, around 3-5 percentage points higher. For the LIMTIP poverty estimates, we observe that the pandemic years show some steep decline from 13.8 % in 2020 to 10% in 2022 before rising back to the pre-pandemic level of around 15%.
+Moreover, it is notable that time poverty peaked around the Great Recession and Covid-19 pandemic recession. While time poverty rate has remained more or less stable until 2019, it fell slightly in 2020 before rising again between 2020 to 2023. In the latest year, 2023, nearly 3.5 percent of individuals are hidden poor. 
 
 ::: {#fig-trend}
 
@@ -96,9 +108,12 @@ Trends of Time, Income and Limtip Poverty in the U.S.
 ::: 
 
 
+In the next section, we identify the subsample that can potentially be brought out of poverty. 
+
+
 # Identifying the Problem {#sec-problem}
 
-One of the strategies that could help reducing the problem of time poverty, and thereby the incidence of hidden poor, is the redistribution of household production responsibilities across all capable members in the household. At best, household members with time surpluses could take on more household responsabilities, reducing the burden of those with time deficits. At worst, the redistribution could make the time deficits more equal among the household members, even if the household remains time poor. 
+One of the strategies that could help reducing the problem of time poverty, and thereby the incidence of hidden poor, is the redistribution of household production responsibilities across all capable members in the household. At best, household members with time surpluses could take on more household responsabilities, reducing the burden of those with time deficits, and potentially bringing out household out of poverty. At worst, the redistribution could make the time deficits more equal among the household members, even if the household remains time poor. 
 
 Before we start analyzing the potential that redistribution could have in reducing time poverty, we must first identify the households where redistribution is possible and desirable. Specifically, we exclude from the analysis households that are not time poor, even if such households could potentially benefit from redistribution, reducing the gaps of time surpluses among household members. From the sample of individuals living in a time poor household we classify them into 5 different groups:
 
