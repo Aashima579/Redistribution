@@ -209,42 +209,44 @@ As described in the previous section, we consider three scenarios to analyze the
 
 Based on the imputed data, and considering people in working age only, 55 out of 100 individuals that live in time poor households are not time poor themselves. 4.6 live in households where everyone is time poor,  
 
-:::{#fig-dist}
+:::{#fig-dist }
+:::{layout-ncol=2}
 
-
-           Not Time Poor |  756879414       54.61       54.61
-Lives in T-I   household | 63305032.1        4.57       59.17
-Lives in T-II  household |98537399.85        7.11       66.28
-Lives in T-III household |  467350179       33.72      100.00
-
-
-          2 | 63305032.1        4.57        4.57
-          3 |  196805429       14.20       18.77
-          4 | 1.1260e+09       81.23      100.00
-
-Waffle plot of the distribution of individuals across the different types of time poor households
+![Individuals](resources/ind_dist.pdf){#fig-dista}
+ 
+![Households](resources/hh_dist.pdf){#fig-distb}
 
 :::
+
+\footnotesize \begin{flushleft}Note: H.Type I : All working age members are time poor, H.Type II: There are Non-time poor individuals Living in the HH, but time surplus is insufficient to Lift HH out of Time poverty, H.Type III: There is enough time surplus to lift HH out of time poverty.\end{flushleft}
+
+Distribution of individuals by type 
+
+:::
+
+
 
 To understand the impact of the diferent redistribution scenarios on this groups, we will focus on transition probabilities. Thus, for those out of poverty, our statistic of interest would be the likelihood that they fall back into poverty, and for those in poverty, the likelihood that they transition out of poverty.
 
 
 :::{#fig-transition1}
 
-Transition probabilities across types individuals
+![](resources/trans1.pdf){fig-align="center"}
 
-                c1         c1         c1
+Transition probabilities by Redistribution Scenario
+
+:::
+
+
+<!-- 
+This are the numbers for reference
+                 c1         c1         c1
 0.itpoor  12.912076  12.324692  12.366351
 2.itpoor  16.916774  2.4870703   18.05441
 3.itpoor  16.820663  8.1439392  20.574782
 4.itpoor  76.187584  89.438562  72.301048
 
-
-Probably use Lines to represent the changes Side by Side
-
-:::
-
-asd
+ -->
 
 :::{#fig-transition2}
 
@@ -296,7 +298,5 @@ Deficits by group
 
 # References {#sec-ref .unnumbered}
 
-<!--- # Appendix Tables {#refs .unnumbered} 
 ::: {#refs}
 :::
---->
