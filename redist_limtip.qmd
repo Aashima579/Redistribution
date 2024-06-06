@@ -140,7 +140,7 @@ In the next section, we discuss three redistribution scenarios wherein household
 Intrahousehold redistribution can potentially reduce time deficits and bring households out of poverty. We construct three redistrubution scenarios based on different guiding principles. The extent of the reduction would depend on the principle that we use in distributing household responsibilities among the members. 
 First, we use the simple egalitarianism principle that involves an equal division of total household productiom time among all working age members. Second, we redistribute conditional on the available time people have. In the thord scenario, we redsitribute based on the opportunity cost of time for people. 
 
-We outline the methods used for implementing the principles in our data, with the detailed explanation of some aspects below:
+We outline the methods used for implementing the principles in our data, with the detailed explanation of some aspects below.
 
 
 ## Distribution Rules for Household Production
@@ -151,7 +151,7 @@ The procedure for the equal shares scenario is relatively simple. Recall that th
 $$\alpha_{ij}^E= 1/I_j*(1-\alpha_{j}^{nw'})
 $$ {#eq-r1}
 
-where \alpha_{ij} represents the redistributed share of individual $i$;  $I^j$ denote the number of working-age persons in household $j$ and \alpha_{j}^{nw'} represents the share of non-working group, hence (1-\alpha_{j}^{nw'}) representing the available redistributable share. 
+where \alpha_{ij} represents the redistributed share of individual $i$;  $I^j$ denote the number of working-age persons in household $j$ and $\alpha_{j}^{nw'}$ represents the share of non-working group, hence $(1-\alpha_{j}^{nw'})$ representing the available redistributable share. 
 We count how many people are in the redistribution simulation in each household and then assign them the appropriate fraction (1 for households with one person in the simulation, 1⁄2 for households with two people in the simulation, and so on) and apply that fraction to the redistributable share of required household production time. 
 This scenraio overlooks time equity, i.e redistributes without taking into consideration the time available to individuals. 
 
@@ -180,7 +180,7 @@ In order to impute wages for those not currently employed for wages, we first im
 
 Next, we move on to the first stage of the Heckit procedure, a probit estimation of a dummy variable for being employed in wage work (paid):
 
-$$P(paid=1|X)=F(X* \beta)
+$$P(paid=1|X)=F(X \beta)
 $$ {#eq-probit}
 
 where F is the cumulative density function of a normal distribution. The vector of explanatory variables, 𝑋, comprises the individual’s age, sex, race, disability, number of kids across age groups (0 to 5, 6 to 14, 15-17), presence of spouse and spouse's age, education and employment status education. The regression is run on the universe of all eligible adults separately by age (divided into four categories: 18 to 30 years old; 31 to 45 years old; and 46 to 64 years old) and sex. The Mills ratio, 𝜆, is calculated for all individuals using the results of the first stage regression:
@@ -192,7 +192,7 @@ $$ {#eq-mills}
 where 𝑓 and 𝐹 are, respectively, the probability and cumulative density function of a normal distribution, and $\beta$ is the vector of estimated coefficients from the probit model.
 The second stage is an ordinary least squares (OLS) estimate of the log of hourly wage:
 
-$$lnw= (\gamma_2*Z^w) + (\theta_2 * \lambda) + \mu
+$$lnw= (\gamma_2*Z^w) + (\theta_2 \lambda) + \mu
 $$  {#eq-OLS}
 
 
