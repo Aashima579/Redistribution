@@ -74,7 +74,7 @@ The underlying idea is that if we were to monetize the time deficits of individu
 The LIMTIP estimates can be classified into four braod categories: Income poor,time poor, (ii)Income poor, time non-poor; (iii) Income non-poor, time poor; and (iv) Income non-poor, time non-poor.
 In @tbl-limtip we present the  distribution of individuals and households across the four-way classification of LIMTIP, averaged out across years 2005 to 2022.
 
-\singlespacing
+
 :::{#tbl-limtip}
 
 {{< include resources/limtip.tex >}}
@@ -82,7 +82,7 @@ In @tbl-limtip we present the  distribution of individuals and households across
 **Four-way classification, LIMTIP **
 
 :::
-\onehalfspacing
+
 
 
 Moreover, the estimation of LIMTIP helps us calculate the number of hidden poor, i.e time poor indivuals who are left outside the scope of official income poverty estimates. The difference between the LIMTIP measure of poverty and the official poverty estimates give us the number of hidden poor. 
@@ -146,16 +146,16 @@ We outline the methods used for implementing the principles in our data, with th
 ## Distribution Rules for Household Production
 Alternative values of $\alpha_{ij}$ indicate how household production requirements, net of the portion met by household members that are not of working age or are physically unable to take on more work, are shared among working-age people in the household.  The three principles are: 
 
-### 1. Equal Shares Principle
+### Equal Shares Principle
 The procedure for the equal shares scenario is relatively simple. Recall that the shares of those in the redistribution simulation in this scenario are simply:
 $$\alpha_{ij}^E= 1/I_j*(1-\alpha_{j}^{nw'})
 $$ {#eq-r1}
 
-where \alpha_{ij} represents the redistributed share of individual $i$;  $I^j$ denote the number of working-age persons in household $j$ and $\alpha_{j}^{nw'}$ represents the share of non-working group, hence $(1-\alpha_{j}^{nw'})$ representing the available redistributable share. 
+where $\alpha_{ij}$ represents the redistributed share of individual $i$;  $I^j$ denote the number of working-age persons in household $j$ and $\alpha_{j}^{nw'}$ represents the share of non-working group, hence $(1-\alpha_{j}^{nw'})$ representing the available redistributable share. 
 We count how many people are in the redistribution simulation in each household and then assign them the appropriate fraction (1 for households with one person in the simulation, 1⁄2 for households with two people in the simulation, and so on) and apply that fraction to the redistributable share of required household production time. 
 This scenraio overlooks time equity, i.e redistributes without taking into consideration the time available to individuals. 
 
-### 2. Time Available Principle  (WIP editing)
+### Time Available Principle 
 The time available scenario is based on equity such that the redistrubted shares are based on the time that is available after setting aside the time for personal maintenance requirements and income generation. In other words, the  household members should split up the required household production time based on the time each one has available, i.e based on an equity criteria. The time available ($Z_{ij}$) is defined as the time left over after the minimum personal maintenance and time spent on income generation (including commuting time) have been subtracted from the total weekly hours. To calculate the shares for each individual based on this principle, we first calculate the time available for each individual, then add up the total among the household for those individuals that have positive time available. We then divide each individual’s time available by the total and apply that fraction to the redistributable share of household production time. For those individuals that have negative time available we set their shares to zero in this simulation.
 
 
@@ -165,7 +165,7 @@ $${#eq-r2}
 $$\alpha_{ij}^A =0, if Z_{ij}<0
 $${#eq-r3}
 
-### 3. Opportunity costs
+### Opportunity costs
 
 The third possibility is based on the idea of opportunity costs along marginalist lines. The sharing rule depends on the relative actual (potential) wage. For example, if there are only two working-age adults, say husband and wife, and if the husband’s wage is twice as much as the wife, the wife’s share would be two-thirds and the husband’s share would be one-third. We use the actual or shadow wage for the employed and the potential wage for the nonemployed.
 Redistribution takes place based on the following equation:
@@ -198,8 +198,6 @@ $$  {#eq-OLS}
 
 This regression is run only on those that are actually employed for pay (!FRA). The vector of explanatory variables, [], includes age, sex, race, education, geographical region, disability, industry, occupation, presence of spouse, spouse's employment status, and, finally, λ, the Mills ratio calculated in the first stage. Inclusion of the Mills ratio corrects for the selection bias induced by limiting the regression to those in paid employment. The imputed log of wage is predicted for those not working for wages from the results of the regression, with industry and occupation replaced by the industries and occupations assigned in the previous step.
 
-
-Describe our procedue : 2 stages
 
 We simulate each of these principles of redistribution and recalculate individual and household time and income poverty using the LIMTP framework described above. 
 
