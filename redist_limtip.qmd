@@ -99,7 +99,7 @@ Trends of Time, Income and Limtip Poverty in the U.S.
 ::: 
 
 
-In the next section, we identify the subsample that can potentially be brought out of poverty. 
+In the next section, we focus on the subsample that can potentially be brought out of poverty. 
 
 
 # Identifying the Problem {#sec-problem}
