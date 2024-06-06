@@ -29,7 +29,7 @@ frame toplot: {
 
 **
 
-cd "j:\Shared drives\levy_distribution\Time Poverty\US\LIMTIP\redistribution_simulation\"
+cd "g:\Shared drives\levy_distribution\Time Poverty\US\LIMTIP\redistribution_simulation\"
 capture matrix drop  _all
 forvalues i = 2005 / 2023 {
 use red_scenarios_`i'.dta, clear
@@ -118,6 +118,10 @@ forvalues i = 2005 / 2023 {
 
     replace tpoor_type = 0 if htpoor    == 0                // is not Time poor
     gen itpoor = tpoor_type * tpoor
+    drop2 spm_nobs
+    gen spm_nobs = min(4,spm_nobs)
+    drop if spm_nobs ==1
+    drop if htpoor   ==0
     save ``i''
 }
 
