@@ -207,32 +207,65 @@ As described in the previous section, we consider three scenarios to analyze the
 
 ## Redistribution Scenarios and Time Poverty: General Results
 
-Based on the imputed data, and considering people in working age only, 55 out of 100 individuals that live in time poor households are not time poor themselves. 4.6 live in households where everyone is time poor,  /1
+Based on the imputed data, and considering people in working age only, 55 out of 100 individuals that live in time poor households are not time poor themselves. 4.6 live in households where everyone is time poor,  
 
-** Start by looking at distributions Both for individuals and households. **
+:::{#fig-dist}
 
-- Compare the time poverty changes on those identified earlier. 
+Waffle plot of the distribution of individuals across the different types of time poor households
+
+:::
+
+To understand the impact of the diferent redistribution scenarios on this groups, we will focus on transition probabilities. Thus, for those out of poverty, our statistic of interest would be the likelihood that they fall back into poverty, and for those in poverty, the likelihood that they transition out of poverty.
+
+
+:::{#fig-transition1}
+
+Transition probabilities across types individuals
+
+Probably use Lines to represent the changes Side by Side
+
+:::
+
+asd
+
+:::{#fig-transition2}
+
+Transition probabilities across Households: 
+
+Probably use Lines to represent the changes Side by Side
+
+:::
+
+Of course, the scenarios also have implications in terms of time poverty gap (time deficits). As shown in 
+
+
+:::{#fig-transition}
+
+Plot on time Deficits: Across Different Scenarios 
+
+Perhaps Mandoline plot
+
+:::
  
-- Moreover, we examine the changes by sex, employment status, presence of children
-in the household. 
-- Perhaps Start with a global analysis (without Specific groups)
-- then Analyze the case for Specific groups
+## Redistribution Scenarios and Time Poverty: Heterogeneity
 
-Perhaps provide more emphasis on Some of the groups (gender, the employed, parents?)
+In this section, we present the results of the redistribution scenarios analyzing the impact on time poverty across different demographic groups.
 
-## Gender Disparity in the Incidence of Time Deficits
-In this section we present the time deficits and LIMTIP poverty estimates by gender. We consider other characteritics of indivdiuals and hh such that employment status and nuber of children, factors which affect time availability. 
+Perhaps Mandoline plot for all scenarios by group: Three groups. We only see Individuals Here
 
-Evidence indicates that negative time balance values (i.e., time deficits) occur mostly among employed persons, we look at the heterogenous differences by presentinf limtip estimates by employment status and sex in tbl_ws. We observe that xxx
+:::{#fig-tran_by_group1}
+
+Transition probabilities across types individuals, by Group
 
 
+:::
 
-Further, presence of children would demand more caregiving hours thereby putting a pressure on time available, particulalrly for employed couples or single memebr hosuehodls. 
-Add table by sex and children for limtip and discuss results.
 
-## Gender and race Disparity in the  Incidence of Time Deficits
-Finally, in the case of the US, race inequality holds significance. In Table xx we present the 
+:::{#fig-tran_by_group1}
 
+Deficits by group
+
+:::
 
 # Policy implications
 
