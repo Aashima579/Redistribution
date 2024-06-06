@@ -63,23 +63,41 @@ where 168 is the number of hours in a week, $M$ is the sum of personal care and 
 
 To construct this measure, we need a dataset that contains information on individuals' time use, in addition to standard information required for poverty analysis. The main source of information for time use comes from the American Time Use Survey (ATUS), which only provides information for a single person in the household and a single day. We understook a statitical matching procedure to combine time use data from ATUS to the Annual Social and Economic Supplements (ASEC) data. It is necessary to combine the ATUS with the ASEC data to construct a synthetic dataset that contains information on time use for all household members, which will allow us to impute all required variables for eq-bal.
 
-Using the the matched data we then construct income and time poverty estimates for the United States for the years 2005 to 2022. 
+Using the the matched data we then construct income and time poverty estimates for the individuals and households in the United States for the years 2005 to 2022. Note that we classify a household as time poor, if atleast one working age member experiences time deficit. 
+
 
 The LIMTIP is finally measured as: 
 $$P_{j}^L* = P_{j}^O- p_{j}*X_{j}
 $$ {#eq-limtip}
 
 The underlying idea is that if we were to monetize the time deficits of individuals and add those to the offical income poverty thresholds, we get an adjusted poverty line - LIMTIP.
-The estimation of LIMTIP helps us calculate the number of hidden poor, i.e time poor indivuals who are left outside the scope of official income poverty estimates. The difference between the LIMTIP measure of poverty and the official poverty estimates give us the number of hidden poor. 
+The LIMTIP estimates can be classified into four braod categories: Income poor,time poor, (ii)Income poor, time non-poor; (iii) Income non-poor, time poor; and (iv) Income non-poor, time non-poor.
+In @tbl-limtip and @tbl-limtiph we present the average distribution of individuals and households, respectively, across the four-way classification of LIMTIP for the years from 2005 to 2022.
 
-In @fig-trend we present time trend from 2005 to 2023 of time poverty estimates, the offical income poverty trend, and the LIMTIP poverty trend. We observe that the official poverty estimates shows a slight rising trend between 2005 to 2014 and then starts to decline. The pandemic years show some steep decline from 13.8 % in 2020 to 10% in 2022 before rising back to the pre-pandemic level of around 15%.
-When we adjust for time deficits, as expected our LIMTIP estimates shows a higher level of poverty, around 25 percentage points higher . The gap widened during pandemic years.
-Moreover, it is notable that time poverty peaked around Great recession and Covid-19 pandemic recession. While time poverty rate has remained more or less stabke until 2019, it fell slightly in 2020 before rising again between 2020 to 2023.
-We also observe that in 2022, nearly 33 percent of individuals are hidden poor in 2022. 
-Further, in Table xx and yy we present the distribution of individuals and hh respectively across the four-way classification of LIMTIP (time poor and i) for the year 2022.
+\singlespacing
+:::{#tbl-limtip}
 
+{{< include resources/Tables/tbl_limtip.tex >}}
 
-In the next section, we identify the subsample that can potentially be brought out of poverty. 
+**Four-way classification of Individuals, LIMTIP **
+
+:::
+\onehalfspacing
+
+\singlespacing
+:::{#tbl-limtiph}
+
+{{< include resources/Tables/tbl_limtiph.tex >}}
+
+**Four-way classification of Households, LIMTIP **
+
+:::
+\onehalfspacing
+
+Moreover, the estimation of LIMTIP helps us calculate the number of hidden poor, i.e time poor indivuals who are left outside the scope of official income poverty estimates. The difference between the LIMTIP measure of poverty and the official poverty estimates give us the number of hidden poor. 
+
+In @fig-trend we present time trend from 2005 to 2023 of time poverty estimates, the offical income poverty trend, and the LIMTIP poverty trend. We observe that the official poverty estimates shows a slight rising trend between 2005 to 2014 and then starts to decline. When we adjust for time deficits, as expected our LIMTIP estimates shows a higher level of poverty across all years, around 3-5 percentage points higher. For the LIMTIP poverty estimates, we observe that the pandemic years show some steep decline from 13.8 % in 2020 to 10% in 2022 before rising back to the pre-pandemic level of around 15%.
+Moreover, it is notable that time poverty peaked around the Great Recession and Covid-19 pandemic recession. While time poverty rate has remained more or less stable until 2019, it fell slightly in 2020 before rising again between 2020 to 2023. In the latest year, 2023, nearly 3.5 percent of individuals are hidden poor. 
 
 ::: {#fig-trend}
 
@@ -90,9 +108,12 @@ Trends of Time, Income and Limtip Poverty in the U.S.
 ::: 
 
 
+In the next section, we identify the subsample that can potentially be brought out of poverty. 
+
+
 # Identifying the Problem {#sec-problem}
 
-One of the strategies that could help reducing the problem of time poverty, and thereby the incidence of hidden poor, is the redistribution of household production responsibilities across all capable members in the household. At best, household members with time surpluses could take on more household responsabilities, reducing the burden of those with time deficits. At worst, the redistribution could make the time deficits more equal among the household members, even if the household remains time poor. 
+One of the strategies that could help reducing the problem of time poverty, and thereby the incidence of hidden poor, is the redistribution of household production responsibilities across all capable members in the household. At best, household members with time surpluses could take on more household responsabilities, reducing the burden of those with time deficits, and potentially bringing out household out of poverty. At worst, the redistribution could make the time deficits more equal among the household members, even if the household remains time poor. 
 
 Before we start analyzing the potential that redistribution could have in reducing time poverty, we must first identify the households where redistribution is possible and desirable. Specifically, we exclude from the analysis households that are not time poor, even if such households could potentially benefit from redistribution, reducing the gaps of time surpluses among household members. From the sample of individuals living in a time poor household we classify them into 5 different groups:
 
