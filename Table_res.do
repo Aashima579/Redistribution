@@ -321,11 +321,11 @@ frame toplot: {
     graph export "C:\Users\Fernando\Documents\GitHub\Redistribution\resources\def1.png", replace width(1500)       
         
 }
+    mata:tot=st_matrix("tot");tot=tot,(1::19);tot=tot[,(1..4,13)]\tot[,(5..8,13)]\tot[,(9..12,13)]
+    mata:st_matrix("tot",tot)
 
 frame toplot: {
     clear
-    mata:tot=st_matrix("tot");tot=tot,(1::19);tot=tot[,(1..4,13)]\tot[,(5..8,13)]\tot[,(9..12,13)]
-    mata:st_matrix("tot",tot)
     lbsvmat  tot, row
     gen cat = "Overall" if tot5==1
     replace cat = "Men" if tot5==2
@@ -343,13 +343,13 @@ frame toplot: {
     replace cat = "Age: 31/45" if tot5==14
     replace cat = "Age: 45/64" if tot5==15
  
-    drop if inrange(tot5,8,12)
+    *drop if inrange(tot5,8,12)
     drop if inrange(tot5,16,99)
-    gen     tlist = 1 in 1/10
-    replace tlist = 2 in 11/20
-    replace tlist = 3 in 21/30
-    sort tlist n
-    by tlist:gen clist = 11-_n
+    gen     tlist = 1 in  1/15
+    replace tlist = 2 in 16/30
+    replace tlist = 3 in 31/45
+    sort tlist tot5
+    by tlist:gen clist = 16-_n
 
     /*clonevar clist2 = clist
     replace clist = 17.9 if clist2 == 9
@@ -372,33 +372,77 @@ frame toplot: {
     replace clist = 5.1 if clist2 == 5
     replace clist = 4.2 if clist2 == 4*/
     
-    forvalues i = 1/10 {
+    forvalues i = 2/7 {
         local ylabs `ylabs' `=clist[`i']' "`=cat[`i']'" 
         local yt `yt' `=clist[`i']'  " "
         
     }
-    global ylabs `ylabs'
-    global yt `yt'
-    two (scatter clist tot1 ) (scatter clist tot1) (scatter clist tot1) , ///
-    ysize(10) xsize(6) ytitle("")  ylabel( $ylabs   ) yscale(range(0/10)) ///
-    scale(1.5) subtitle("Non Time Poor")    ///
-    name(m1, replace) legend(off) by(tlist, col(3)) 
+    global ylabs1 `ylabs'
+    global yt1    `yt'
     
-    two (scatter clist tot2 ) (scatter clist tot6) (scatter clist tot10) , ///
-    ysize(10) xsize(6) ytitle("")  ylabel( $yt ) yscale(range(0/10)) ///
-    scale(1.5) subtitle("T.P. in H.T-I")    ///
-    legend(ring(0) pos(7) col(3) order(1 "Scenario 1" 2 "Scenario 2" 3 "Scenario 3")) ///
-    name(m2, replace) fxsize(20) legend(off)
+    local ylabs
+    local yt
+    forvalues i = 8/15 {
+        local ylabs `ylabs' `=clist[`i']' "`=cat[`i']'" 
+        local yt `yt' `=clist[`i']'  " "
+        
+    }
+    global ylabs2 `ylabs'
+    global yt2    `yt'
     
-        two (scatter clist tot3 ) (scatter clist tot7) (scatter clist tot11) , ///
-    ysize(10) xsize(6) ytitle("")  ylabel( $yt   ) yscale(range(0/10)) ///
-    scale(1.5) subtitle("T.P. in H.T-II")    ///
-    name(m3, replace) fxsize(20) legend(off)
+    ren tot5 xtot5
+    ren tot_* xtot_*
+    gen id = _n
+           reshape long tot, i(id) j(pty)       
+    label define pty 1 "Not Time Poor", modify
+    label define pty 2 "T.P. in H.T-I", modify
+    label define pty 3 "T.P. in H.T-II", modify
+    label define pty 4 "T.P. in H.T-III", modify
+    label values pty pty
+    gen zero = 0
+    gen clist2 = clist 
+    replace clist2 = clist + 0.2 if tlist==1 
+    replace clist2 = clist - 0.2 if tlist==3
+    by id: gen r=_n
+    sort r id
+    drop tot2
     
-        two (scatter clist tot4 ) (scatter clist tot8) (scatter clist tot12) , ///
-    ysize(10) xsize(6) ytitle("")  ylabel( $yt    ) yscale(range(0/10)) ///
-    scale(1.5) subtitle("T.P. in H.T-III")    ///
-    legend( order(1 "Scenario 1" 2 "Scenario 2" 3 "Scenario 3")) ///
-    name(m4, replace) fxsize(30) 
-    graph combine m1 m2 m3 m4,  row(1) imargin(0 0 0 0) nocopies
+    bysort r tlist (xtot5):gen tot2=tot-tot[1]
+    
+    replace tot2 = 20 if tot2>20
+    preserve
+        keep if inrange(xtot5,2,7)
+        two (pcspike clist2 zero clist2 tot2 if tlist==1, lw(1.5) pstyle(p1)) ///
+            (pcspike clist2 zero clist2 tot2 if tlist==2, lw(1.5) pstyle(p2)) ///
+            (pcspike clist2 zero clist2 tot2 if tlist==3, lw(1.5) pstyle(p3)) ///
+            (pcarrow clist2 zero clist2 tot2 if tlist==1 & tot2==20, mlw(1.5) pstyle(p1)) ///
+            (pcarrow clist2 zero clist2 tot2 if tlist==2 & tot2==20, mlw(1.5) pstyle(p2)) ///
+            (pcarrow clist2 zero clist2 tot2 if tlist==3 & tot2==20, mlw(1.5) pstyle(p3)),  ///
+        ysize(5) xsize(10) ytitle("") ///
+        ylabel( $ylabs1 , nogrid labsize(13pt)  )   ///
+        xlabel(  ,labsize(13pt)) ///
+        name(m1, replace) by(pty, col(4) note("")   )  ///
+        legend(order(1 "Scenario 1" 2 "Scenario 2" 3 "Scenario 3") col(3) size(13pt)) ///
+        xtitle("")
+    restore
+        graph export "C:\Users\Fernando\Documents\GitHub\Redistribution\resources\det1.pdf", replace
+    graph export "C:\Users\Fernando\Documents\GitHub\Redistribution\resources\det1.png", replace width(1500)     
+    preserve
+        keep if inrange(xtot5,8,15)
+        two (pcspike clist2 zero clist2 tot2 if tlist==1, lw(1.5) pstyle(p1)) ///
+            (pcspike clist2 zero clist2 tot2 if tlist==2, lw(1.5) pstyle(p2)) ///
+            (pcspike clist2 zero clist2 tot2 if tlist==3, lw(1.5) pstyle(p3)) ///
+            (pcarrow clist2 zero clist2 tot2 if tlist==1 & tot2==20, mlw(1.5) pstyle(p1)) ///
+            (pcarrow clist2 zero clist2 tot2 if tlist==2 & tot2==20, mlw(1.5) pstyle(p2)) ///
+            (pcarrow clist2 zero clist2 tot2 if tlist==3 & tot2==20, mlw(1.5) pstyle(p3)),  ///
+        ysize(5) xsize(10) ytitle("") ///
+        ylabel( $ylabs2 , nogrid labsize(13pt)  )   ///
+        xlabel(  ,labsize(13pt)) ///
+        name(m1, replace) by(pty, col(4) note("")   )  ///
+        legend(order(1 "Scenario 1" 2 "Scenario 2" 3 "Scenario 3") col(3) size(13pt)) ///
+        xtitle("")
+    restore
+        graph export "C:\Users\Fernando\Documents\GitHub\Redistribution\resources\det2.pdf", replace
+    graph export "C:\Users\Fernando\Documents\GitHub\Redistribution\resources\det2.png", replace width(1500)     
+     
 }
