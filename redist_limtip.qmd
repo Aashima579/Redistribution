@@ -79,14 +79,15 @@ $$ {#eq-limtip}
 
 The underlying idea is that if we were to monetize the time deficits of individuals and add those to the offical income poverty thresholds, we get an adjusted poverty line - LIMTIP.
 The LIMTIP estimates can be classified into four braod categories: Income poor,time poor, (ii)Income poor, time non-poor; (iii) Income non-poor, time poor; and (iv) Income non-poor, time non-poor.
-In @tbl-limtip and @tbl-limtiph we present the average distribution of individuals and households, respectively, across the four-way classification of LIMTIP for the years from 2005 to 2022.
+In @tbl-limtip we present the  distribution of individuals and households across the four-way classification of LIMTIP, averaged out across years 2005 to 2022.
+
 
  
 :::{#tbl-limtip}
 
 {< include resources/Tables/tbl_limtip.tex >}
 
-**Four-way classification of Individuals, LIMTIP **
+**Four-way classification, LIMTIP **
 
 :::
  
@@ -119,19 +120,22 @@ Trends of Time, Income and Limtip Poverty in the U.S.
 
 ::: 
 
-In the next section, we identify the subsample that can potentially be brought out of poverty. 
+
+In the next section, we focus on the subsample that can potentially be brought out of poverty. 
 
 # Identifying the Problem {#sec-problem}
 
-One of the strategies that could help reducing the problem of time poverty, and thereby the incidence of hidden poor, is the redistribution of household production responsibilities across all capable members in the household. At best, household members with time surpluses could take on more household responsabilities, reducing the burden of those with time deficits, and potentially bringing out household out of poverty. At worst, the redistribution could make the time deficits more equal among the household members, even if the household remains time poor. 
+One of the strategies that could help reducing the problem of time poverty, and thereby the incidence of hidden poor, is the redistribution of household production responsibilities across all capable (!add footnote on capable!) members in the household. At best, household members with time surpluses could take on more household responsabilities, reducing the burden of those with time deficits, and potentially bringing out household out of poverty. At worst, the redistribution could make the time deficits more equal among the household members, even if the household remains time poor. 
 
-Before we start analyzing the potential that redistribution could have in reducing time poverty, we must first identify the households where redistribution is possible and desirable. Specifically, we exclude from the analysis households that are not time poor, even if such households could potentially benefit from redistribution, reducing the gaps of time surpluses among household members. From the sample of individuals living in a time poor household we classify them into 5 different groups:
+Before we start analyzing the potential that redistribution could have in reducing time poverty, we must first identify the households where redistribution is possible and desirable. Specifically, we exclude from the analysis households that are not time poor, even if such households could potentially benefit from redistribution, reducing the gaps of time surpluses among household members and even resulting in more gender-equitable sharing of household work. From the sample of individuals living in a time poor household we classify them into five different groups:
 
 - Single: These are time poor individuals that live in a household where they are the only working-age person. In this case, redistribution is not possible, and thus are excluded from the analysis.
 - Time Poor living in H. Type I: These are time poor individuals who live in households where all working-age members are time poor. While redistribution is possible, and may help in reducing the time deficits of individuals, and even allow some to transition out of time poverty, the household will remain time poor in any redistributional scenario.
 - Time Poor living in H. Type II: These are time poor individuals who live in households where there are non-time poor individuals. However, the combined time surpluses is insufficient to lift the household out of time poverty. 
 - Time Poor living in H. Type III: These are time poor individuals who live in households where there is enough time surplus to lift the household out of time poverty. Redistribution in these households can lift all working members of the household out of time poverty.
-- Non Time poor living in a time poor household: This last group consists of individuals with time surpluses living in a time poor household. The goal of the redistribution scenarios is to allocate household responsabilities in such a way that this invididuals can help lift other household members out of time poverty. However, it is also possible that some of these individuals may end up experiencing time poverty in the redistribution scenarios.
+- Non Time poor living in a time poor household: This last group consists of individuals with time surpluses living in a time poor household. The goal of the redistribution scenarios is to allocate household responsabilities in such a way that these invididuals can help lift other household members out of time poverty. However, it is also possible that some of these individuals may end up experiencing time poverty in the redistribution scenarios.
+(!present this info in a table across columns: Red possibile or not and efficient or not/or what outcome it brings in, by hhtype)
+
 
 @fig-composition provides a visual representation of the classification of individuals living in time poor households. As it can be observed, across years, about 40% of individuals were living in a time poor household. While this share shows a sharp increase between 2005 and 2007, it has remained stable from 2008 onwards, with a small increase across years. There is an additional 4-5% of individuals who are time poor but redistribution is not possible. From the rest, about 15% of individuals constitute our main group of analysis, i.e., those living in households where redistribution is possible and some individuals could benefit from it. The remaining 20% are individuals who are not time poor but live in a time poor household.
 
@@ -146,7 +150,7 @@ Time Poverty classification, across time
 ::: 
 
 
-In the next section, we discuss three redistribution scenarios where household responsabilities could be redistributed across working-age members, under different criteria. Nevertheless, we should keep in mind that we will only be analyzing the impact of redistribution on time poor households with at least 2 working-age members.
+In the next section, we discuss three redistribution scenarios wherein household responsabilities can redistributed across working-age members, under different criteria. Nevertheless, we should keep in mind that we will only be analyzing the impact of redistribution on time poor households with at least 2 working-age members.
  
 # Redistribution Scenarios
 
@@ -154,73 +158,67 @@ In the next section, we discuss three redistribution scenarios where household r
 
 - Describe the scenarios and the assumptions behind them.
 
-Intrahousehold redistribution can potentially reduce time deficits. We construct three redistrubution scenarios based on different guiding principles. The extent of the reduction would depend on the principle that we use in distributing household responsibilities among the members. 
+Intrahousehold redistribution can potentially reduce time deficits and bring households out of poverty. We construct three redistrubution scenarios based on different guiding principles. The extent of the reduction would depend on the principle that we use in distributing household responsibilities among the members. 
 First, we use the simple egalitarianism principle that involves an equal division of total household productiom time among all working age members. Second, we redistribute conditional on the available time people have. In the thord scenario, we redsitribute based on the opportunity cost of time for people. 
 
-xxxx
-In the next section, we outline the methods used for implementing the principles in our data, with the detailed explanation of some aspects below:
+We outline the methods used for implementing the principles in our data, with the detailed explanation of some aspects below.
 
 
 ## Distribution Rules for Household Production
-Alternative values of $\alpha_{ij}$ indicate how household production requirements, net of the portion met by household members that are not of working age or are physically unable to take on more work, are shared between working-age persons in the household.  Below we discuss the three principles.
+Alternative values of $\alpha_{ij}$ indicate how household production requirements, net of the portion met by household members that are not of working age or are physically unable to take on more work, are shared among working-age people in the household.  The three principles are: 
 
-### 1. Equal Shares Scenario
+### Equal Shares Principle
 The procedure for the equal shares scenario is relatively simple. Recall that the shares of those in the redistribution simulation in this scenario are simply:
-
-
- As before, denoting the number of working-age persons in household $j$ as $I^j$, we can express the rule as:
-
 $$\alpha_{ij}^E= 1/I_j*(1-\alpha_{j}^{nw'})
 $$ {#eq-r1}
 
-We need to count how many people are in the redistribution simulation in each household and then assign them the appropriate fraction (1 for households with one person in the simulation, 1⁄2 for households with two people in the simulation, and so on) and apply that fraction to the redistributable share of required household production time. 
+where $\alpha_{ij}$ represents the redistributed share of individual $i$;  $I^j$ denote the number of working-age persons in household $j$ and $\alpha_{j}^{nw'}$ represents the share of non-working group, hence $(1-\alpha_{j}^{nw'})$ representing the available redistributable share. 
+We count how many people are in the redistribution simulation in each household and then assign them the appropriate fraction (1 for households with one person in the simulation, 1⁄2 for households with two people in the simulation, and so on) and apply that fraction to the redistributable share of required household production time. 
+This scenraio overlooks time equity, i.e redistributes without taking into consideration the time available to individuals. 
+
+### Time Available Principle 
+The time available scenario is based on equity such that the redistrubted shares are based on the time that is available after setting aside the time for personal maintenance requirements and income generation. In other words, the  household members should split up the required household production time based on the time each one has available, i.e based on an equity criteria. The time available ($Z_{ij}$) is defined as the time left over after the minimum personal maintenance and time spent on income generation (including commuting time) have been subtracted from the total weekly hours. To calculate the shares for each individual based on this principle, we first calculate the time available for each individual, then add up the total among the household for those individuals that have positive time available. We then divide each individual’s time available by the total and apply that fraction to the redistributable share of household production time. For those individuals that have negative time available we set their shares to zero in this simulation.
 
 
-### 2. Time Available Scenario (WIP editing)
-The time available scenario is based on equity such that the redistrubted shares are based on the time that is available after setting aside the time for personal maintenance requirements and income generation. In other words, the  household members should split up the required household production time based on the time each one has available, i.e based on an equity criteria. The time available ($Z_{ij}$)) is defined as the time left over after the minimum personal maintenance and time spent on income generation (including commuting time) have been subtracted from the total weekly hours. To calculate the shares for each individual based on this principle, we first calculate the time available for each individual, then add up the total among the household for those individuals that have positive time available. We then divide each individual’s time available by the total and apply that fraction to the redistributable share of household production time. For those individuals that have negative time available we set their shares to zero in this simulation.
+$$\alpha_{ij}^A= (Z_{ij}/ \sum Z_{ij}) (1-\alpha_{j}^{nw'}), if  Z_{ij}>0, 
+$${#eq-r2}
 
+$$\alpha_{ij}^A =0, if Z_{ij}<0
+$${#eq-r3}
 
-
-
-
-
-### 3. Opportunity costs
+### Opportunity costs
 
 The third possibility is based on the idea of opportunity costs along marginalist lines. The sharing rule depends on the relative actual (potential) wage. For example, if there are only two working-age adults, say husband and wife, and if the husband’s wage is twice as much as the wife, the wife’s share would be two-thirds and the husband’s share would be one-third. We use the actual or shadow wage for the employed and the potential wage for the nonemployed.
 Redistribution takes place based on the following equation:
-
-
-
- First, we imputed wages for all of those not currently working for pay. In order to do this, we used a two-stage Heckman selection model (Heckman 1979), also known as the Heckit procedure, which we outline below. Once done, we used the imputed wages of those that are not currently working for pay and the actual wages of those that are working to divide up the redistributable share of required household production:
-
-
 $$\alpha_{ij}^O= (1/{I_j-1})*(1-w_{ij}/w_{ij} ) (1-\alpha_{j}^{nw'})
 $$ {#eq-r3}
 
+
+ First, we imputed wages for all of those not currently working for pay. In order to do this, we used a two-stage Heckman selection model (Heckman 1979), also known as the Heckit procedure, which we outline below. Once done, we used the imputed wages of those that are not currently working for pay and the actual wages of those that are working to divide up the redistributable share of required household production.
 
 As the share of required household production needs to be inversely proportional to the individual’s share of the sum of wages, we subtract their share of this sum from one. To ensure that the resulting shares sum up to unity, we divide by the number of individuals in the simulation minus one. We then apply this share to the redistributable share of required household production as in previous steps.
 In order to impute wages for those not currently employed for wages, we first impute the likeliest industry and occupation for each individual using a multinomial probit procedure. Industry and occupation are regressed on age, age squared, sex, race, education, and geographic region on all those in the working age population (18-64). The likelihood for each industry and occupation is then predicted for everyone, using the results of the multinomial probit. Then each individual not currently working for wages is assigned the industry and occupation corresponding to the xxxx/ largest predicted likelihoods for that individual.
 
 Next, we move on to the first stage of the Heckit procedure, a probit estimation of a dummy variable for being employed in wage work (paid):
 
-$$P(paid=1|X)=F(X* \beta)
+$$P(paid=1|X)=F(X \beta)
 $$ {#eq-probit}
 
 where F is the cumulative density function of a normal distribution. The vector of explanatory variables, 𝑋, comprises the individual’s age, sex, race, disability, number of kids across age groups (0 to 5, 6 to 14, 15-17), presence of spouse and spouse's age, education and employment status education. The regression is run on the universe of all eligible adults separately by age (divided into four categories: 18 to 30 years old; 31 to 45 years old; and 46 to 64 years old) and sex. The Mills ratio, 𝜆, is calculated for all individuals using the results of the first stage regression:
 
+$$\lambda = f(X\beta)/ F(X\beta)
+$$ {#eq-mills}
 
 
-where 𝑓 and 𝐹 are, respectively, the probability and cumulative density function of a normal distribution, and 𝛽􏱞 is the vector of estimated coefficients from the probit model.
+where 𝑓 and 𝐹 are, respectively, the probability and cumulative density function of a normal distribution, and $\beta$ is the vector of estimated coefficients from the probit model.
 The second stage is an ordinary least squares (OLS) estimate of the log of hourly wage:
 
+$$lnw= (\gamma_2*Z^w) + (\theta_2 \lambda) + \mu
+$$  {#eq-OLS}
 
-$$lnw= (\gamma_2*Z^w) + (\theta_2 * \lambda) +
-$$ 
 
 This regression is run only on those that are actually employed for pay (!FRA). The vector of explanatory variables, [], includes age, sex, race, education, geographical region, disability, industry, occupation, presence of spouse, spouse's employment status, and, finally, λ, the Mills ratio calculated in the first stage. Inclusion of the Mills ratio corrects for the selection bias induced by limiting the regression to those in paid employment. The imputed log of wage is predicted for those not working for wages from the results of the regression, with industry and occupation replaced by the industries and occupations assigned in the previous step.
 
-
-Describe our procedue : 2 stages
 
 We simulate each of these principles of redistribution and recalculate individual and household time and income poverty using the LIMTP framework described above. 
 
