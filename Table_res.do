@@ -446,3 +446,36 @@ frame toplot: {
     graph export "C:\Users\Fernando\Documents\GitHub\Redistribution\resources\det2.png", replace width(1500)     
      
 }
+
+
+tabstat tdef* ,by(sex)
+tabstat tdef* ,by(haschildren)
+tabstat tdef* ,by(emp)
+tabstat tdef* ,by(educ)
+tabstat tdef* ,by(age_g)
+
+tabstat2 spmpov adjpoor* [w=asecwt], by(itpoor)  save
+matrix tmatrix2 = r(tmatrix2)*100
+
+esttab matrix(tmatrix2), tex
+
+
+frame toplot : {
+    clear
+    lbsvmat tmatrix2
+    gen type = _n
+    label define type 1 "Not Time Poor", modify
+    label define type 2 "T.P. in H.T-I", modify
+    label define type 3 "T.P. in H.T-II", modify
+    label define type 4 "T.P. in H.T-III", modify
+    label values type type
+    graph bar (asis) tmatrix21 tmatrix22 tmatrix23 tmatrix24 tmatrix25 , ///
+    over(type)  ylabel(0(2)14) ///
+    bar(1, color(gs4)) bar(2, color(gs7))  ///
+    bar(3, bstyle(p1)) bar(4, bstyle(p2)) bar(5, bstyle(p3))    ///
+    legend(order(1 "SPM Poverty" 2 "LIMTIP Povery" 3 "Scenario 1" 4 "Scenario 2" 5 "Scenario 3") ///
+    ring(0) pos(12) row(1)) ytitle(Poverty Rate) blab(bar, format(%3.1f)) scale(1.5) xsize(9)
+    graph export "C:\Users\Fernando\Documents\GitHub\Redistribution\resources\glimtip.pdf", replace
+    graph export "C:\Users\Fernando\Documents\GitHub\Redistribution\resources\glimtip.png", replace width(1500)     
+    
+}
