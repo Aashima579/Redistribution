@@ -287,39 +287,60 @@ graph export "C:\Users\Fernando\Documents\GitHub\Redistribution\resources\hh_dis
 
 matrix tmres1 = mres1'
 capture frame create toplot
-frame toplot: lbsvmat tmres1
+frame toplot: clear
+*frame toplot: matrix ttmres1=tmres1'
+ 
 frame toplot: {
+    gen type = _n
+    lbsvmat ttmres1
+    label define type 1 "Not Time Poor", modify
+    label define type 2 "T.P. in H.T-I", modify
+    label define type 3 "T.P. in H.T-II", modify
+    label define type 4 "T.P. in H.T-III", modify
+    label values type type
 
-    scatter tmres12 tmres13 tmres14 tmres11 scenario, ///
-            connect(l l l l) xlabel(1 "Scenario 1" 2 "Scenario 2" 3 "Scenario 3", labsize(11pt)) ///
-            xtitle("") lpatter( solid solid solid - )  xscale(range(0.75 3.25)) ylabel(,labsize(9pt)) ///
-            legend(order(1 "T.P. in H.T-I" ///
-            2 "T.P. in H.T-II" ///
-            3 "T.P. in H.T-III" ///
-            4 "Not Time Poor") pos(6) row(1) size(10pt)) ysize(3)
+    graph bar (asis) ttmres11 ttmres12 ttmres13   , ///
+    over(type)     legend(order(1 "Scenario 1" 2 "Scenario 2" 3 "Scenario 3") ///
+    ring(1) pos(6) row(1)) ytitle(Transition) blab(bar, format(%3.1f)) scale(1.5) xsize(9)
     graph export "C:\Users\Fernando\Documents\GitHub\Redistribution\resources\trans1.pdf", replace
-    graph export "C:\Users\Fernando\Documents\GitHub\Redistribution\resources\trans1.png", replace width(1500)        
+    graph export "C:\Users\Fernando\Documents\GitHub\Redistribution\resources\trans1.png", replace width(1500)
+    
+  
+        
 }
 
-frame toplot:clear
-matrix tx = r(tmatrix2)
-frame toplot: {
-    mata:tx = st_matrix("tx"); tx = (tx[,1],tx[,2],(1\2\3\4),(1\1\1\1))\(tx[,1],tx[,3],(1\2\3\4),(2\2\2\2))\(tx[,1],tx[,4],(1\2\3\4),(3\3\3\3));st_matrix("tx",tx)
-    lbsvmat tx
-    
+tabstat2 tdef* [w=asecwt], by(itpoor) save
+matrix tdef1 = r(tmatrix2)
+tabstat2 ttdef* [w=asecwt], by(itpoor) save
+matrix tdef2 = r(tmatrix2)
+ frame toplot: {
+    clear
+    matrix tdef1 = -tdef1
+    matrix tdef2 = -tdef2
+    lbsvmat tdef1
+    lbsvmat tdef2
  
-    gen type1 = tx3+(tx4-2)/5
+     gen type = _n
+    label define type 1 "Not Time Poor", modify
+    label define type 2 "T.P. in H.T-I", modify
+    label define type 3 "T.P. in H.T-II", modify
+    label define type 4 "T.P. in H.T-III", modify
+    label values type type
     
-    gen ty0 = tx1
-    two (pcarrow tx1 type1 tx2 type1 if tx4==1 , msize(medlarge))  ///
-        (pcarrow tx1 type1 tx2 type1 if tx4==2 , msize(medlarge)) ///
-        (pcarrow tx1 type1 tx2 type1 if tx4==3 , msize(medlarge)), ///
-        legend(order(1 "Scenario 1" 2 "Scenario 2" 3 "Scenario 3") ring(0) pos(7)) ///
-        ytitle("Time Deficit") xtitle("") xlabel( 1 "Non Time Poor" 2 "T.P. in H.T-I" 3 "T.P. in H.T-II" 4 "T.P. in H.T-I" ) ///
-        scale(1.5) ysize(4) xsize(8) xscale(range(0.5 4.5))
+    graph bar (asis) tdef11 tdef12 tdef13 tdef14   , ///
+    over(type)     legend(order(1 "Baseline" 2 "Scenario 1" 3 "Scenario 2" 4 "Scenario 3") ///
+   ring(1) pos(6) row(1)) ytitle(Time Deficit) blab(bar, format(%3.1f)) scale(1.5) xsize(9) ///
+    bar(1, color(gs4))  bar(2, bstyle(p1)) bar(3, bstyle(p2)) bar(4, bstyle(p3))   
+ 
     graph export "C:\Users\Fernando\Documents\GitHub\Redistribution\resources\def1.pdf", replace
-    graph export "C:\Users\Fernando\Documents\GitHub\Redistribution\resources\def1.png", replace width(1500)       
-        
+    graph export "C:\Users\Fernando\Documents\GitHub\Redistribution\resources\def1.png", replace width(1500)      
+    graph bar (asis) tdef21 tdef22 tdef23 tdef24   , ///
+    over(type)     legend(order(1 "Baseline" 2 "Scenario 1" 3 "Scenario 2" 4 "Scenario 3") ///
+    ring(1) pos(6) row(1)) ytitle(Time Deficit) blab(bar, format(%3.1f)) scale(1.5) xsize(9) ///
+    bar(1, color(gs4))  bar(2, bstyle(p1)) bar(3, bstyle(p2)) bar(4, bstyle(p3))   
+    
+    graph export "C:\Users\Fernando\Documents\GitHub\Redistribution\resources\def2.pdf", replace
+    graph export "C:\Users\Fernando\Documents\GitHub\Redistribution\resources\def2.png", replace width(1500)      
 }
     mata:tot=st_matrix("tot");tot=tot,(1::19);tot=tot[,(1..4,13)]\tot[,(5..8,13)]\tot[,(9..12,13)]
     mata:st_matrix("tot",tot)
@@ -455,7 +476,7 @@ tabstat tdef* ,by(educ)
 tabstat tdef* ,by(age_g)
 
 tabstat2 spmpov adjpoor* [w=asecwt], by(itpoor)  save
-matrix tmatrix2 = r(tmatrix2)*100
+matrix tmatrix2 =  (r(StatTotal)\r(tmatrix2))*100
 
 esttab matrix(tmatrix2), tex
 
@@ -464,17 +485,18 @@ frame toplot : {
     clear
     lbsvmat tmatrix2
     gen type = _n
-    label define type 1 "Not Time Poor", modify
-    label define type 2 "T.P. in H.T-I", modify
-    label define type 3 "T.P. in H.T-II", modify
-    label define type 4 "T.P. in H.T-III", modify
+    label define type 1 "T.P. Households", modify
+    label define type 2 "Not Time Poor", modify
+    label define type 3 "T.P. in H.T-I", modify
+    label define type 4 "T.P. in H.T-II", modify
+    label define type 5 "T.P. in H.T-III", modify
     label values type type
     graph bar (asis) tmatrix21 tmatrix22 tmatrix23 tmatrix24 tmatrix25 , ///
-    over(type)  ylabel(0(2)14) ///
+    over(type)   ///
     bar(1, color(gs4)) bar(2, color(gs7))  ///
     bar(3, bstyle(p1)) bar(4, bstyle(p2)) bar(5, bstyle(p3))    ///
     legend(order(1 "SPM Poverty" 2 "LIMTIP Povery" 3 "Scenario 1" 4 "Scenario 2" 5 "Scenario 3") ///
-    ring(0) pos(12) row(1)) ytitle(Poverty Rate) blab(bar, format(%3.1f)) scale(1.5) xsize(9)
+    ring(1) pos(6) row(1)) ytitle(Poverty Rate) blab(bar, format(%3.1f)) scale(1.5) xsize(9)
     graph export "C:\Users\Fernando\Documents\GitHub\Redistribution\resources\glimtip.pdf", replace
     graph export "C:\Users\Fernando\Documents\GitHub\Redistribution\resources\glimtip.png", replace width(1500)     
     

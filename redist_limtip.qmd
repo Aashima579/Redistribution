@@ -233,6 +233,7 @@ As described in the previous section, we consider three scenarios to analyze the
 ## Redistribution Scenarios and Time Poverty: General Results
 
 @fig-dist provides the distribution of individuals, and their households by type. @fig-dista shows that 54.6% individuals live in time poor households are not time poor themselves. These are the individuals that could help lift other household members out of time poverty, by taking on more household responsibilities.
+
 From the rest, 4.6% live in households where everyone is time poor, 7.1% live in households with at least one not-time-poor individual, but with insufficient time surplus to lift the household out of time poverty, and 33.7% live in households where there is enough time surplus to lift every household member out of poverty. 
 
 In terms of household structure, @fig-distb shows 81.2% of the households could exit from time poverty, but the remaining 18.8% cannot do so, even if all working-age members were to take on more household responsibilities. Nevertheless, it may be possible to reduce the time deficits of some individuals in these households.
@@ -278,13 +279,6 @@ This are the numbers for reference
 
  -->
 
-:::{#fig-transition2 fig-pos="H"}
-
-![](resources/hhtrans.pdf){fig-align="center" width="70%"}
-
-Transition probabilities for households
-
-:::
 
 For the rest of the categories, we observe that there are substantially more heterogeneity on the impact of time povery across the different Scenarios. For individuals in households where all members are time poor, the equal share and opportunity cost scenarios suggest that up to 17%-18% of individuals could exist time poverty, with only a 2.5% exit rate under the time availability scenario. 
 
@@ -307,7 +301,7 @@ Average Time Deficits
 
 ![](resources/def2.pdf){fig-align="center"}
 
-Average Time Deficits for Time Poor Individuals
+Average Time Deficits (Excluding Zeros)
 
 :::
 
@@ -323,15 +317,36 @@ Lives in T-III h | -10.45076  -2.27825 -.4266873 -2.103088
 -----------------+----------------------------------------
 -->
  
-The next group of interest are those individual living in households that cannot exit time poverty, but could reduce time deficits for some of their members. Interestingly, the poverty exit rates are 
+The next group of interest are those individual living in households that cannot exit time poverty, but could reduce time deficits for some of their members (Household Type II). Interestingly, the poverty exit rates for these individuals are ver similar as for the previous group, with the time availability scenario having the lowest impact at 8.1%. In contrast, when we pay attention to the time deficits, its the equal share scenario that has the largest impact on time deficit.  
+
+At baseline,  individuals in this group had in average a time deficit of 20hrs per week. Under Scenarios 1 and 3, the average deficit reduces to 9hrs and 10hrs respectively. However, under Scenario 2, it reduces to only 5.6hrs a week. While the time availability scenario is not as effective in reducing time poverty, it may appear it is the most fair, as it redistributes both the gains and losses of time allocation more equally across household members.
+
+The last group of interest are those individuals living in households where redistribution could lift all members out of time poverty. In this case, all redistribution scenarios do an excellent job at reducing time poverty, with exit rates of 72-89%. In contrast with the two previous cases, the time availability scenario has the largest impact reducing time poverty, with an exit rate of 89%. In terms of time deficits, given the success the redistribution scenarios have in reducing time poverty, the average time deficits is reduced to 0.4-2.3hrs per week. However, for those who remain time poor, the impacts in terms of time deficits are much smaller, with scenario 2 still representing the most efficient, reducing the deficit to just 4hrs per week.
+
+As it would be expected, this reduction in individual time poverty also has an impact at the household. While non of the households Type I or II are able exit time poverty, as shown in @fig-transition2, between 65-87% of households Type III are able to exit time poverty, with Scenario 2 being the best at reducing time poverty.
+
+:::{#fig-transition2 fig-pos="H"}
+
+![](resources/hhtrans.pdf){fig-align="center" width="70%"}
+
+Transition probabilities for households
+
+:::
+
 <!-- 
 Exact NUmbers 69.2 87.2 65.0
  -->
+
 ## Redistribution Scenarios and Time Poverty: Heterogeneity
 
-In this section, we present the results of the redistribution scenarios analyzing the impact on time poverty across different demographic groups.
+As suggested earlier, not all individuals were affected in the same way by the redistribution scenarios. For example,  groups who are traditionally more vulnerable to time poverty, are also the most likely to benefit from intra household redistribution of responsabilities. To explore this further, in this section we present how the poverty transition rates varies across different groups of individuals. @fig-tran_by_group1 and @fig-tran_by_group2 present the difference between the group specific transition rate compares to the overall transition rate.
 
-Perhaps Mandoline plot for all scenarios by group: Three groups. We only see Individuals Here
+Under Scenarios 1 and 2, men have a higher probability of falling into time poverty compared to women, with a lower probability of exiting time poverty. This is particularly pronouced among individuals living in type-III households. Interestingly, Scenario 3, which is based on opportunity costs, shows the opposite pattern. Although we have shown that all scenarios help reduce time poverty, the opportunity cost scenario seem to attenuate the effect by perpetuating the gender roles tied to earning potentials. 
+
+A second characteristics that tends to drive differences in time poverty is related to the presence of Children. In our results, however, their presence has mixed impact oon tn transition rates. Under all scenarios, not time poor individuals living in households with children are more like to fall into time poverty. However having children also increases the chances of exiting time poverty in Household Type II, while reducing it in Household Type III. The time availability scenario is the only case where the results are consistent across all household types, with children increasing the probability of falling into time poverty, but decreasing the probability of exiting time poverty.
+
+The last group of interst considered in @fig-tran_by_group1 is based on employment status. Since time poverty is closely related to the time spent on paid work, we should emphasize that the share of time poor individuals among the not employed is much smaller compared to the employed. Because of this, the unemployed have an almost 0% probability of falling into time poverty, and those who are time poor, are far more likely exit time poverty. Among the employed, while they are somewhat more likely to fall into time poverty than average, there are almost no singificant differences in any other scenario.
+
 
 :::{#fig-tran_by_group1 fig-pos="H"}
 
@@ -343,7 +358,11 @@ Transition probabilities Heterogeneity: Gender, Employment Status and Children P
 
 :::
 
-This should be Gender
+In terms of education and age (see @fig-tran_by_group2) the patterns are less clear. Among non time poor individuals, those with higher levels of education seem to be the most likely to fall into time poverty. This pattern is observed for all scenarios, with but with a smaller impact under the opportunity cost scenario. 
+
+For time poor individuals, the patterns are less clear. When redistribution is driven by oppotunity cost, higher levels of education increase the probability of exiting time poverty. However, the magnitude of the diferences is small for type III households. For Scenarios 1 and 2, we can only observe some patterns for individuals living in type III households, where higher education reduce, rather than increase, the probability of exiting time poverty.
+
+Finally, in terms of age, both the youngest and oldest individuals are less likely to fall into poverty, while also being the more likely to exit time poverty. This patterns may be a reflection that individuals in the age group 30-45 are most likely to be in the labor market, and thus are less flexible in terms of time allocation, and thus are less likely to be affected by the redistribution scenarios. 
 
 :::{#fig-tran_by_group2 fig-pos="H"}
 
@@ -356,8 +375,7 @@ Transition probabilities Heterogeneity: Education and Age
 
 ## Changes in LIMTIP: The hidden poor
 
-
-Finally, we present the changes in the LIMTIP estimates across the different redistribution scenarios.
+WHile the discussion above provides a detailed picture of the potential impact that redistribution could have on time poverty, it is equally important to understand changes in terms of Adjusted LIMTIP estimates. 
 
 :::{#fig-limtip fig-pos="H"}
 
@@ -366,6 +384,13 @@ Finally, we present the changes in the LIMTIP estimates across the different red
 Changes in LIMTIP estimates across redistribution scenarios
 
 :::
+
+In @fig-limtip we present the poverty rates across the different redistribution scenarios, for the sample of households that we identify to be time poor. The first thing to consider here is that the incidence of official poverty and LIMTIP poverty in the sample is lower than the one observed in the general population (@fig-trend). This is expected, since our sample of interested is restricted to time poor households, who are more likely to have members working, and hence less likely to be income poor. 
+
+Even in this sample we observe a large difference between the official poverty estimates and the LIMTIP estimates. While the official poverty estimates are around 5%, the LIMTIP estimates poverty to be closer to 11%, showing that 6% of the individuals in the sample are hidden poor. Given the success of the redistribution scenarios in reducing time poverty, we observe that the LIMTIP estimates are also reduced, with the time availability scenario showing the largest reduction in poverty rates, practically eliminating the incidence of hidden poor in the sample. 
+
+However, a detailed look across individuals suggests that such large improvements are not uniform across all groups. In households where all individuals are time poor, the redistribution scenarios worsen the poverty rates, albeit the impact is small. This happens because the aggregated time deficit of the household increases as some individuals who exit time poverty status. For households with some potential to reduce aggregated time deficits (H.Type II), we observe that the share of the hidden poor is greatly reduced from  8% to 3 to 5%. 
+
 <!--
 
           itpoor |   adjpoor  adjpoo~1  adjpoo~2  adjpoo~3
