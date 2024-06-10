@@ -261,10 +261,10 @@ This are the numbers for reference
 
 
 
-In terms of time deficits, as shown in @fig-def1, the average time deficits (in hours per week) that non-time poor individuals face is quite small, just around 0.7 hours. However, those who become time poor (non-zero time deficit), their time deficits increase in the range of 4.4-5.8 hours  (see @fig-def2). Interestingly,for this subgroup, the Time availability Scenario (Scenario 2) has the lowest impact in making non-time poor people enter time poverty by increasing their time deficits 
+In terms of time deficits, as shown in @fig-def1, the average time deficits (in hours per week) that non-time poor individuals face is quite small, just around 0.7 hours. However, those who become time poor (non-zero time deficit), their time deficits increase in the range of 4.4-5.8 hours  (see @fig-def2). Interestingly,for this subgroup, the Time availability Scenario (Scenario 2) has the lowest (negative) impact in moving non-time poor people enter time poverty by increasing their time deficits.
 
 
-While such case may suggest an improvement on the quality of life of some individuals, the redistribution scenarios also have implications in terms of time deficits other household members face. As shown in @fig-def1, average time deficit increase in roughly 1 hour for scenarios 1 and 3. However, as shown in @fig-def2, the time deficit for those who remain time poor increase in just over 3hrs. In general, while the availability scenario has smallest impact on transition rates, it also has the smallest impact in terms of time deficits, for those who remain time poor.
+While such a case may suggest an improvement on the quality of life of some individuals, the redistribution scenarios also have implications in terms of time deficits other household members face. As shown in @fig-def1, average time deficit increase in roughly 1 hour for scenarios 1 and 3. However, as shown in @fig-def2, the time deficit for those who remain time poor increase in just over 3hrs. In general, while the availability scenario has smallest impact on transition rates, it also has the smallest impact in terms of time deficits, for those who remain time poor. !! AScheck again!!
 
 
 
@@ -386,7 +386,21 @@ Lives in T-III h |  .1053606  .0658254  .0547888  .0649033
 ----------------------------------------------------------
 -->
 
-# Policy implications
+# Policy implications 
+Redistributing household production among household members could serve as en effective tool to reduce some individuals' time deficits and bring them out of time poverty. In addition, such redistributions could have well-being effects for the household as a whole in terms of more equitable sharing of hh production lifting households out of poverty (the ones where aggregate time surplus can absorbaggregate time deficits). We find that our redistribution principles can signifantly allow people to exit poverty, partiuclarly in these type of households. The objective of estimating LIMTIP among other things is to make the hidden poor visible. A redistribtion strategy proposed in this brief could help solve the problem of hidden poor by reducing their time deficits.
+
+equity-based red scenario serve as the most effective in lifting people out of poverty and in reducing the time-adjutsed poverty rate.
+
+Moreover, it is impo to note that red policies may not work well in hh where everyone is time poor, infact it may end up increasing their LIMTIP poverty if nothing else. Therefore, red policies need to be tailored by type of hh and the potential of making red possible and desirable.
+
+xx
+xxx
+xx 
+
+
+
+**Note that While such a policy may end up redistributing to youth and older people which could not be the most ideal situtaion as it could interupt with youth's education and also time efficiency point ..
+
 
 # Conclusion
 
