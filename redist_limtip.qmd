@@ -387,6 +387,13 @@ Lives in T-III h |  .1053606  .0658254  .0547888  .0649033
 -->
 
 # Policy implications (WIP), dont read yet)
+
+-Analysis by type of hh is imp
+-Compare scenarios and their implications
+-Cannot generalize red polices, but by hh type and structure
+-Open doors for gender-based reedistribution policy in specific age-groups to avoid mismangaed redi.
+
+
 Redistributing household production among household members could serve as en effective tool to reduce some individuals' time deficits and bring them out of time poverty. In addition, such redistributions could have well-being effects for the household as a whole in terms of more equitable sharing of hh production lifting households out of poverty (the ones where aggregate time surplus can absorbaggregate time deficits). We find that our redistribution principles can signifantly allow people to exit poverty, partiuclarly in these type of households. The objective of estimating LIMTIP among other things is to make the hidden poor visible. A redistribtion strategy proposed in this brief could help solve the problem of hidden poor by reducing their time deficits.
 
 equity-based red scenario serve as the most effective in lifting people out of poverty and in reducing the time-adjutsed poverty rate.
