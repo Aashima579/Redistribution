@@ -274,7 +274,7 @@ This are the numbers for reference
 In terms of time deficits, as shown in @fig-def1, the average time deficits (in hours per week) that non-time poor individuals face is quite small, just around 0.7 hours. However, those who become time poor (non-zero time deficit), their time deficits increase in the range of 4.4-5.8 hours  (see @fig-def2). Interestingly,for this subgroup, the Time availability Scenario (Scenario 2) has the lowest (negative) impact in moving non-time poor people enter time poverty by increasing their time deficits.
 
 
-While such a case may suggest an improvement on the quality of life of some individuals, the redistribution scenarios also have implications in terms of time deficits other household members face. As shown in @fig-def1, average time deficit increase in roughly 1 hour for scenarios 1 and 3. However, as shown in @fig-def2, the time deficit for those who remain time poor increase in just over 3hrs. In general, while the availability scenario has smallest impact on transition rates, it also has the smallest impact in terms of time deficits, for those who remain time poor. !! AScheck again!!
+While such a case may suggest an improvement on the quality of life of some individuals, the redistribution scenarios also have implications in terms of time deficits other household members face. As shown in @fig-def1, average time deficit increase in roughly 1 hour for scenarios 1 and 3. However, as shown in @fig-def2, the time deficit for those who remain time poor increase in just over 3hrs. In general, while the availability scenario has smallest impact on transition rates, it also has the smallest impact in terms of time deficits, for those who remain time poor. !! AS to check again not clear!!
 
 
 
