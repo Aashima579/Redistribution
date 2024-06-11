@@ -28,7 +28,15 @@ author:
 date: today
 keywords: " Time Poverty, Income Poverty, Redistribution , household production, care work, gender equality, LIMTIP"
 abstract: |
-    In this policy brief we start by presenting the LIMTIP estimates for the United States from 2005 to 2023 calcualted based on the statistically matched ATUS and ASEC data. Next, we implement redistribution simulations to explore the potential of redistributing household production time shares, among working-age household members, to reduce time deficits faced by individuals and households. Our simulations include three scenarios based on equality, equity and opportunity costs principles. We focus on time poor housheolds with atleast two working-age individuals such that everyone is time poor or  atleast one time poor and one time-non poor individual or where time surplus of members exceed time deficits. We compare redistribution scenarios based on transition rates of individuals entering and exiting poverty in different types of time poor households. 
+    In this policy brief we start by presenting the Levy Institute measure of Time and Income Poverty (LIMTIP) estimates for the United States from 2005 to 2023 calculated based on the statistically matched 
+    American Time Use survey (ATUS) and Annual Social and Economic Supplements (ASEC) data. Next, we implement redistribution simulations to explore the potential of redistributing household production 
+    time shares, among working-age household members, to lift individuals and hosuehodls out of time poverty. Our simulations include three scenarios based on equality, equity and opportunity costs principles. We focus on time poor 
+    housheolds with atleast two working-age individuals and segregate individuals into households where everyone is time poor (HH type I); atleast one time poor and one time-non poor individual 
+    but no scope to bring household out of poverty (HH type II); and where time surplus of members exceed time deficits (HH type III). We compare redistribution scenarios based on transition rates of individuals 
+    entering and exiting poverty across different types of time poor households. Further, we present the relative transition rates across subgroups of gender, age, education, employment 
+    status and presence of children. Overall, we find across all redistribution scenarios that significant share of individuals and households can exit time poverty, most pronounced in equity-based redistribution and in HH type III.
+    Moreover, time poverty and number of hidden poor declines in all three scenarios and in all household types except HH type II. Our analysis points towards tailoring redistribution policies by household type and 
+    by composition of time-poor aand time non-poor individuals. This in turn could help support broader poverty alleviation efforts. 
 
 bibliography: biblio.bib
 ---
@@ -70,6 +78,8 @@ $$ {#eq-limtip}
 
 where $p_{j}$ is the price at which time balance/deficits of household ${j}$ are monetized, and is measured as the average hourly wages for the industry private households obtained from Merged Outgoing Rotation Groups (MORG) data. The underlying idea is that if we were to monetize the time deficits of individuals and add those to the offical income poverty thresholds ($P_{j}^O$), we get an adjusted poverty line - LIMTIP ($P_{j}^L$).
 The LIMTIP estimates can be classified into four braod categories: Income poor,time poor, (ii)Income poor, time non-poor; (iii) Income non-poor, time poor; and (iv) Income non-poor, time non-poor. In @tbl-limtip we present the  distribution of individuals and households across the four-way classification of LIMTIP, averaged out across years 2005 to 2023.
+We find that a quarter of individuals are time poor and 15 % percent LIMTIP poor. Moreover, 45% of households are time poor and nearly 16 % are LIMTIP poor. 
+These estimates gives us a starting ground as to the prevalance of time poverty issue that we would like to target using intra-household redistributon policy; potentially benefiting a significant number of households exit time poverty.
 
 
  
@@ -401,8 +411,9 @@ While, examining redistribution among all working-age (18-64 years) members have
 
 While intra-household reditribution is crucial, the role of redistributing some of the components of housheold production, particulary unpaid care work to the public sector cannot be overlooked. The role of the public sector needs to expand in terms of supporting some of the social reporoduction needs of the household, to balance individuals' time constraints, particulalry for those in income poor households.
 
-A time-adjusted measure of poverty is an effort to provide evidence on the crucial aspects of time poverty and a push towards devising public policies to address constrainst associated with time resources in addition to income respurces. 
+A time-adjusted measure of poverty is an effort to provide evidence on the crucial aspects of time poverty and a push towards devising public policies to address constraints associated with time resources in addition to income resources. 
 
+!!BTW who will enforce redistribution policy??!!
 
 # Conclusion
 
