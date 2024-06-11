@@ -30,7 +30,7 @@ keywords: " Time Poverty, Income Poverty, Redistribution , household production,
 abstract: |
     In this policy brief we start by presenting the Levy Institute measure of Time and Income Poverty (LIMTIP) estimates for the United States from 2005 to 2023 calculated based on the statistically matched 
     American Time Use survey (ATUS) and Annual Social and Economic Supplements (ASEC) data. Next, we implement redistribution simulations to explore the potential of redistributing household production 
-    time shares, among working-age household members, to lift individuals and hosuehodls out of time poverty. Our simulations include three scenarios based on equality, equity and opportunity costs principles. We focus on time poor 
+    time shares, among working-age household members, to lift individuals and hosueholds out of time poverty. Our simulations include three scenarios based on equality, equity and opportunity costs principles. We focus on time poor 
     housheolds with atleast two working-age individuals and segregate individuals into households where everyone is time poor (HH type I); atleast one time poor and one time-non poor individual 
     but no scope to bring household out of poverty (HH type II); and where time surplus of members exceed time deficits (HH type III). We compare redistribution scenarios based on transition rates of individuals 
     entering and exiting poverty across different types of time poor households. Further, we present the relative transition rates across subgroups of gender, age, education, employment 
