@@ -29,15 +29,11 @@ $endif$
 \vspace{.2in}
 
 $if(keywords)$
-\textbf{\textit{Keyword: }}
-    $for(keywords/allbutlast)$$keywords$, $endfor$
-    $for(keywords/last)$$keywords$$endfor$ 
+\textbf{\textit{Keyword: }}$keywords$
 $endif$
 
 $if(jelcodes)$
-\textbf{\textit{JEL: }}
-    $for(jelcodes/allbutlast)$$jelcodes$, $endfor$
-    $for(jelcodes/last)$$jelcodes$$endfor$ 
+\textbf{\textit{JEL: }}$jelcodes$
 $endif$
 
 \thispagestyle{empty}
