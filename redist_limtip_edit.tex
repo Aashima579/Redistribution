@@ -43,28 +43,14 @@
 \setlength{\emergencystretch}{3em} % prevent overfull lines
 \setcounter{secnumdepth}{3}
 % Make \paragraph and \subparagraph free-standing
-\makeatletter
 \ifx\paragraph\undefined\else
   \let\oldparagraph\paragraph
-  \renewcommand{\paragraph}{
-    \@ifstar
-      \xxxParagraphStar
-      \xxxParagraphNoStar
-  }
-  \newcommand{\xxxParagraphStar}[1]{\oldparagraph*{#1}\mbox{}}
-  \newcommand{\xxxParagraphNoStar}[1]{\oldparagraph{#1}\mbox{}}
+  \renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
 \fi
 \ifx\subparagraph\undefined\else
   \let\oldsubparagraph\subparagraph
-  \renewcommand{\subparagraph}{
-    \@ifstar
-      \xxxSubParagraphStar
-      \xxxSubParagraphNoStar
-  }
-  \newcommand{\xxxSubParagraphStar}[1]{\oldsubparagraph*{#1}\mbox{}}
-  \newcommand{\xxxSubParagraphNoStar}[1]{\oldsubparagraph{#1}\mbox{}}
+  \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
 \fi
-\makeatother
 
 
 \providecommand{\tightlist}{%
@@ -220,7 +206,7 @@ Aashima Sinha\\
 Levy Economics Institute\\
 \\
 }
-\date{2024-06-13}
+\date{2024-06-14}
 \begin{document}
 
 
@@ -261,11 +247,8 @@ support broader poverty alleviation efforts.
  
 \vspace{.2in}
 
-\textbf{\textit{Keyword: }}
-    Time Poverty, Income Poverty, Redistribution , household production,
-care work, gender equality, LIMTIP, 
-    Time Poverty, Income Poverty, Redistribution , household production,
-care work, gender equality, LIMTIP 
+\textbf{\textit{Keyword: }}Time Poverty, Income Poverty, Redistribution
+, household production, care work, gender equality, LIMTIP
 
 
 \thispagestyle{empty}
@@ -415,7 +398,7 @@ Population Survey (CPS). For the identification of time poverty, using
 weekly hours as unit of analysis (168hrs per week), we identify the
 amount of time individuals would have left (\(X_{ij}\)) after engaging
 in required activities for taking care of their share of
-responsabilities (\(\alpha_ij\)) taking care of the household and its
+responsabilities (\(\alpha_{ij}\)) taking care of the household and its
 members (\(R_j\)), personal maintenance (\(M\)), and paid work
 (Commuting \(T_{ij}\) and time spent at work \(T_{ij}\)). This is
 expressed in the following equation (see Equation~\ref{eq-bal}):
@@ -449,7 +432,7 @@ represents the amount of income may be required to outsource some of the
 time responsabilities, and eliminate time poverty. The adjusted poverty
 line, and the LIMTIP, is then calculated as:
 
-\begin{equation}\phantomsection\label{eq-limtip}{Z_{j}^{adj}* = Z_{j} + 52*wage* |X_{j}|
+\begin{equation}\phantomsection\label{eq-limtip}{Z_{j}^{adj} = Z_{j} + 52*wage* |X_{j}|
 }\end{equation}
 
 where \(wage\) is the price we use to give a monetary value to the time
@@ -549,7 +532,7 @@ problems related to time poverty and the hidden poor are persistent, but
 show little hettrogeinity across years. Because of this, the rest of
 this policy brief will focus on average results across all years.
 
-\begin{figure}
+\begin{figure}[H]
 
 \centering{
 
@@ -636,7 +619,7 @@ where redistribution may be sufficient to lift the household out of time
 poverty. The remaining 20\% are individuals who are not time poor but
 live in a time poor household.
 
-\begin{figure}
+\begin{figure}[H]
 
 \centering{
 
@@ -661,22 +644,29 @@ households with at least 2 working-age members.
 
 \section{Redistribution Scenarios}\label{redistribution-scenarios}
 
-We construct three redistrubution scenarios based on different guiding
-principles. The extent of the reduction would depend on the principle
-that we use in distributing household responsibilities among the
-members. First, we use the simple egalitarianism principle that involves
-an equal division of total household productiom time among all working
-age members. Second, we redistribute conditional on the time available
-to people. Finally, in the third scenario, redistribution is guided
-based on the opportunity cost of time.
+The idea of redistribution of household production responsibilities
+follows the principle that everyone in a household should be able to
+carry out their \textbf{fair} share of household work. The question,
+however, is what constitutes a fair share?. In this section we present
+three different principles that could guide the redistribution of
+household production responsibilities among working-age members.
+
+First, we use the simple egalitarianism principle that involves an equal
+division of total household production time among all working age
+members. Second, we redistribute conditional on the time available to
+people. Finally, in the third scenario, redistribution is guided based
+on the principle of opportunity cost of time, where those with higher
+wages (higher opportunity cost of time) are assigned less household
+production time.
 
 For all scenarios, we only consider the redistribution of required
-household production activities \(R_j\) net of the portion met by
-household members that are not of working age. Thus, the goal of the
-different scenarios is to simulate different \(\alpha_{ij}\) values,
-which represent the share of required household production time that
-each household member takes on. We outline the methods used for
-implementing the scenarios below.
+household production activities \(R_j\) net of the portion met by other
+household members. Thus, the goal of the different scenarios is to
+simulate different \(\alpha_{ij}\) values, which represent the share of
+required household production time that each household member takes on.
+We also impose the assumption that all household members are equally
+efficient at taking care of the household responsabilities. We outline
+the methods used for implementing the scenarios below.
 
 \subsection{Scenario 1: Equal Shares}\label{scenario-1-equal-shares}
 
@@ -698,26 +688,24 @@ taking into consideration the time available of individuals.
 \subsection{Scenario 2: Time Available}\label{scenario-2-time-available}
 
 The time available scenario is based on the principles of equity. In
-contrast with Scenario 1, this scenario suggests that household
-responsabilities could be redistributed relative to the available
+contrast with Scenario 1, this one suggests that household
+responsabilities could be redistributed relative to the available time
 individuals may have after setting aside the time for personal
 maintenance requirements and income generation
-(\(Z_{ij}=168-M-D_{ij}(L_{ij}+T_{ij}\)). In other words, household
-members should split up the required household production time based on
-the time each one has available, i.e based on an equity criteria.
+(\(Z_{ij}=168-M-D_{ij}(L_{ij}+T_{ij}\)).
 
 To implement this first we calculate the time available (\(Z_{ij}\)) for
 each individual, and recalculate the shares \(\alpha_{ij}^A\), using the
 ratio of time available to the total time available among working-age
 members. For individuals that do not have any time available
-(\(Z_{ij}<0\)), we set their time available to zero. This ensures that
+(\(Z_{ij}<0\)), we set their \(Z_{ij}\) to zero. This ensures that
 people who already suffer from time povery are not assigned further
 tasks within the household. The new share is defined as:
 
 \begin{equation}\phantomsection\label{eq-r2}{
 \begin{aligned}
 Z_{ij} &=\max{\Big(168-M-D_{ij}(L_{ij}+T_{ij}),0\Big)} \\
-\alpha_{ij}^A &= \frac{Z_{ij}}{\sum Z_{ij}} (1-\alpha_{j}^{nw'})
+\alpha_{ij}^A &= \frac{Z_{ij}}{\sum Z_{ij}} (1-\alpha_{j}^{nw})
 \end{aligned}
 }\end{equation}
 
@@ -725,92 +713,39 @@ Z_{ij} &=\max{\Big(168-M-D_{ij}(L_{ij}+T_{ij}),0\Big)} \\
 Cost}\label{scenario-3-opportunity-cost}
 
 The third possibility is based on the idea of opportunity costs along
-marginalist lines. The sharing rule depends on the relative actual
-(potential) wage. For example, if there are only two working-age adults,
-say husband and wife, and if the husband's wage is twice as much as the
-wife, the wife's share would be two-thirds and the husband's share would
-be one-third. We use the actual or shadow wage for the employed and the
-potential wage for the nonemployed. Redistribution takes place based on
-the following equation:
-\[\alpha_{ij}^O= (1/{I_j-1})*(1-w_{ij}/\sum w_{ij} ) (1-\alpha_{j}^{nw'})
-\] For this simulation, we first impute wages for everyone using a
-two-stage Heckman selection model (Heckman 1979), also known as the
-Heckit procedure (see details below). We then used the imputed wages of
-those that are not currently working for pay and those that are working
-to divide up the redistributable share of required household production.
+marginalist lines. The sharing rule depends on the earning potentials of
+individuals, such that individuals with higher potential wages are
+assigned a lower share of household production time. In principle, this
+would encourage the most productive members of the household to spend
+more time in paid work, while those with lower earning potentials would
+take on more household production responsibilities.
 
-As the share of required household production needs to be inversely
-proportional to the individual's share of the sum of wages, we subtract
-their share of this sum from one. To ensure that the resulting shares
-sum up to unity, we divide by the number of individuals in the
-simulation minus one. We then apply this share to the redistributable
-share of required household production as in previous steps.
+For example, if there are only two working-age adults, say husband and
+wife, and if the husband's potential hourly wage is twice as much as the
+wife, the wife would have to do twice as much work as the husband.
 
-In order to impute wages for those not currently employed, we first
-impute the likeliest industry and occupation for each individual using a
-multinomial probit procedure. Industry and occupation are regressed on
-age, age squared, sex, race, education, and geographic region on all
-those in the working age population (18-64). The likelihood for each
-industry and occupation is then predicted for everyone, using the
-results of the multinomial probit. Then for each individual not
-currently working for wages, we use the predicted likelihoods of
-potentially belonging to a particular industry and occupation.
-!!FRAplease check the wordings!!
+\[\alpha_{ij}^O= \frac{1}{I_j-1}*\left( 1- \frac{w_{ij}}{\sum w_{ij}} \right) (1-\alpha_{j}^{nw})
+\]
 
-Next, we move on to the first stage of the Heckit procedure, a probit
-estimation of a dummy variable for being employed in wage work (paid):
+Alternative:
 
-\begin{equation}\phantomsection\label{eq-probit}{P(paid=1|X)=F(X \beta)
-}\end{equation}
+\[\begin{aligned}
+rw_{ij} &= \frac{\max(w_{ij})}{w_{ij}} \\
+\alpha_{ij}^O &= \frac{rw_{ij}}{\sum rw_{ij}} (1-\alpha_{j}^{nw})
+\end{aligned}
+\]
 
-where F is the cumulative density function of a normal distribution. The
-vector of explanatory variables, 𝑋, comprises the individual's age, sex,
-race, disability, number of kids across age groups (0 to 5, 6 to 14,
-15-17), presence of spouse and spouse's age, education and employment
-status education. The regression is run on the universe of all eligible
-adults separately by age (divided into four categories: 18 to 30 years
-old; 31 to 45 years old; and 46 to 64 years old) and sex. The Mills
-ratio, 𝜆, is calculated for all individuals using the results of the
-first stage regression:
-
-\begin{equation}\phantomsection\label{eq-mills}{\lambda = f(X\beta)/ F(X\beta)
-}\end{equation}
-
-where 𝑓 and 𝐹 are, respectively, the probability and cumulative density
-function of a normal distribution, and \(\beta\) is the vector of
-estimated coefficients from the probit model. The second stage is an
-ordinary least squares (OLS) estimate of the log of hourly wage:
-
-\begin{equation}\phantomsection\label{eq-OLS}{lnw= (\gamma_2*Z^w) + (\theta_2 \lambda) + \mu
-}\end{equation}
-
-This regression is run only on those that are actually employed for pay.
-The vector of explanatory variables, {[}\(Z^w\){]}, includes age, sex,
-race, education, geographical region, disability, industry, occupation,
-presence of spouse, spouse's employment status, and, finally, λ, the
-Mills ratio calculated in the first stage. Inclusion of the Mills ratio
-corrects for the selection bias induced by limiting the regression to
-those in paid employment. The imputed log of wage is predicted for those
-not working for wages from the results of the regression, with industry
-and occupation replaced by the industries and occupations assigned in
-the previous step.
-
-We simulate each of the above principles of redistribution and
-recalculate individual and household poverty using the LIMTP framework
-described above.
-
-Next, in Section 5.1 we provide an general assessment of the different
-principles in terms of tranistion rates, i.e share of time poor
-individuals exiting and enetering poverty and how much such improvements
-are congruent with the betterment of the well-being of their families in
-terms of lifting households out of poverty. In Section 5.2, we also
-discuss results for subgroups, comparing transition rates across gender,
-education level, employment status, having children, and age group,
-relative to tranistion rates for the overall sample.
-
-In the (\textbf{policybrief2?}), we compare and contrast the joint
-distribution of time and income poverty among families and individuals
-that would result from each principle.
+Because we do not have wage data for non-working household members, we
+use the potential/predicted wages for all working-age household members.
+To do this, we use a two-step procedure. First, we predict occupation
+and industry probabilities for all non-working individuals using a
+multinomial logit model. Second, we estimate a maximum likelihood
+Heckman selection model (Heckman, 1979) using the observed and predicted
+probabilities of belonging to specific occupations and industries, in
+addition to individual, household and spouse demographic
+characteristics. With this information, we predict wages based on the
+model that corrects for sample selection (see (\textbf{wp\_qmatch?}) for
+details).
 
 \section{Results}\label{results}
 
@@ -819,9 +754,14 @@ analyze the impact that redistribution could have on time poverty,
 focusing on individuals living in time poor households with at least two
 working-age members. In this section, we present the results of the
 redistribution scenarios and discuss the implications for time poverty
-and the incidence of hidden poor. Since most of the results across time
-are similar, we focus on providing results that average the impacts of
-redistribution across all years.
+and the incidence of hidden poor. Specifically, we analyze how effective
+are the redistribution scenarios in helping time poor individuals exit
+time poverty, as well as to what extend non-time poor individuals are
+affected by the redistribution scenarios, falling into time poverty. We
+refer to both of these as transition rates (into and out of time
+poverty). Since most of the results across time are similar, we focus on
+providing results that average the impacts of redistribution across all
+years.
 
 \subsection{Redistribution Scenarios and Time Poverty: General
 Results}\label{redistribution-scenarios-and-time-poverty-general-results}
@@ -833,7 +773,7 @@ These are the individuals that could help lift other household members
 out of time poverty, by taking on more household responsibilities.
 
 From the rest, 4.6\% live in households where everyone is time poor (HH
-type I), 7.1\% live in households with at least one not-time-poor
+Type I), 7.1\% live in households with at least one not-time-poor
 individual, but with insufficient time surplus to lift the household out
 of time poverty (HH type II), and 33.7\% live in households where there
 is enough time surplus to lift every household member out of poverty (HH
@@ -1307,6 +1247,11 @@ Economics}, \emph{15}(3), 35--59.
 Esquivel, V. (2016). Power and the {Sustainable} {Development} {Goals}:
 A feminist analysis. \emph{Gender \& Development}, \emph{24}(1), 9--23.
 \url{https://doi.org/10.1080/13552074.2016.1147872}
+
+\bibitem[\citeproctext]{ref-heckman1979}
+Heckman, J. J. (1979). Sample selection bias as a specification error.
+\emph{Econometrica}, \emph{47}(1), 153.
+\url{https://doi.org/10.2307/1912352}
 
 \bibitem[\citeproctext]{ref-hess2020}
 Hess, Cynthia, Ahmed, T., and Hayes, J. (2020). \emph{Providing {Unpaid}
