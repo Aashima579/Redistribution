@@ -75,7 +75,7 @@ $$ {#eq-bal}
 
 The minimum time required for each of the components in @eq-bal are estimated using a mixture of assumptions, the synthetic dataset and the ATUS dataset (see @wp_qmatch for details).
 
-At the household level, however, we assume that individuals with time surpluses are unable or unwilling to share and redistribute some of the responsabilities of those with time deficits. In this framework, a household is considered to be time poor as long as there is one person with time deficit living in the household.[^2 To identify time poverty status, we only consider the time deficits of household members age 18 or older.] This is expressed in the following equation (see @eq-hbal):
+At the household level, however, we assume that individuals with time surpluses are unable or unwilling to share and redistribute some of the responsabilities of those with time deficits. In this framework, a household is considered to be time poor as long as there is one person with time deficit living in the household.^[To identify time poverty status, we only consider the time deficits of household members age 18 or older.] This is expressed in the following equation (see @eq-hbal):
 
 $$X_{j} = \sum_{i=1}^{I_j} \min(X_{ij},0)
 $$ {#eq-hbal}
@@ -177,7 +177,8 @@ Z_{ij} &=\max{\Big(168-M-D_{ij}(L_{ij}+T_{ij}),0\Big)} \\
 \end{aligned}
 $$ {#eq-r2}
 
-Because there are individuals (young adults) who may still be in school, the standard definition of $Z_{ij}$ may not capture their true time availability. To address this, we add a correction to their time availability, based on how many hours people spend in education activities per week, if they declare to be in school. This correction does not affect the time balance used for the identification of the time poor. have less time available than their time balance $Z_{ij}$ may suggest
+Because there are individuals (young adults) who may still be in school, the standard definition of $Z_{ij}$ may not capture their true time availability. To address this we add a correction to time availability to all individuals who declared to attend school, using the average number of hours people spend in education activities per week. This correction does not affect the time balance used for the identification of the time poor, only the estimation of the adjusted shares $\alpha_{ij}^A$. 
+
 
 ## Scenario 3: Opportunity Cost
 

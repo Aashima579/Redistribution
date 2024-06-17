@@ -43,14 +43,28 @@
 \setlength{\emergencystretch}{3em} % prevent overfull lines
 \setcounter{secnumdepth}{3}
 % Make \paragraph and \subparagraph free-standing
+\makeatletter
 \ifx\paragraph\undefined\else
   \let\oldparagraph\paragraph
-  \renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+  \renewcommand{\paragraph}{
+    \@ifstar
+      \xxxParagraphStar
+      \xxxParagraphNoStar
+  }
+  \newcommand{\xxxParagraphStar}[1]{\oldparagraph*{#1}\mbox{}}
+  \newcommand{\xxxParagraphNoStar}[1]{\oldparagraph{#1}\mbox{}}
 \fi
 \ifx\subparagraph\undefined\else
   \let\oldsubparagraph\subparagraph
-  \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+  \renewcommand{\subparagraph}{
+    \@ifstar
+      \xxxSubParagraphStar
+      \xxxSubParagraphNoStar
+  }
+  \newcommand{\xxxSubParagraphStar}[1]{\oldsubparagraph*{#1}\mbox{}}
+  \newcommand{\xxxSubParagraphNoStar}[1]{\oldsubparagraph{#1}\mbox{}}
 \fi
+\makeatother
 
 
 \providecommand{\tightlist}{%
@@ -206,7 +220,7 @@ Aashima Sinha\\
 Levy Economics Institute\\
 \\
 }
-\date{2024-06-14}
+\date{2024-06-17}
 \begin{document}
 
 
@@ -415,10 +429,10 @@ At the household level, however, we assume that individuals with time
 surpluses are unable or unwilling to share and redistribute some of the
 responsabilities of those with time deficits. In this framework, a
 household is considered to be time poor as long as there is one person
-with time deficit living in the household.{[}\^{}2 To identify time
-poverty status, we only consider the time deficits of household members
-age 18 or older.{]} This is expressed in the following equation (see
-Equation~\ref{eq-hbal}):
+with time deficit living in the household.\footnote{To identify time
+  poverty status, we only consider the time deficits of household
+  members age 18 or older.} This is expressed in the following equation
+(see Equation~\ref{eq-hbal}):
 
 \begin{equation}\phantomsection\label{eq-hbal}{X_{j} = \sum_{i=1}^{I_j} \min(X_{ij},0)
 }\end{equation}
@@ -692,7 +706,7 @@ contrast with Scenario 1, this one suggests that household
 responsabilities could be redistributed relative to the available time
 individuals may have after setting aside the time for personal
 maintenance requirements and income generation
-(\(Z_{ij}=168-M-D_{ij}(L_{ij}+T_{ij}\)).
+(\(Z_{ij}=168-M-D_{ij}(L_{ij}+T_{ij})\)).
 
 To implement this first we calculate the time available (\(Z_{ij}\)) for
 each individual, and recalculate the shares \(\alpha_{ij}^A\), using the
@@ -709,6 +723,15 @@ Z_{ij} &=\max{\Big(168-M-D_{ij}(L_{ij}+T_{ij}),0\Big)} \\
 \end{aligned}
 }\end{equation}
 
+Because there are individuals (young adults) who may still be in school,
+the standard definition of \(Z_{ij}\) may not capture their true time
+availability. To address this we add a correction to time availability
+to all individuals who declared to attend school, using the average
+number of hours people spend in education activities per week. This
+correction does not affect the time balance used for the identification
+of the time poor, only the estimation of the adjusted shares
+\(\alpha_{ij}^A\).
+
 \subsection{Scenario 3: Opportunity
 Cost}\label{scenario-3-opportunity-cost}
 
@@ -720,20 +743,21 @@ would encourage the most productive members of the household to spend
 more time in paid work, while those with lower earning potentials would
 take on more household production responsibilities.
 
-For example, if there are only two working-age adults, say husband and
-wife, and if the husband's potential hourly wage is twice as much as the
-wife, the wife would have to do twice as much work as the husband.
+For example, if there are only three working-age adults in a household,
+and where the secpmd member earns twice as much as the first, and the
+third earns three times as much as the first, the shares of household
+production would be 1/2, 1/3, and 1/6 respectively. To implement this
+scenario, we first calculate the inverse of the wage of each individual
+\(rw_{ij}\), rescale it to sum to 1, and then calculate the share of
+household production time as follows:
 
-\[\alpha_{ij}^O= \frac{1}{I_j-1}*\left( 1- \frac{w_{ij}}{\sum w_{ij}} \right) (1-\alpha_{j}^{nw})
-\]
-
-Alternative:
-
-\[\begin{aligned}
-rw_{ij} &= \frac{\max(w_{ij})}{w_{ij}} \\
+\begin{equation}\phantomsection\label{eq-r3}{\begin{aligned}
+rw_{ij} &= \frac{1}{w_{ij}} \\
 \alpha_{ij}^O &= \frac{rw_{ij}}{\sum rw_{ij}} (1-\alpha_{j}^{nw})
 \end{aligned}
-\]
+}\end{equation}
+
+where \(w_{ij}\) is the wage of individual \(i\).
 
 Because we do not have wage data for non-working household members, we
 use the potential/predicted wages for all working-age household members.
@@ -744,8 +768,7 @@ Heckman selection model (Heckman, 1979) using the observed and predicted
 probabilities of belonging to specific occupations and industries, in
 addition to individual, household and spouse demographic
 characteristics. With this information, we predict wages based on the
-model that corrects for sample selection (see (\textbf{wp\_qmatch?}) for
-details).
+model that corrects for sample selection.
 
 \section{Results}\label{results}
 
