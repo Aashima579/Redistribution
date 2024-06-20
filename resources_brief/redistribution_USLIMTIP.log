@@ -1,0 +1,3708 @@
+------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  C:\Users\Fernando\Documents\GitHub\Redistribution\resources_brief\redistribution_USLIMTIP.log
+  log type:  text
+ opened on:  20 Jun 2024, 13:37:34
+
+. /*02_simple_reallocation.do
+>         created: March 21 2024
+>         by: Aashima Sinha
+>         Purpose: To perform the three simple scenarios to reditribute time, contruct new hh production sha
+> res and and alter time deficts using using US LIMTIP estimates 2023. 
+>         
+> /**********************************************
+>  * Three Scenarios:                           *
+>  * 1. equal sharing                           *
+>  * 2. proportional to time available          *
+>  * 3. proportional to wage (opportunity cost) *
+>  **********************************************/
+>                 
+> */
+. global server "/Users/aashimasinha/Library/CloudStorage/GoogleDrive-asinha@levy.org/Shared drives/"
+
+. global server "j:/Shared drives/"
+
+. global levy     "$server/levy_distribution/" 
+
+. global US     "$levy/Time Poverty/US/" 
+
+. global USLIMTIP     "$US/LIMTIP/" 
+
+. global LIMTIPdata "$USLIMTIP/limtip/"
+
+. global hhid spmfamunit
+
+. 
+. * get data
+. forvalues year = 2005/2023 {
+  2. use "$LIMTIPdata/limtip_us_`year'.dta", clear
+  3. 
+.     ***********
+.     **srhp for 0 hhid
+.     global nonsubha=17
+  4. 
+.         /**********/
+.     * Program To ID Couples within SPM Units
+.     /**********/
+. 
+.     * Step1: Define IN sample 
+.     drop2 insample 
+  5.     gen byte insample = 0
+  6.     replace  insample = 1 if inrange(age,18,64) & disable == 0
+  7. 
+.     * Using sploc: Programmatic Spouse Line number
+.     bysort $hhid:egen n_couple = sum(sploc!=0)
+  8.     * There can only be "odd" Number of couples
+.      
+.     // ID couple using Husband and Wife code
+.     gen     couple_code = min(pernum,sploc)*100+max(pernum,sploc)
+  9.     replace couple_code = 0 if couple_code <100
+ 10.      
+.     // Find Mean Couple Age
+.     bysort $hhid couple_code (age): gen age_mean = 0.5*(age[1]+age[2])
+ 11. 
+.     // Find Couples that are "in Sample"
+.     bysort $hhid couple_code: egen min_sample = sum(insample) if couple_code!=0
+ 12.     replace min_sample = min_sample ==2 if  min_sample !=.
+ 13.     drop2 same_sex
+ 14.     by     $hhid couple_code : gen same_sex = sex[1]==sex[2]
+ 15.     replace same_sex = . if couple_code==0
+ 16. 
+.     replace min_sample = 0 if same_sex==1 
+ 17. 
+.     //
+.     gsort spmu_id min_sample -age_mean 
+ 18.     drop2 ss
+ 19.      by spmu_id: gen ss=sum(0.51) if min_sample==1
+ 20.     replace ss=round(ss)
+ 21. 
+.     drop2 insample n_couple couple_code   age_mean  
+ 22. 
+.     ren min_sample couple_in_sample 
+ 23.     label var couple_in_sample "Couples that fullfill in-sample criteria"
+ 24.     ren ss couple_order
+ 25.     label var couple_order "Couple order based on age"
+ 26.     replace couple_in_sample=99 if couple_in_sample==.
+ 27.     replace couple_order = 99 if couple_order ==.
+ 28. 
+.  * make new in time calculation dummy/ eligible 
+.     gen intimecalc_redist = intimecalc
+ 29.  
+.  * Getting Dissable
+.     replace intimecalc_redist =0 if  disable == 1
+ 30. *gen intimecalc_redist=couple_in_sample*(couple_in_sample!=99)
+. 
+.     ** Creating Baselines
+. 
+.     ** First Srhp for younger than 15 -> 0
+.     replace srhp =0 if age<15
+ 31.     ** Get Shares for those not in the analysis (excludes Disable)
+.     egen srhp_nw = sum(srhp*(!intimecalc_redist)), by($hhid) 
+ 32. 
+.     egen num_w = sum(!intimecalc_redist), by($hhid)
+ 33.     egen h_intimecalc_redist = sum(intimecalc_redist), by($hhid)
+ 34. 
+.     *get hh number in the redistribution time poverty calculation
+. 
+.     *gen time_balance = (168 - pmthresh - $nonsubha -  usl_hrs - commute_wh - srhp*spm_thp_thres)
+.     gen time_balance_nohp = (168 - pmthresh - $nonsubha -  min(120,usl_hrs) - commute_wh  )*inrange(age,18
+> ,64) 
+ 35.     label var time_balance_nohp "Time balance excluding HP"
+ 36.     ** By assumption for now. 
+.     gen     time_school = 0
+ 37.         
+.         *Based on ATUS IPUMS time spent (in hrs per day) on education (BLS_educ)
+.         *HS full time weekly hrs
+.     replace time_school = 7.5*5 if schlcoll== 1 & inrange(age,18,64)
+ 38.         *HS part time weekly hrs
+.     replace time_school = 5.4*5 if schlcoll==2 & inrange(age,18,64)
+ 39.         *Coll/unic full time weekly hrs
+.     replace time_school = 6.1*5 if schlcoll== 3 & inrange(age,18,64)
+ 40.         *Coll/unic part time weekly hrs
+.     replace time_school = 4.1*5 if schlcoll== 4 & inrange(age,18,64)
+ 41.         
+. 
+.     gen time_balance_school = (168 - pmthresh - $nonsubha -  min(120,usl_hrs) - commute_wh - time_school)*
+> inrange(age,18,64) 
+ 42.     egen htbalance_sch = sum( (time_balance_school - srhp*spm_thp_thres)*intimecalc_redist), by($hhid)
+ 43.     label var htbalance_sch  "Net Time Balance (including School) for all In Sample"
+ 44.   
+.     egen htbalance_limtip = sum(tbalance), by($hhid)
+ 45.     /****************************/
+.     /* scenario 1: equal shares */
+.     /****************************/
+. 
+.     * calculate the equal shares for those in the time poverty calculation
+.     gen     srhp_sc1 = srhp 
+ 46.     replace srhp_sc1 = (1-srhp_nw)/h_intimecalc_redist if intimecalc_redist
+ 47. 
+.     /*****************************/
+.     /* scenario 2: Time Available*/
+.     /* Inc School                */
+.     /*****************************/
+. 
+.     gen     srhp_sc2 = srhp 
+ 48.     egen    htime_balance_school = sum( max(0,time_balance_school) * intimecalc_redist ), by($hhid)
+ 49.     replace srhp_sc2 = max(0,time_balance_school)/htime_balance_school*(1-srhp_nw) if  intimecalc_redis
+> t==1
+ 50.     replace srhp_sc2 = srhp_sc1 if  intimecalc_redist==1 & htime_balance_school==0
+ 51. 
+.     /*****************************/
+.     /* scenario 3: Opportinity   */
+.     /*             cost          */
+.     /*****************************/
+.     drop2 rw1 rw2 shr_wage?
+ 52.     ** Rel Wages
+.     *egen rw1 = max(wage_hat1) if intimecalc_redist, by($hhid)
+.     gen rw1 =       1 / wage_hat1
+ 53.     ** Standardization
+.     egen shr_wage1 = sum(rw1)  if intimecalc_redist, by($hhid)
+ 54.     replace shr_wage1  = rw1 / shr_wage1
+ 55.     * calculate shares for those in the time poverty calculation
+.     gen srhp_sc3 = srhp 
+ 56.     replace srhp_sc3 = shr_wage1*(1-srhp_nw) if intimecalc_redist
+ 57. 
+. 
+.     ** Labels
+.     label var srhp_sc1 "Person's reallocated share in HH household production (scenario 1)"
+ 58.     label var srhp_sc2 "Person's reallocated share in HH household production (scenario 2)"
+ 59.     label var srhp_sc3 "Person's reallocated share in HH household production (scenario 3)"
+ 60. 
+. 
+. /*****************************/
+. /* Added variables           */
+. /*****************************/
+. 
+.     label def povclass 1 "Income Poor, Time Poor" 2 "Income Poor, Time Nonpoor" 3 "Income Nonpoor, Time Po
+> or" ///
+>         4 "Income Nonpoor, TimeNonpoor", replace
+ 61.     
+.     ** Other Agg
+.     forvalues sc = 1/3 {
+ 62.         gen       rhp_sc`sc' = (srhp_sc`sc')*h_hpthresh
+ 63.         label var rhp_sc`sc' "Required weekly hours of household production (scenario `sc')"  
+ 64.         gen       tavail_sc`sc'     = (168 - pmthresh - $nonsubha - rhp_sc`sc' )*inrange(age,18,64)
+ 65.         label var tavail_sc`sc' "Time available (without Work), weekly (scenario `sc')"
+ 66.     *gen       time_balance_nohp = (168 - pmthresh - $nonsubha -  min(120,usl_hrs) - commute_wh  )*inra
+> nge(age,18,64) 
+.         gen       tbalance_sc`sc' = (time_balance_nohp -  rhp_sc`sc')*inrange(age,18,64)
+ 67.         label var tbalance_sc`sc'  "Required weekly hours of household production (scenario `sc')"  
+ 68.         gen       tdef_sc`sc' = min(0, tbalance_sc`sc') * inrange(age,18,64)
+ 69.         label var tdef_sc`sc' "Time deficit, weekly (time balance, topped off at zero, scenario `sc')"
+ 70.         gen byte  tpoor_sc`sc' = (tdef_sc`sc' < 0) if inrange(age,18,64)
+ 71.         label var tpoor_sc`sc' "Dummy for time poverty_sc`sc'"
+ 72. 
+.     /**************************/
+.     /** Poverty calculations **/
+.     /**************************/
+.         egen htdef_sc`sc' = sum(tdef_sc`sc'), by($hhid)
+ 73.         label var htdef_sc`sc' "Household AGG Time Deficit Scenario `sc'"
+ 74.      
+.         
+.         gen h_tpoor_sc`sc' = (htdef_sc`sc')<0
+ 75.         label var h_tpoor_sc`sc' "Dummy for Household time poverty_sc`sc'"    
+ 76.         gen tpovcut_sc`sc' = spmthresh + abs(htdef_sc`sc' * div_mean_wage * 52)
+ 77.         label var tpovcut_sc`sc' "Adj Poverty Line"
+ 78.         
+.         gen adjpoor_sc`sc' = (spmtotres < tpovcut_sc`sc')
+ 79.         label var adjpoor_sc`sc' "LIMTIP Poor"    
+ 80.         
+.         * household level measure
+.         gen     povclass_sc`sc' = 1 if  adjpoor_sc`sc' &  h_tpoor_sc`sc'
+ 81.         /* Income-poor, with time-deficit       */
+.         replace povclass_sc`sc' = 2 if  adjpoor_sc`sc' & !h_tpoor_sc`sc'
+ 82.         /* Income-poor, without time-deficit    */ 
+.         replace povclass_sc`sc' = 3 if !adjpoor_sc`sc' &  h_tpoor_sc`sc'
+ 83.         /* Income-nonpoor, with time-deficit    */
+.         replace povclass_sc`sc' = 4 if !adjpoor_sc`sc' & !h_tpoor_sc`sc'
+ 84.         /* Income-nonpoor, without time-deficit */
+.         
+.         * individual level measure
+.         gen     limtip_sc`sc' = 1 if  adjpoor_sc`sc' &  tpoor_sc`sc'    
+ 85.         /* Income-poor, with time-deficit       */
+.         replace limtip_sc`sc' = 2 if  adjpoor_sc`sc' & !tpoor_sc`sc'
+ 86.         /* Income-poor, without time-deficit    */ 
+.         replace limtip_sc`sc' = 3 if !adjpoor_sc`sc' &  tpoor_sc`sc'
+ 87.         /* Income-nonpoor, with time-deficit    */
+.         replace limtip_sc`sc' = 4 if !adjpoor_sc`sc' & !tpoor_sc`sc'
+ 88.         /* Income-nonpoor, without time-deficit */
+.         label var povclass_sc`sc' "Four-way classification of households according to LIMTIP (scenario `sc
+> ')"
+ 89.         label val povclass_sc`sc' povclass
+ 90.         label var limtip_sc`sc' "Four-way classification of individuals according to LIMTIP (scenario `
+> sc')"
+ 91.         label val limtip_sc`sc' povclass
+ 92.     }
+ 93. 
+. keep year serial asecwth asecwth04 hhintype region county statecensus ownershp hhincome ///
+> nfams ncouples faminc hrhhid hrhhid2 hseq pernum cpsidp asecwt earnweek2 hourwage2 ///
+> relate age sex marst popstat famsize nchild nchlt5 famunit eldch yngch nsibs ftype ///
+> hispan empstat occ ind classwkr uhrsworkt uhrswork1 wkstat educ99 occly indly ///
+> uhrsworkly fullpart ftotval inctot incwage offpov offpovuniv offtotval offcutoff ///
+> offreason poverty cutoff spmnewfam spmpov spmwt spmnadults spmnchild spmnpers ///
+> spmthresh spmfamunit disabwrk health hourwage paidhour union earnweek race educ ///
+> isfamily empstat2 hhfam hhmainfam hhnonfam nkids05 nkids614 nkids1517 nadults1824f ///
+> nadults2554f nadults1824m nadults2554m nadults5564 nadults65p notfamily ftwadults ///
+> haschildren extfam nonrel famtype hfaminc_sum_pi hfaminc retired disable srel ecivil ///
+> sppernum spage spsex sprace specivil speduc spclasswly spuhrsworkt spuhrswork1 ///
+> spuhrsworkly spempstat2 spfullpart spearnweek2 core_wkday proc_wkday ccare_wkday ///
+> acare_wkday core_wkend proc_wkend ccare_wkend acare_wkend hp_wk rel_income pband ///
+> foster is_adult non_employed not_disable not_student spmu_id spm_thp_wk spm_nadults ///
+> spm_nadults65p spm_nkids05 spm_nkids614 spm_nkids1517 spm_thp_thres occode3 indcode3 ///
+> occode1 occode2 indcode2 indcode1  age_g hr_wage log_hr_wage sppresent ///
+> wage_hat1 wage_oc div div_mean_wage div_median_wage labocc labind wgt wgti ref_person ///
+> head pmthresh emp ftpt commute_wh h_hpthresh intimecalc num_in_range num_hhp usl_hrs ///
+> h_usl_hrs hphrs h_hphrs srhp num12 rhp tavail tbalance tdef tpoor tavail_tp atdef ///
+> h_tdef ntpoor h_tavail h_tavail_tp h_atdef h_tpoor tpovcut adjpoor hidpoor povclass ///
+> limtip emphd spmpov spmeqscale spmwt spmftotval spmtotres spmnadults spmnchild ///
+> spmnpers spmgeoadj spmthresh spmfamunit spmwkxpns spmu_id spm_thp_wk spm_nadults ///
+> spm_nadults65p spm_nkids05 spm_nkids614 spm_nkids1517 spm_thp_thres spmftotval ///
+> spmtotres spmnadults spmnchild spmnpers spmgeoadj spmthresh spmfamunit spmwkxpns ///
+> spmu_id spm_thp_wk spm_nadults spm_nadults65p spm_nkids05 spm_nkids614 spm_nkids1517 ///
+> spm_thp_thres intimecalc_redist srhp_nw h_intimecalc_redist srhp_sc1 rhp_sc1 ///
+> tavail_sc1 tbalance_sc1 tdef_sc1 tpoor_sc1 srhp_sc2 rhp_sc2 tavail_sc2 tbalance_sc2 ///
+> tdef_sc2 tpoor_sc2 srhp_sc3 rhp_sc3 tavail_sc3 tbalance_sc3 tdef_sc3 tpoor_sc3 ///
+> h_tpoor_sc1 tpovcut_sc1 adjpoor_sc1 povclass_sc1 limtip_sc1 h_tpoor_sc2 tpovcut_sc2 ///
+> adjpoor_sc2 povclass_sc2 limtip_sc2 h_tpoor_sc3 tpovcut_sc3 adjpoor_sc3 povclass_sc3 ///
+> limtip_sc3 time_school htbalance_sch sploc pernum couple_order couple_in_sample htbalance_limtip
+ 94. 
+. compress
+ 95.  
+. ** ID Groups of Interest: Baseline
+. egen nwage = sum(inrange(age,18,64)), by($hhid)
+ 96. egen nnp   = sum(intimecalc_redist * !tpoor), by($hhid)
+ 97. 
+. **
+. *Table 4.1 group undefined
+. gen byte htype = 0  if             h_tpoor == 0
+ 98. 
+. *Group 1 Table 4.1/FRA HH type 0
+. replace  htype = 1 if             nwage   <= 1 & htype ==. 
+ 99. *Similar to Group 1 and 3 in Table 4.1/ FRA HT type 0
+. replace  htype = 1 if h_intimecalc_redist <= 1 & htype ==.
+100. 
+. *Similar to Group 2 and 3 in Table 4.1/FRA HH type I
+. replace  htype = 2 if htbalance_limtip  <  0 & nnp == 0 & htype ==. 
+101. 
+. *Similar to Group 4 and 5 in Table 4.1/FRA HH type II 
+. replace  htype = 3 if htbalance_limtip  <  0 & nnp >= 1 & htype ==.
+102. 
+. *Similar to Group  6 in Table 4.1/FRA HH type III 
+. replace  htype = 4 if htbalance_limtip >= 0 & htype ==.
+103. 
+. gen byte ptype = htype * tpoor 
+104. replace  ptype = 5 if tpoor ==.  
+105. 
+. label define htype 0 "Non Time poor HH", modify
+106. label define htype 1 "Single person Eligible Person", modify
+107. label define htype 2 "All Eligible are Time Poor   ", modify
+108. label define htype 3 "At least 1 member not time poor", modify
+109. label define htype 4 "Enough for HH to exit T.P.", modify
+110. 
+. **Person type
+. label define ptype 0 "Not Time Poor" , modify
+111. label define ptype 1 "Time Poor Single" , modify
+112. label define ptype 2 "Lives in HH T.P.-I" , modify
+113. label define ptype 3 "Lives in HH T.P.-II" , modify
+114. label define ptype 4 "Lives in HH T.P.-III" , modify
+115. label define ptype 5 "Not in Universe" , modify
+116. 
+. label values ptype  ptype 
+117. label values htype  htype 
+118. drop nnp nwage
+119. compress
+120. saveold "$USLIMTIP/redistribution_simulation/red_scenarios_`year'.dta", replace version(12)
+121. }
+(FULL CPS)
+(120,076 real changes made)
+(118,687 real changes made)
+(32,970 missing values generated)
+(118,687 missing values generated)
+(81,878 real changes made)
+variable same_sex not found
+(118,687 real changes made, 118,687 to missing)
+(260 real changes made)
+variable ss not found
+(136,665 missing values generated)
+(73,902 real changes made)
+(118,687 real changes made)
+(136,665 real changes made)
+(5,820 real changes made)
+(36 real changes made)
+(2,049 real changes made)
+(133 real changes made)
+(5,269 real changes made)
+(881 real changes made)
+(97,886 real changes made)
+(98,224 real changes made, 283 to missing)
+(283 real changes made)
+variable rw1 not found
+variable rw2 not found
+variable shr_wage? not found
+(84,671 missing values generated)
+(90,491 missing values generated)
+(120,076 real changes made)
+(98,204 real changes made)
+(84,671 missing values generated)
+(198,832 missing values generated)
+(20,430 real changes made)
+(61,644 real changes made)
+(116,758 real changes made)
+(191,051 missing values generated)
+(12,649 real changes made)
+(89,877 real changes made)
+(88,525 real changes made)
+(84,671 missing values generated)
+(202,790 missing values generated)
+(23,058 real changes made)
+(32,379 real changes made)
+(147,353 real changes made)
+(192,458 missing values generated)
+(12,726 real changes made)
+(86,106 real changes made)
+(93,626 real changes made)
+(84,671 missing values generated)
+(199,287 missing values generated)
+(20,880 real changes made)
+(62,545 real changes made)
+(115,862 real changes made)
+(191,170 missing values generated)
+(12,763 real changes made)
+(89,889 real changes made)
+(88,518 real changes made)
+  variable year was float now int
+  variable couple_in_sample was float now byte
+  variable couple_order was float now byte
+  variable intimecalc_redist was float now byte
+  variable h_intimecalc_redist was float now byte
+  variable h_tpoor_sc1 was float now byte
+  variable adjpoor_sc1 was float now byte
+  variable povclass_sc1 was float now byte
+  variable limtip_sc1 was float now byte
+  variable h_tpoor_sc2 was float now byte
+  variable adjpoor_sc2 was float now byte
+  variable povclass_sc2 was float now byte
+  variable limtip_sc2 was float now byte
+  variable h_tpoor_sc3 was float now byte
+  variable adjpoor_sc3 was float now byte
+  variable povclass_sc3 was float now byte
+  variable limtip_sc3 was float now byte
+  (10,528,350 bytes saved)
+(95,546 missing values generated)
+(13,378 real changes made)
+(1,377 real changes made)
+(5,008 real changes made)
+(15,638 real changes made)
+(60,145 real changes made)
+(84,671 missing values generated)
+(84,671 real changes made)
+  (0 bytes saved)
+(saving in Stata 12 format, which can be read by Stata 11 or 12)
+file j:/Shared drives//levy_distribution//Time
+    Poverty/US//LIMTIP//redistribution_simulation/red_scenarios_2005.dta saved
+(FULL CPS)
+(119,492 real changes made)
+(117,611 real changes made)
+(33,116 missing values generated)
+(117,611 missing values generated)
+(80,916 real changes made)
+variable same_sex not found
+(117,611 real changes made, 117,611 to missing)
+(294 real changes made)
+variable ss not found
+(135,529 missing values generated)
+(72,946 real changes made)
+(117,611 real changes made)
+(135,529 real changes made)
+(5,785 real changes made)
+(71 real changes made)
+(2,102 real changes made)
+(126 real changes made)
+(5,308 real changes made)
+(875 real changes made)
+(97,091 real changes made)
+(97,488 real changes made, 338 to missing)
+(338 real changes made)
+variable rw1 not found
+variable rw2 not found
+variable shr_wage? not found
+(83,198 missing values generated)
+(88,983 missing values generated)
+(119,492 real changes made)
+(97,451 real changes made)
+(83,198 missing values generated)
+(195,425 missing values generated)
+(20,290 real changes made)
+(70,208 real changes made)
+(104,927 real changes made)
+(187,876 missing values generated)
+(12,741 real changes made)
+(92,737 real changes made)
+(82,398 real changes made)
+(83,198 missing values generated)
+(199,877 missing values generated)
+(23,099 real changes made)
+(39,157 real changes made)
+(137,621 real changes made)
+(189,558 missing values generated)
+(12,780 real changes made)
+(88,926 real changes made)
+(87,852 real changes made)
+(83,198 missing values generated)
+(195,725 missing values generated)
+(20,522 real changes made)
+(71,096 real changes made)
+(104,107 real changes made)
+(188,018 missing values generated)
+(12,815 real changes made)
+(92,327 real changes made)
+(82,876 real changes made)
+  variable year was float now int
+  variable couple_in_sample was float now byte
+  variable couple_order was float now byte
+  variable intimecalc_redist was float now byte
+  variable h_intimecalc_redist was float now byte
+  variable h_tpoor_sc1 was float now byte
+  variable adjpoor_sc1 was float now byte
+  variable povclass_sc1 was float now byte
+  variable limtip_sc1 was float now byte
+  variable h_tpoor_sc2 was float now byte
+  variable adjpoor_sc2 was float now byte
+  variable povclass_sc2 was float now byte
+  variable limtip_sc2 was float now byte
+  variable h_tpoor_sc3 was float now byte
+  variable adjpoor_sc3 was float now byte
+  variable povclass_sc3 was float now byte
+  variable limtip_sc3 was float now byte
+  (10,423,750 bytes saved)
+(102,638 missing values generated)
+(14,480 real changes made)
+(1,450 real changes made)
+(6,433 real changes made)
+(19,414 real changes made)
+(60,861 real changes made)
+(83,198 missing values generated)
+(83,198 real changes made)
+  (0 bytes saved)
+(saving in Stata 12 format, which can be read by Stata 11 or 12)
+file j:/Shared drives//levy_distribution//Time
+    Poverty/US//LIMTIP//redistribution_simulation/red_scenarios_2006.dta saved
+(FULL CPS)
+(118,493 real changes made)
+(115,585 real changes made)
+(31,269 missing values generated)
+(115,585 missing values generated)
+(80,744 real changes made)
+variable same_sex not found
+(115,585 real changes made, 115,585 to missing)
+(304 real changes made)
+variable ss not found
+(133,725 missing values generated)
+(72,772 real changes made)
+(115,585 real changes made)
+(133,725 real changes made)
+(5,839 real changes made)
+(49 real changes made)
+(2,106 real changes made)
+(112 real changes made)
+(5,221 real changes made)
+(835 real changes made)
+(97,921 real changes made)
+(98,284 real changes made, 310 to missing)
+(310 real changes made)
+variable rw1 not found
+variable rw2 not found
+variable shr_wage? not found
+(82,165 missing values generated)
+(88,004 missing values generated)
+(118,493 real changes made)
+(98,272 real changes made)
+(82,165 missing values generated)
+(191,704 missing values generated)
+(19,260 real changes made)
+(75,434 real changes made)
+(97,010 real changes made)
+(184,994 missing values generated)
+(12,550 real changes made)
+(93,908 real changes made)
+(78,536 real changes made)
+(82,165 missing values generated)
+(197,065 missing values generated)
+(22,587 real changes made)
+(44,345 real changes made)
+(130,133 real changes made)
+(187,038 missing values generated)
+(12,560 real changes made)
+(90,708 real changes made)
+(83,770 real changes made)
+(82,165 missing values generated)
+(192,317 missing values generated)
+(19,716 real changes made)
+(76,659 real changes made)
+(95,942 real changes made)
+(185,264 missing values generated)
+(12,663 real changes made)
+(93,756 real changes made)
+(78,845 real changes made)
+  variable year was float now int
+  variable couple_in_sample was float now byte
+  variable couple_order was float now byte
+  variable intimecalc_redist was float now byte
+  variable h_intimecalc_redist was float now byte
+  variable h_tpoor_sc1 was float now byte
+  variable adjpoor_sc1 was float now byte
+  variable povclass_sc1 was float now byte
+  variable limtip_sc1 was float now byte
+  variable h_tpoor_sc2 was float now byte
+  variable adjpoor_sc2 was float now byte
+  variable povclass_sc2 was float now byte
+  variable limtip_sc2 was float now byte
+  variable h_tpoor_sc3 was float now byte
+  variable adjpoor_sc3 was float now byte
+  variable povclass_sc3 was float now byte
+  variable limtip_sc3 was float now byte
+  (10,324,850 bytes saved)
+(108,886 missing values generated)
+(15,590 real changes made)
+(1,489 real changes made)
+(7,567 real changes made)
+(23,135 real changes made)
+(61,105 real changes made)
+(82,165 missing values generated)
+(82,165 real changes made)
+  (0 bytes saved)
+(saving in Stata 12 format, which can be read by Stata 11 or 12)
+file j:/Shared drives//levy_distribution//Time
+    Poverty/US//LIMTIP//redistribution_simulation/red_scenarios_2007.dta saved
+(FULL CPS)
+(118,537 real changes made)
+(116,004 real changes made)
+(31,980 missing values generated)
+(116,004 missing values generated)
+(80,052 real changes made)
+variable same_sex not found
+(116,004 real changes made, 116,004 to missing)
+(330 real changes made)
+variable ss not found
+(134,648 missing values generated)
+(71,652 real changes made)
+(116,004 real changes made)
+(134,648 real changes made)
+(6,042 real changes made)
+(52 real changes made)
+(2,120 real changes made)
+(111 real changes made)
+(5,383 real changes made)
+(846 real changes made)
+(97,467 real changes made)
+(97,841 real changes made, 273 to missing)
+(273 real changes made)
+variable rw1 not found
+variable rw2 not found
+variable shr_wage? not found
+(81,721 missing values generated)
+(87,763 missing values generated)
+(118,537 real changes made)
+(97,845 real changes made)
+(81,721 missing values generated)
+(196,283 missing values generated)
+(22,752 real changes made)
+(51,064 real changes made)
+(122,467 real changes made)
+(187,377 missing values generated)
+(13,846 real changes made)
+(83,321 real changes made)
+(90,210 real changes made)
+(81,721 missing values generated)
+(200,023 missing values generated)
+(24,977 real changes made)
+(26,710 real changes made)
+(148,336 real changes made)
+(188,853 missing values generated)
+(13,807 real changes made)
+(80,455 real changes made)
+(94,591 real changes made)
+(81,721 missing values generated)
+(196,696 missing values generated)
+(22,996 real changes made)
+(54,556 real changes made)
+(119,144 real changes made)
+(187,543 missing values generated)
+(13,843 real changes made)
+(84,324 real changes made)
+(89,376 real changes made)
+  variable year was float now int
+  variable couple_in_sample was float now byte
+  variable couple_order was float now byte
+  variable intimecalc_redist was float now byte
+  variable h_intimecalc_redist was float now byte
+  variable h_tpoor_sc1 was float now byte
+  variable adjpoor_sc1 was float now byte
+  variable povclass_sc1 was float now byte
+  variable limtip_sc1 was float now byte
+  variable h_tpoor_sc2 was float now byte
+  variable adjpoor_sc2 was float now byte
+  variable povclass_sc2 was float now byte
+  variable limtip_sc2 was float now byte
+  variable h_tpoor_sc3 was float now byte
+  variable adjpoor_sc3 was float now byte
+  variable povclass_sc3 was float now byte
+  variable limtip_sc3 was float now byte
+  (10,315,000 bytes saved)
+(88,625 missing values generated)
+(11,543 real changes made)
+(1,219 real changes made)
+(4,212 real changes made)
+(12,151 real changes made)
+(59,500 real changes made)
+(81,721 missing values generated)
+(81,721 real changes made)
+  (0 bytes saved)
+(saving in Stata 12 format, which can be read by Stata 11 or 12)
+file j:/Shared drives//levy_distribution//Time
+    Poverty/US//LIMTIP//redistribution_simulation/red_scenarios_2008.dta saved
+(FULL CPS)
+(119,399 real changes made)
+(116,609 real changes made)
+(31,884 missing values generated)
+(116,609 missing values generated)
+(80,834 real changes made)
+variable same_sex not found
+(116,609 real changes made, 116,609 to missing)
+(332 real changes made)
+variable ss not found
+(135,865 missing values generated)
+(71,984 real changes made)
+(116,609 real changes made)
+(135,865 real changes made)
+(6,309 real changes made)
+(22 real changes made)
+(2,193 real changes made)
+(149 real changes made)
+(5,509 real changes made)
+(895 real changes made)
+(98,372 real changes made)
+(98,739 real changes made, 259 to missing)
+(259 real changes made)
+variable rw1 not found
+variable rw2 not found
+variable shr_wage? not found
+(82,141 missing values generated)
+(88,450 missing values generated)
+(119,399 real changes made)
+(98,761 real changes made)
+(82,141 missing values generated)
+(198,783 missing values generated)
+(24,097 real changes made)
+(47,171 real changes made)
+(127,515 real changes made)
+(189,357 missing values generated)
+(14,671 real changes made)
+(82,281 real changes made)
+(92,405 real changes made)
+(82,141 missing values generated)
+(202,316 missing values generated)
+(26,348 real changes made)
+(22,969 real changes made)
+(152,999 real changes made)
+(190,628 missing values generated)
+(14,660 real changes made)
+(78,931 real changes made)
+(97,037 real changes made)
+(82,141 missing values generated)
+(199,292 missing values generated)
+(24,479 real changes made)
+(48,003 real changes made)
+(126,810 real changes made)
+(189,510 missing values generated)
+(14,697 real changes made)
+(82,379 real changes made)
+(92,434 real changes made)
+  variable year was float now int
+  variable couple_in_sample was float now byte
+  variable couple_order was float now byte
+  variable intimecalc_redist was float now byte
+  variable h_intimecalc_redist was float now byte
+  variable h_tpoor_sc1 was float now byte
+  variable adjpoor_sc1 was float now byte
+  variable povclass_sc1 was float now byte
+  variable limtip_sc1 was float now byte
+  variable h_tpoor_sc2 was float now byte
+  variable adjpoor_sc2 was float now byte
+  variable povclass_sc2 was float now byte
+  variable limtip_sc2 was float now byte
+  variable h_tpoor_sc3 was float now byte
+  variable adjpoor_sc3 was float now byte
+  variable povclass_sc3 was float now byte
+  variable limtip_sc3 was float now byte
+  (10,392,450 bytes saved)
+(82,950 missing values generated)
+(9,352 real changes made)
+(1,173 real changes made)
+(3,285 real changes made)
+(11,165 real changes made)
+(57,975 real changes made)
+(82,141 missing values generated)
+(82,141 real changes made)
+  (0 bytes saved)
+(saving in Stata 12 format, which can be read by Stata 11 or 12)
+file j:/Shared drives//levy_distribution//Time
+    Poverty/US//LIMTIP//redistribution_simulation/red_scenarios_2009.dta saved
+(FULL CPS)
+(120,657 real changes made)
+(118,465 real changes made)
+(32,133 missing values generated)
+(118,465 missing values generated)
+(80,476 real changes made)
+variable same_sex not found
+(118,465 real changes made, 118,465 to missing)
+(476 real changes made)
+variable ss not found
+(138,199 missing values generated)
+(71,530 real changes made)
+(118,465 real changes made)
+(138,199 real changes made)
+(6,518 real changes made)
+(51 real changes made)
+(2,276 real changes made)
+(124 real changes made)
+(5,830 real changes made)
+(926 real changes made)
+(99,351 real changes made)
+(99,699 real changes made, 255 to missing)
+(255 real changes made)
+variable rw1 not found
+variable rw2 not found
+variable shr_wage? not found
+(82,554 missing values generated)
+(89,072 missing values generated)
+(120,657 real changes made)
+(99,742 real changes made)
+(82,554 missing values generated)
+(200,073 missing values generated)
+(24,997 real changes made)
+(51,941 real changes made)
+(123,135 real changes made)
+(191,313 missing values generated)
+(16,237 real changes made)
+(84,924 real changes made)
+(90,152 real changes made)
+(82,554 missing values generated)
+(203,901 missing values generated)
+(27,438 real changes made)
+(27,084 real changes made)
+(149,379 real changes made)
+(192,692 missing values generated)
+(16,229 real changes made)
+(81,883 real changes made)
+(94,580 real changes made)
+(82,554 missing values generated)
+(200,170 missing values generated)
+(25,010 real changes made)
+(54,682 real changes made)
+(120,478 real changes made)
+(191,382 missing values generated)
+(16,222 real changes made)
+(85,708 real changes made)
+(89,452 real changes made)
+  variable year was float now int
+  variable couple_in_sample was float now byte
+  variable couple_order was float now byte
+  variable intimecalc_redist was float now byte
+  variable h_intimecalc_redist was float now byte
+  variable h_tpoor_sc1 was float now byte
+  variable adjpoor_sc1 was float now byte
+  variable povclass_sc1 was float now byte
+  variable limtip_sc1 was float now byte
+  variable h_tpoor_sc2 was float now byte
+  variable adjpoor_sc2 was float now byte
+  variable povclass_sc2 was float now byte
+  variable limtip_sc2 was float now byte
+  variable h_tpoor_sc3 was float now byte
+  variable adjpoor_sc3 was float now byte
+  variable povclass_sc3 was float now byte
+  variable limtip_sc3 was float now byte
+  (10,486,450 bytes saved)
+(89,552 missing values generated)
+(10,097 real changes made)
+(1,346 real changes made)
+(4,197 real changes made)
+(13,170 real changes made)
+(60,742 real changes made)
+(82,554 missing values generated)
+(82,554 real changes made)
+  (0 bytes saved)
+(saving in Stata 12 format, which can be read by Stata 11 or 12)
+file j:/Shared drives//levy_distribution//Time
+    Poverty/US//LIMTIP//redistribution_simulation/red_scenarios_2010.dta saved
+(FULL CPS)
+(118,304 real changes made)
+(115,536 real changes made)
+(32,018 missing values generated)
+(115,536 missing values generated)
+(78,466 real changes made)
+variable same_sex not found
+(115,536 real changes made, 115,536 to missing)
+(514 real changes made)
+variable ss not found
+(135,408 missing values generated)
+(69,506 real changes made)
+(115,536 real changes made)
+(135,408 real changes made)
+(6,492 real changes made)
+(26 real changes made)
+(2,474 real changes made)
+(98 real changes made)
+(5,734 real changes made)
+(869 real changes made)
+(97,338 real changes made)
+(97,721 real changes made, 250 to missing)
+(250 real changes made)
+variable rw1 not found
+variable rw2 not found
+variable shr_wage? not found
+(80,118 missing values generated)
+(86,610 missing values generated)
+(118,304 real changes made)
+(97,702 real changes made)
+(80,118 missing values generated)
+(195,979 missing values generated)
+(25,889 real changes made)
+(52,032 real changes made)
+(118,058 real changes made)
+(186,925 missing values generated)
+(16,835 real changes made)
+(82,878 real changes made)
+(87,212 real changes made)
+(80,118 missing values generated)
+(199,806 missing values generated)
+(28,169 real changes made)
+(27,611 real changes made)
+(144,026 real changes made)
+(188,367 missing values generated)
+(16,730 real changes made)
+(79,892 real changes made)
+(91,745 real changes made)
+(80,118 missing values generated)
+(196,208 missing values generated)
+(25,995 real changes made)
+(56,264 real changes made)
+(113,949 real changes made)
+(186,988 missing values generated)
+(16,775 real changes made)
+(83,873 real changes made)
+(86,340 real changes made)
+  variable year was float now int
+  variable couple_in_sample was float now byte
+  variable couple_order was float now byte
+  variable intimecalc_redist was float now byte
+  variable h_intimecalc_redist was float now byte
+  variable h_tpoor_sc1 was float now byte
+  variable adjpoor_sc1 was float now byte
+  variable povclass_sc1 was float now byte
+  variable limtip_sc1 was float now byte
+  variable h_tpoor_sc2 was float now byte
+  variable adjpoor_sc2 was float now byte
+  variable povclass_sc2 was float now byte
+  variable limtip_sc2 was float now byte
+  variable h_tpoor_sc3 was float now byte
+  variable adjpoor_sc3 was float now byte
+  variable povclass_sc3 was float now byte
+  variable limtip_sc3 was float now byte
+  (10,245,700 bytes saved)
+(90,874 missing values generated)
+(10,213 real changes made)
+(1,419 real changes made)
+(4,047 real changes made)
+(12,832 real changes made)
+(62,363 real changes made)
+(80,118 missing values generated)
+(80,118 real changes made)
+  (0 bytes saved)
+(saving in Stata 12 format, which can be read by Stata 11 or 12)
+file j:/Shared drives//levy_distribution//Time
+    Poverty/US//LIMTIP//redistribution_simulation/red_scenarios_2011.dta saved
+(FULL CPS)
+(115,589 real changes made)
+(113,208 real changes made)
+(31,329 missing values generated)
+(113,208 missing values generated)
+(76,864 real changes made)
+variable same_sex not found
+(113,208 real changes made, 113,208 to missing)
+(548 real changes made)
+variable ss not found
+(134,000 missing values generated)
+(67,314 real changes made)
+(113,208 real changes made)
+(134,000 real changes made)
+(6,647 real changes made)
+(40 real changes made)
+(2,272 real changes made)
+(116 real changes made)
+(5,624 real changes made)
+(954 real changes made)
+(94,921 real changes made)
+(95,308 real changes made, 245 to missing)
+(245 real changes made)
+variable rw1 not found
+variable rw2 not found
+variable shr_wage? not found
+(79,078 missing values generated)
+(85,725 missing values generated)
+(115,589 real changes made)
+(95,321 real changes made)
+(79,078 missing values generated)
+(191,794 missing values generated)
+(25,536 real changes made)
+(50,475 real changes made)
+(115,783 real changes made)
+(183,205 missing values generated)
+(16,947 real changes made)
+(80,576 real changes made)
+(85,682 real changes made)
+(79,078 missing values generated)
+(195,892 missing values generated)
+(27,965 real changes made)
+(26,050 real changes made)
+(141,877 real changes made)
+(184,850 missing values generated)
+(16,923 real changes made)
+(77,461 real changes made)
+(90,466 real changes made)
+(79,078 missing values generated)
+(192,456 missing values generated)
+(25,835 real changes made)
+(50,424 real changes made)
+(116,197 real changes made)
+(183,584 missing values generated)
+(16,963 real changes made)
+(80,585 real changes made)
+(86,036 real changes made)
+  variable year was float now int
+  variable couple_in_sample was float now byte
+  variable couple_order was float now byte
+  variable intimecalc_redist was float now byte
+  variable h_intimecalc_redist was float now byte
+  variable h_tpoor_sc1 was float now byte
+  variable adjpoor_sc1 was float now byte
+  variable povclass_sc1 was float now byte
+  variable limtip_sc1 was float now byte
+  variable h_tpoor_sc2 was float now byte
+  variable adjpoor_sc2 was float now byte
+  variable povclass_sc2 was float now byte
+  variable limtip_sc2 was float now byte
+  variable h_tpoor_sc3 was float now byte
+  variable adjpoor_sc3 was float now byte
+  variable povclass_sc3 was float now byte
+  variable limtip_sc3 was float now byte
+  (10,065,700 bytes saved)
+(84,369 missing values generated)
+(9,580 real changes made)
+(1,212 real changes made)
+(4,390 real changes made)
+(12,575 real changes made)
+(56,612 real changes made)
+(79,078 missing values generated)
+(79,078 real changes made)
+  (0 bytes saved)
+(saving in Stata 12 format, which can be read by Stata 11 or 12)
+file j:/Shared drives//levy_distribution//Time
+    Poverty/US//LIMTIP//redistribution_simulation/red_scenarios_2012.dta saved
+(FULL CPS)
+(115,671 real changes made)
+(113,995 real changes made)
+(31,778 missing values generated)
+(113,995 missing values generated)
+(76,754 real changes made)
+variable same_sex not found
+(113,995 real changes made, 113,995 to missing)
+(588 real changes made)
+variable ss not found
+(135,493 missing values generated)
+(67,044 real changes made)
+(113,995 real changes made)
+(135,493 real changes made)
+(6,593 real changes made)
+(84 real changes made)
+(2,214 real changes made)
+(154 real changes made)
+(8,127 real changes made)
+(2,752 real changes made)
+(94,840 real changes made)
+(95,293 real changes made, 372 to missing)
+(372 real changes made)
+variable rw1 not found
+variable rw2 not found
+variable shr_wage? not found
+(80,273 missing values generated)
+(86,866 missing values generated)
+(115,671 real changes made)
+(95,223 real changes made)
+(80,273 missing values generated)
+(193,681 missing values generated)
+(26,146 real changes made)
+(48,519 real changes made)
+(119,016 real changes made)
+(184,574 missing values generated)
+(17,039 real changes made)
+(80,871 real changes made)
+(86,664 real changes made)
+(80,273 missing values generated)
+(196,872 missing values generated)
+(27,937 real changes made)
+(27,127 real changes made)
+(141,808 real changes made)
+(185,864 missing values generated)
+(16,929 real changes made)
+(78,433 real changes made)
+(90,502 real changes made)
+(80,273 missing values generated)
+(193,950 missing values generated)
+(26,148 real changes made)
+(49,696 real changes made)
+(118,106 real changes made)
+(184,775 missing values generated)
+(16,973 real changes made)
+(81,318 real changes made)
+(86,484 real changes made)
+  variable year was float now int
+  variable couple_in_sample was float now byte
+  variable couple_order was float now byte
+  variable intimecalc_redist was float now byte
+  variable h_intimecalc_redist was float now byte
+  variable h_tpoor_sc1 was float now byte
+  variable adjpoor_sc1 was float now byte
+  variable povclass_sc1 was float now byte
+  variable limtip_sc1 was float now byte
+  variable h_tpoor_sc2 was float now byte
+  variable adjpoor_sc2 was float now byte
+  variable povclass_sc2 was float now byte
+  variable limtip_sc2 was float now byte
+  variable h_tpoor_sc3 was float now byte
+  variable adjpoor_sc3 was float now byte
+  variable povclass_sc3 was float now byte
+  variable limtip_sc3 was float now byte
+  (10,126,850 bytes saved)
+(82,740 missing values generated)
+(9,886 real changes made)
+(1,248 real changes made)
+(4,142 real changes made)
+(11,456 real changes made)
+(56,008 real changes made)
+(80,273 missing values generated)
+(80,273 real changes made)
+  (0 bytes saved)
+(saving in Stata 12 format, which can be read by Stata 11 or 12)
+file j:/Shared drives//levy_distribution//Time
+    Poverty/US//LIMTIP//redistribution_simulation/red_scenarios_2013.dta saved
+(FULL CPS)
+(79,378 real changes made)
+(78,096 real changes made)
+(21,783 missing values generated)
+(78,096 missing values generated)
+(52,828 real changes made)
+variable same_sex not found
+(78,096 real changes made, 78,096 to missing)
+(406 real changes made)
+variable ss not found
+(93,430 missing values generated)
+(45,924 real changes made)
+(78,096 real changes made)
+(93,430 real changes made)
+(4,667 real changes made)
+(52 real changes made)
+(1,520 real changes made)
+(77 real changes made)
+(5,375 real changes made)
+(1,862 real changes made)
+(65,294 real changes made)
+(65,653 real changes made, 279 to missing)
+(279 real changes made)
+variable rw1 not found
+variable rw2 not found
+variable shr_wage? not found
+(55,309 missing values generated)
+(59,976 missing values generated)
+(79,378 real changes made)
+(65,579 real changes made)
+(55,309 missing values generated)
+(132,852 missing values generated)
+(17,663 real changes made)
+(34,670 real changes made)
+(80,519 real changes made)
+(126,897 missing values generated)
+(11,708 real changes made)
+(56,788 real changes made)
+(58,401 real changes made)
+(55,309 missing values generated)
+(135,207 missing values generated)
+(19,147 real changes made)
+(20,944 real changes made)
+(95,116 real changes made)
+(127,776 missing values generated)
+(11,716 real changes made)
+(55,527 real changes made)
+(60,533 real changes made)
+(55,309 missing values generated)
+(132,984 missing values generated)
+(17,669 real changes made)
+(37,040 real changes made)
+(78,275 real changes made)
+(126,976 missing values generated)
+(11,661 real changes made)
+(57,584 real changes made)
+(57,731 real changes made)
+  variable year was float now int
+  variable couple_in_sample was float now byte
+  variable couple_order was float now byte
+  variable intimecalc_redist was float now byte
+  variable h_intimecalc_redist was float now byte
+  variable h_tpoor_sc1 was float now byte
+  variable adjpoor_sc1 was float now byte
+  variable povclass_sc1 was float now byte
+  variable limtip_sc1 was float now byte
+  variable h_tpoor_sc2 was float now byte
+  variable adjpoor_sc2 was float now byte
+  variable povclass_sc2 was float now byte
+  variable limtip_sc2 was float now byte
+  variable h_tpoor_sc3 was float now byte
+  variable adjpoor_sc3 was float now byte
+  variable povclass_sc3 was float now byte
+  variable limtip_sc3 was float now byte
+  (6,967,700 bytes saved)
+(59,552 missing values generated)
+(7,650 real changes made)
+(769 real changes made)
+(3,120 real changes made)
+(8,898 real changes made)
+(39,115 real changes made)
+(55,309 missing values generated)
+(55,309 real changes made)
+  (0 bytes saved)
+(saving in Stata 12 format, which can be read by Stata 11 or 12)
+file j:/Shared drives//levy_distribution//Time
+    Poverty/US//LIMTIP//redistribution_simulation/red_scenarios_2014.dta saved
+(FULL CPS)
+(112,387 real changes made)
+(111,581 real changes made)
+(31,748 missing values generated)
+(111,581 missing values generated)
+(74,882 real changes made)
+variable same_sex not found
+(111,581 real changes made, 111,581 to missing)
+(634 real changes made)
+variable ss not found
+(134,137 missing values generated)
+(64,772 real changes made)
+(111,581 real changes made)
+(134,137 real changes made)
+(6,977 real changes made)
+(39 real changes made)
+(2,124 real changes made)
+(127 real changes made)
+(7,489 real changes made)
+(2,397 real changes made)
+(92,377 real changes made)
+(92,817 real changes made, 349 to missing)
+(349 real changes made)
+variable rw1 not found
+variable rw2 not found
+variable shr_wage? not found
+(79,545 missing values generated)
+(86,522 missing values generated)
+(112,387 real changes made)
+(92,766 real changes made)
+(79,545 missing values generated)
+(188,617 missing values generated)
+(24,019 real changes made)
+(51,718 real changes made)
+(112,880 real changes made)
+(180,616 missing values generated)
+(16,018 real changes made)
+(82,316 real changes made)
+(82,282 real changes made)
+(79,545 missing values generated)
+(192,627 missing values generated)
+(26,428 real changes made)
+(30,293 real changes made)
+(135,906 real changes made)
+(182,180 missing values generated)
+(15,981 real changes made)
+(79,958 real changes made)
+(86,241 real changes made)
+(79,545 missing values generated)
+(189,362 missing values generated)
+(24,400 real changes made)
+(53,005 real changes made)
+(111,957 real changes made)
+(180,988 missing values generated)
+(16,026 real changes made)
+(82,696 real changes made)
+(82,266 real changes made)
+  variable year was float now int
+  variable couple_in_sample was float now byte
+  variable couple_order was float now byte
+  variable intimecalc_redist was float now byte
+  variable h_intimecalc_redist was float now byte
+  variable h_tpoor_sc1 was float now byte
+  variable adjpoor_sc1 was float now byte
+  variable povclass_sc1 was float now byte
+  variable limtip_sc1 was float now byte
+  variable h_tpoor_sc2 was float now byte
+  variable adjpoor_sc2 was float now byte
+  variable povclass_sc2 was float now byte
+  variable limtip_sc2 was float now byte
+  variable h_tpoor_sc3 was float now byte
+  variable adjpoor_sc3 was float now byte
+  variable povclass_sc3 was float now byte
+  variable limtip_sc3 was float now byte
+  (9,945,450 bytes saved)
+(84,463 missing values generated)
+(10,355 real changes made)
+(1,418 real changes made)
+(4,404 real changes made)
+(14,017 real changes made)
+(54,269 real changes made)
+(79,545 missing values generated)
+(79,545 real changes made)
+  (0 bytes saved)
+(saving in Stata 12 format, which can be read by Stata 11 or 12)
+file j:/Shared drives//levy_distribution//Time
+    Poverty/US//LIMTIP//redistribution_simulation/red_scenarios_2015.dta saved
+(FULL CPS)
+(104,201 real changes made)
+(104,214 real changes made)
+(29,772 missing values generated)
+(104,214 missing values generated)
+(69,410 real changes made)
+variable same_sex not found
+(104,214 real changes made, 104,214 to missing)
+(730 real changes made)
+variable ss not found
+(125,776 missing values generated)
+(59,544 real changes made)
+(104,214 real changes made)
+(125,776 real changes made)
+(6,556 real changes made)
+(44 real changes made)
+(2,087 real changes made)
+(116 real changes made)
+(6,903 real changes made)
+(2,244 real changes made)
+(85,284 real changes made)
+(85,693 real changes made, 330 to missing)
+(330 real changes made)
+variable rw1 not found
+variable rw2 not found
+variable shr_wage? not found
+(74,563 missing values generated)
+(81,119 missing values generated)
+(104,201 real changes made)
+(85,627 real changes made)
+(74,563 missing values generated)
+(176,851 missing values generated)
+(21,482 real changes made)
+(46,698 real changes made)
+(108,671 real changes made)
+(169,337 missing values generated)
+(13,968 real changes made)
+(76,709 real changes made)
+(78,660 real changes made)
+(74,563 missing values generated)
+(179,851 missing values generated)
+(23,247 real changes made)
+(27,659 real changes made)
+(128,945 real changes made)
+(170,473 missing values generated)
+(13,869 real changes made)
+(74,792 real changes made)
+(81,812 real changes made)
+(74,563 missing values generated)
+(177,048 missing values generated)
+(21,492 real changes made)
+(49,690 real changes made)
+(105,866 real changes made)
+(169,457 missing values generated)
+(13,901 real changes made)
+(77,707 real changes made)
+(77,849 real changes made)
+  variable year was float now int
+  variable couple_in_sample was float now byte
+  variable couple_order was float now byte
+  variable intimecalc_redist was float now byte
+  variable h_intimecalc_redist was float now byte
+  variable h_tpoor_sc1 was float now byte
+  variable adjpoor_sc1 was float now byte
+  variable povclass_sc1 was float now byte
+  variable limtip_sc1 was float now byte
+  variable h_tpoor_sc2 was float now byte
+  variable adjpoor_sc2 was float now byte
+  variable povclass_sc2 was float now byte
+  variable limtip_sc2 was float now byte
+  variable h_tpoor_sc3 was float now byte
+  variable adjpoor_sc3 was float now byte
+  variable povclass_sc3 was float now byte
+  variable limtip_sc3 was float now byte
+  (9,266,000 bytes saved)
+(77,535 missing values generated)
+(9,772 real changes made)
+(1,201 real changes made)
+(4,260 real changes made)
+(12,066 real changes made)
+(50,236 real changes made)
+(74,563 missing values generated)
+(74,563 real changes made)
+  (0 bytes saved)
+(saving in Stata 12 format, which can be read by Stata 11 or 12)
+file j:/Shared drives//levy_distribution//Time
+    Poverty/US//LIMTIP//redistribution_simulation/red_scenarios_2016.dta saved
+(FULL CPS)
+(104,258 real changes made)
+(103,878 real changes made)
+(30,108 missing values generated)
+(103,878 missing values generated)
+(69,398 real changes made)
+variable same_sex not found
+(103,878 real changes made, 103,878 to missing)
+(794 real changes made)
+variable ss not found
+(126,126 missing values generated)
+(59,604 real changes made)
+(103,878 real changes made)
+(126,126 real changes made)
+(6,438 real changes made)
+(42 real changes made)
+(1,935 real changes made)
+(92 real changes made)
+(6,824 real changes made)
+(2,204 real changes made)
+(85,249 real changes made)
+(85,700 real changes made, 347 to missing)
+(347 real changes made)
+variable rw1 not found
+variable rw2 not found
+variable shr_wage? not found
+(75,034 missing values generated)
+(81,472 missing values generated)
+(104,258 real changes made)
+(85,612 real changes made)
+(75,034 missing values generated)
+(175,174 missing values generated)
+(19,944 real changes made)
+(53,537 real changes made)
+(101,693 real changes made)
+(168,607 missing values generated)
+(13,377 real changes made)
+(79,667 real changes made)
+(75,563 real changes made)
+(75,034 missing values generated)
+(179,092 missing values generated)
+(22,309 real changes made)
+(32,610 real changes made)
+(124,173 real changes made)
+(170,153 missing values generated)
+(13,370 real changes made)
+(77,478 real changes made)
+(79,305 real changes made)
+(75,034 missing values generated)
+(175,872 missing values generated)
+(20,343 real changes made)
+(54,000 real changes made)
+(101,529 real changes made)
+(168,960 missing values generated)
+(13,431 real changes made)
+(79,379 real changes made)
+(76,150 real changes made)
+  variable year was float now int
+  variable couple_in_sample was float now byte
+  variable couple_order was float now byte
+  variable intimecalc_redist was float now byte
+  variable h_intimecalc_redist was float now byte
+  variable h_tpoor_sc1 was float now byte
+  variable adjpoor_sc1 was float now byte
+  variable povclass_sc1 was float now byte
+  variable limtip_sc1 was float now byte
+  variable h_tpoor_sc2 was float now byte
+  variable adjpoor_sc2 was float now byte
+  variable povclass_sc2 was float now byte
+  variable limtip_sc2 was float now byte
+  variable h_tpoor_sc3 was float now byte
+  variable adjpoor_sc3 was float now byte
+  variable povclass_sc3 was float now byte
+  variable limtip_sc3 was float now byte
+  (9,286,500 bytes saved)
+(81,753 missing values generated)
+(9,884 real changes made)
+(1,410 real changes made)
+(5,587 real changes made)
+(16,230 real changes made)
+(48,642 real changes made)
+(75,034 missing values generated)
+(75,034 real changes made)
+  (0 bytes saved)
+(saving in Stata 12 format, which can be read by Stata 11 or 12)
+file j:/Shared drives//levy_distribution//Time
+    Poverty/US//LIMTIP//redistribution_simulation/red_scenarios_2017.dta saved
+(FULL CPS)
+(100,675 real changes made)
+(100,284 real changes made)
+(29,307 missing values generated)
+(100,284 missing values generated)
+(66,930 real changes made)
+variable same_sex not found
+(100,284 real changes made, 100,284 to missing)
+(806 real changes made)
+variable ss not found
+(122,570 missing values generated)
+(57,440 real changes made)
+(100,284 real changes made)
+(122,570 real changes made)
+(5,970 real changes made)
+(43 real changes made)
+(1,967 real changes made)
+(95 real changes made)
+(6,480 real changes made)
+(1,979 real changes made)
+(82,508 real changes made)
+(82,905 real changes made, 290 to missing)
+(290 real changes made)
+variable rw1 not found
+variable rw2 not found
+variable shr_wage? not found
+(73,365 missing values generated)
+(79,335 missing values generated)
+(100,675 real changes made)
+(82,839 real changes made)
+(73,365 missing values generated)
+(171,425 missing values generated)
+(20,065 real changes made)
+(45,325 real changes made)
+(106,035 real changes made)
+(164,222 missing values generated)
+(12,862 real changes made)
+(75,995 real changes made)
+(75,365 real changes made)
+(73,365 missing values generated)
+(174,503 missing values generated)
+(21,907 real changes made)
+(26,912 real changes made)
+(125,684 real changes made)
+(165,436 missing values generated)
+(12,840 real changes made)
+(74,036 real changes made)
+(78,560 real changes made)
+(73,365 missing values generated)
+(171,668 missing values generated)
+(20,251 real changes made)
+(47,554 real changes made)
+(103,863 real changes made)
+(164,325 missing values generated)
+(12,908 real changes made)
+(76,479 real changes made)
+(74,938 real changes made)
+  variable year was float now int
+  variable couple_in_sample was float now byte
+  variable couple_order was float now byte
+  variable intimecalc_redist was float now byte
+  variable h_intimecalc_redist was float now byte
+  variable h_tpoor_sc1 was float now byte
+  variable adjpoor_sc1 was float now byte
+  variable povclass_sc1 was float now byte
+  variable limtip_sc1 was float now byte
+  variable h_tpoor_sc2 was float now byte
+  variable adjpoor_sc2 was float now byte
+  variable povclass_sc2 was float now byte
+  variable limtip_sc2 was float now byte
+  variable h_tpoor_sc3 was float now byte
+  variable adjpoor_sc3 was float now byte
+  variable povclass_sc3 was float now byte
+  variable limtip_sc3 was float now byte
+  (9,000,500 bytes saved)
+(75,785 missing values generated)
+(9,512 real changes made)
+(1,183 real changes made)
+(4,225 real changes made)
+(12,220 real changes made)
+(48,645 real changes made)
+(73,365 missing values generated)
+(73,365 real changes made)
+  (0 bytes saved)
+(saving in Stata 12 format, which can be read by Stata 11 or 12)
+file j:/Shared drives//levy_distribution//Time
+    Poverty/US//LIMTIP//redistribution_simulation/red_scenarios_2018.dta saved
+(FULL CPS)
+(100,683 real changes made)
+(99,101 real changes made)
+(29,756 missing values generated)
+(99,101 missing values generated)
+(67,572 real changes made)
+variable same_sex not found
+(99,101 real changes made, 99,101 to missing)
+(834 real changes made)
+variable ss not found
+(122,147 missing values generated)
+(57,880 real changes made)
+(99,101 real changes made)
+(122,147 real changes made)
+(5,853 real changes made)
+(20 real changes made)
+(1,940 real changes made)
+(81 real changes made)
+(6,417 real changes made)
+(1,951 real changes made)
+(82,245 real changes made)
+(82,716 real changes made, 316 to missing)
+(316 real changes made)
+variable rw1 not found
+variable rw2 not found
+variable shr_wage? not found
+(73,491 missing values generated)
+(79,344 missing values generated)
+(100,683 real changes made)
+(82,675 real changes made)
+(73,491 missing values generated)
+(173,140 missing values generated)
+(18,862 real changes made)
+(46,194 real changes made)
+(108,084 real changes made)
+(166,161 missing values generated)
+(11,883 real changes made)
+(78,027 real changes made)
+(76,251 real changes made)
+(73,491 missing values generated)
+(175,634 missing values generated)
+(20,215 real changes made)
+(28,183 real changes made)
+(127,236 real changes made)
+(167,217 missing values generated)
+(11,798 real changes made)
+(76,286 real changes made)
+(79,133 real changes made)
+(73,491 missing values generated)
+(173,421 missing values generated)
+(18,818 real changes made)
+(49,977 real changes made)
+(104,626 real changes made)
+(166,397 missing values generated)
+(11,794 real changes made)
+(79,138 real changes made)
+(75,465 real changes made)
+  variable year was float now int
+  variable couple_in_sample was float now byte
+  variable couple_order was float now byte
+  variable intimecalc_redist was float now byte
+  variable h_intimecalc_redist was float now byte
+  variable h_tpoor_sc1 was float now byte
+  variable adjpoor_sc1 was float now byte
+  variable povclass_sc1 was float now byte
+  variable limtip_sc1 was float now byte
+  variable h_tpoor_sc2 was float now byte
+  variable adjpoor_sc2 was float now byte
+  variable povclass_sc2 was float now byte
+  variable limtip_sc2 was float now byte
+  variable h_tpoor_sc3 was float now byte
+  variable adjpoor_sc3 was float now byte
+  variable povclass_sc3 was float now byte
+  variable limtip_sc3 was float now byte
+  (9,001,350 bytes saved)
+(77,183 missing values generated)
+(9,666 real changes made)
+(1,012 real changes made)
+(4,127 real changes made)
+(11,910 real changes made)
+(50,468 real changes made)
+(73,491 missing values generated)
+(73,491 real changes made)
+  (0 bytes saved)
+(saving in Stata 12 format, which can be read by Stata 11 or 12)
+file j:/Shared drives//levy_distribution//Time
+    Poverty/US//LIMTIP//redistribution_simulation/red_scenarios_2019.dta saved
+(FULL CPS)
+(87,737 real changes made)
+(85,846 real changes made)
+(26,207 missing values generated)
+(85,846 missing values generated)
+(58,990 real changes made)
+variable same_sex not found
+(85,846 real changes made, 85,846 to missing)
+(736 real changes made)
+variable ss not found
+(107,438 missing values generated)
+(50,442 real changes made)
+(85,846 real changes made)
+(107,438 real changes made)
+(4,838 real changes made)
+(55 real changes made)
+(1,619 real changes made)
+(43 real changes made)
+(5,504 real changes made)
+(1,573 real changes made)
+(71,874 real changes made)
+(72,250 real changes made, 218 to missing)
+(218 real changes made)
+variable rw1 not found
+variable rw2 not found
+variable shr_wage? not found
+(65,305 missing values generated)
+(70,143 missing values generated)
+(87,737 real changes made)
+(72,248 real changes made)
+(65,305 missing values generated)
+(152,062 missing values generated)
+(14,838 real changes made)
+(39,282 real changes made)
+(97,942 real changes made)
+(146,462 missing values generated)
+(9,238 real changes made)
+(69,309 real changes made)
+(67,915 real changes made)
+(65,305 missing values generated)
+(154,069 missing values generated)
+(16,085 real changes made)
+(23,508 real changes made)
+(114,476 real changes made)
+(147,220 missing values generated)
+(9,236 real changes made)
+(67,306 real changes made)
+(70,678 real changes made)
+(65,305 missing values generated)
+(152,353 missing values generated)
+(14,973 real changes made)
+(41,055 real changes made)
+(96,325 real changes made)
+(146,637 missing values generated)
+(9,257 real changes made)
+(69,550 real changes made)
+(67,830 real changes made)
+  variable year was float now int
+  variable couple_in_sample was float now byte
+  variable couple_order was float now byte
+  variable intimecalc_redist was float now byte
+  variable h_intimecalc_redist was float now byte
+  variable h_tpoor_sc1 was float now byte
+  variable adjpoor_sc1 was float now byte
+  variable povclass_sc1 was float now byte
+  variable limtip_sc1 was float now byte
+  variable h_tpoor_sc2 was float now byte
+  variable adjpoor_sc2 was float now byte
+  variable povclass_sc2 was float now byte
+  variable limtip_sc2 was float now byte
+  variable h_tpoor_sc3 was float now byte
+  variable adjpoor_sc3 was float now byte
+  variable povclass_sc3 was float now byte
+  variable limtip_sc3 was float now byte
+  (7,894,000 bytes saved)
+(64,284 missing values generated)
+(8,429 real changes made)
+(868 real changes made)
+(3,482 real changes made)
+(10,621 real changes made)
+(40,884 real changes made)
+(65,305 missing values generated)
+(65,305 real changes made)
+  (0 bytes saved)
+(saving in Stata 12 format, which can be read by Stata 11 or 12)
+file j:/Shared drives//levy_distribution//Time
+    Poverty/US//LIMTIP//redistribution_simulation/red_scenarios_2020.dta saved
+(FULL CPS)
+(90,882 real changes made)
+(89,998 real changes made)
+(27,455 missing values generated)
+(89,998 missing values generated)
+(60,296 real changes made)
+variable same_sex not found
+(89,998 real changes made, 89,998 to missing)
+(812 real changes made)
+variable ss not found
+(111,780 missing values generated)
+(51,702 real changes made)
+(89,998 real changes made)
+(111,780 real changes made)
+(5,036 real changes made)
+(59 real changes made)
+(1,627 real changes made)
+(60 real changes made)
+(5,445 real changes made)
+(1,630 real changes made)
+(74,106 real changes made)
+(74,489 real changes made, 244 to missing)
+(244 real changes made)
+variable rw1 not found
+variable rw2 not found
+variable shr_wage? not found
+(67,564 missing values generated)
+(72,600 missing values generated)
+(90,882 real changes made)
+(74,501 real changes made)
+(67,564 missing values generated)
+(158,326 missing values generated)
+(12,166 real changes made)
+(49,894 real changes made)
+(96,266 real changes made)
+(153,933 missing values generated)
+(7,773 real changes made)
+(77,526 real changes made)
+(68,634 real changes made)
+(67,564 missing values generated)
+(159,995 missing values generated)
+(13,130 real changes made)
+(30,764 real changes made)
+(116,101 real changes made)
+(154,616 missing values generated)
+(7,751 real changes made)
+(74,857 real changes made)
+(72,008 real changes made)
+(67,564 missing values generated)
+(158,444 missing values generated)
+(12,328 real changes made)
+(51,170 real changes made)
+(94,946 real changes made)
+(153,963 missing values generated)
+(7,847 real changes made)
+(76,850 real changes made)
+(69,266 real changes made)
+  variable year was float now int
+  variable couple_in_sample was float now byte
+  variable couple_order was float now byte
+  variable intimecalc_redist was float now byte
+  variable h_intimecalc_redist was float now byte
+  variable h_tpoor_sc1 was float now byte
+  variable adjpoor_sc1 was float now byte
+  variable povclass_sc1 was float now byte
+  variable limtip_sc1 was float now byte
+  variable h_tpoor_sc2 was float now byte
+  variable adjpoor_sc2 was float now byte
+  variable povclass_sc2 was float now byte
+  variable limtip_sc2 was float now byte
+  variable h_tpoor_sc3 was float now byte
+  variable adjpoor_sc3 was float now byte
+  variable povclass_sc3 was float now byte
+  variable limtip_sc3 was float now byte
+  (8,174,100 bytes saved)
+(73,514 missing values generated)
+(9,546 real changes made)
+(1,153 real changes made)
+(4,728 real changes made)
+(13,832 real changes made)
+(44,255 real changes made)
+(67,564 missing values generated)
+(67,564 real changes made)
+  (0 bytes saved)
+(saving in Stata 12 format, which can be read by Stata 11 or 12)
+file j:/Shared drives//levy_distribution//Time
+    Poverty/US//LIMTIP//redistribution_simulation/red_scenarios_2021.dta saved
+(FULL CPS)
+(84,423 real changes made)
+(83,973 real changes made)
+(25,919 missing values generated)
+(83,973 missing values generated)
+(56,006 real changes made)
+variable same_sex not found
+(83,973 real changes made, 83,973 to missing)
+(820 real changes made)
+variable ss not found
+(104,751 missing values generated)
+(47,916 real changes made)
+(83,973 real changes made)
+(104,751 real changes made)
+(4,549 real changes made)
+(42 real changes made)
+(1,522 real changes made)
+(62 real changes made)
+(4,910 real changes made)
+(1,482 real changes made)
+(69,048 real changes made)
+(69,354 real changes made, 214 to missing)
+(214 real changes made)
+variable rw1 not found
+variable rw2 not found
+variable shr_wage? not found
+(63,695 missing values generated)
+(68,244 missing values generated)
+(84,423 real changes made)
+(69,387 real changes made)
+(63,695 missing values generated)
+(149,856 missing values generated)
+(10,220 real changes made)
+(47,135 real changes made)
+(92,501 real changes made)
+(146,046 missing values generated)
+(6,410 real changes made)
+(74,647 real changes made)
+(64,989 real changes made)
+(63,695 missing values generated)
+(150,601 missing values generated)
+(10,607 real changes made)
+(29,689 real changes made)
+(110,305 real changes made)
+(146,367 missing values generated)
+(6,373 real changes made)
+(72,280 real changes made)
+(67,714 real changes made)
+(63,695 missing values generated)
+(149,835 missing values generated)
+(10,201 real changes made)
+(49,888 real changes made)
+(89,746 real changes made)
+(146,042 missing values generated)
+(6,408 real changes made)
+(74,706 real changes made)
+(64,928 real changes made)
+  variable year was float now int
+  variable couple_in_sample was float now byte
+  variable couple_order was float now byte
+  variable intimecalc_redist was float now byte
+  variable h_intimecalc_redist was float now byte
+  variable h_tpoor_sc1 was float now byte
+  variable adjpoor_sc1 was float now byte
+  variable povclass_sc1 was float now byte
+  variable limtip_sc1 was float now byte
+  variable h_tpoor_sc2 was float now byte
+  variable adjpoor_sc2 was float now byte
+  variable povclass_sc2 was float now byte
+  variable limtip_sc2 was float now byte
+  variable h_tpoor_sc3 was float now byte
+  variable adjpoor_sc3 was float now byte
+  variable povclass_sc3 was float now byte
+  variable limtip_sc3 was float now byte
+  (7,633,350 bytes saved)
+(67,367 missing values generated)
+(8,280 real changes made)
+(900 real changes made)
+(5,000 real changes made)
+(12,863 real changes made)
+(40,324 real changes made)
+(63,695 missing values generated)
+(63,695 real changes made)
+  (0 bytes saved)
+(saving in Stata 12 format, which can be read by Stata 11 or 12)
+file j:/Shared drives//levy_distribution//Time
+    Poverty/US//LIMTIP//redistribution_simulation/red_scenarios_2022.dta saved
+(FULL CPS)
+(80,577 real changes made)
+(79,647 real changes made)
+(25,014 missing values generated)
+(79,647 missing values generated)
+(53,558 real changes made)
+variable same_sex not found
+(79,647 real changes made, 79,647 to missing)
+(872 real changes made)
+variable ss not found
+(100,107 missing values generated)
+(45,944 real changes made)
+(79,647 real changes made)
+(100,107 real changes made)
+(4,202 real changes made)
+(44 real changes made)
+(1,490 real changes made)
+(60 real changes made)
+(4,667 real changes made)
+(1,355 real changes made)
+(66,115 real changes made)
+(66,445 real changes made, 217 to missing)
+(217 real changes made)
+variable rw1 not found
+variable rw2 not found
+variable shr_wage? not found
+(61,272 missing values generated)
+(65,474 missing values generated)
+(80,577 real changes made)
+(66,489 real changes made)
+(61,272 missing values generated)
+(139,347 missing values generated)
+(14,194 real changes made)
+(48,420 real changes made)
+(76,733 real changes made)
+(134,068 missing values generated)
+(8,915 real changes made)
+(69,542 real changes made)
+(55,611 real changes made)
+(61,272 missing values generated)
+(141,739 missing values generated)
+(15,528 real changes made)
+(30,281 real changes made)
+(95,930 real changes made)
+(135,105 missing values generated)
+(8,894 real changes made)
+(67,025 real changes made)
+(59,186 real changes made)
+(61,272 missing values generated)
+(139,545 missing values generated)
+(14,320 real changes made)
+(47,608 real changes made)
+(77,617 real changes made)
+(134,209 missing values generated)
+(8,984 real changes made)
+(67,935 real changes made)
+(57,290 real changes made)
+  variable year was float now int
+  variable couple_in_sample was float now byte
+  variable couple_order was float now byte
+  variable intimecalc_redist was float now byte
+  variable h_intimecalc_redist was float now byte
+  variable h_tpoor_sc1 was float now byte
+  variable adjpoor_sc1 was float now byte
+  variable povclass_sc1 was float now byte
+  variable limtip_sc1 was float now byte
+  variable h_tpoor_sc2 was float now byte
+  variable adjpoor_sc2 was float now byte
+  variable povclass_sc2 was float now byte
+  variable limtip_sc2 was float now byte
+  variable h_tpoor_sc3 was float now byte
+  variable adjpoor_sc3 was float now byte
+  variable povclass_sc3 was float now byte
+  variable limtip_sc3 was float now byte
+  (7,302,550 bytes saved)
+(67,724 missing values generated)
+(8,409 real changes made)
+(896 real changes made)
+(5,337 real changes made)
+(15,448 real changes made)
+(37,634 real changes made)
+(61,272 missing values generated)
+(61,272 real changes made)
+  (0 bytes saved)
+(saving in Stata 12 format, which can be read by Stata 11 or 12)
+file j:/Shared drives//levy_distribution//Time
+    Poverty/US//LIMTIP//redistribution_simulation/red_scenarios_2023.dta saved
+
+. 
+end of do-file
+
+. do "C:\Users\Fernando\AppData\Local\Temp\STD6be4_000000.tmp"
+
+. *** Redistribution Graphs
+. cd "J:\Shared drives\levy_distribution\Time Poverty\US\LIMTIP\redistribution_simulation"
+J:\Shared drives\levy_distribution\Time Poverty\US\LIMTIP\redistribution_simulation
+
+. *** First Agg all years
+. capture frame drop agg
+
+. capture frame create agg
+
+. forvalues i = 2005/2023 {
+  2.     use red_scenarios_`i', clear
+  3.     drop if htype == 0 | htype == 1
+  4.     keep if inrange(age,18,64)
+  5.     compress
+  6.     tempfile r`i'
+  7.     save `r`i'', replace
+  8.     frame agg:append using `r`i''
+  9. }
+(FULL CPS)
+(129,776 observations deleted)
+(31,112 observations deleted)
+  variable offtotval was double now long
+  (198,716 bytes saved)
+(file C:\Users\Fernando\AppData\Local\Temp\ST_6be4_000001.tmp not found)
+file C:\Users\Fernando\AppData\Local\Temp\ST_6be4_000001.tmp saved as .dta format
+(FULL CPS)
+(121,767 observations deleted)
+(32,165 observations deleted)
+  variable offtotval was double now long
+  (218,172 bytes saved)
+(file C:\Users\Fernando\AppData\Local\Temp\ST_6be4_000002.tmp not found)
+file C:\Users\Fernando\AppData\Local\Temp\ST_6be4_000002.tmp saved as .dta format
+(label pc already defined)
+(label ftpt already defined)
+(label pband already defined)
+(label HHINTYPE already defined)
+(label REGION already defined)
+(label STATECENSUS already defined)
+(label OWNERSHP already defined)
+(label FAMINC already defined)
+(label NFAMS already defined)
+(label NCOUPLES already defined)
+(label EARNWEEK2 already defined)
+(label HOURWAGE2 already defined)
+(label RELATE already defined)
+(label AGE already defined)
+(label SEX already defined)
+(label MARST already defined)
+(label POPSTAT already defined)
+(label FAMSIZE already defined)
+(label NCHILD already defined)
+(label NCHLT5 already defined)
+(label FAMUNIT already defined)
+(label ELDCH already defined)
+(label YNGCH already defined)
+(label NSIBS already defined)
+(label FTYPE already defined)
+(label HISPAN already defined)
+(label EMPSTAT already defined)
+(label CLASSWKR already defined)
+(label UHRSWORKT already defined)
+(label UHRSWORK1 already defined)
+(label WKSTAT already defined)
+(label EDUC99 already defined)
+(label CLASSWLY already defined)
+(label FULLPART already defined)
+(label OFFPOV already defined)
+(label OFFPOVUNIV already defined)
+(label OFFREASON already defined)
+(label POVERTY already defined)
+(label SPMNEWFAM already defined)
+(label SPMPOV already defined)
+(label DISABWRK already defined)
+(label HEALTH already defined)
+(label HOURWAGE already defined)
+(label PAIDHOUR already defined)
+(label UNION already defined)
+(label EARNWEEK already defined)
+(label racex already defined)
+(label educ already defined)
+(label famtype already defined)
+(label hfaminc already defined)
+(label srel already defined)
+(label ecivil already defined)
+(label labocc already defined)
+(label labind already defined)
+(label povclass already defined)
+(label htype already defined)
+(label ptype already defined)
+(FULL CPS)
+(114,690 observations deleted)
+(33,178 observations deleted)
+  variable offtotval was double now long
+  (234,516 bytes saved)
+(file C:\Users\Fernando\AppData\Local\Temp\ST_6be4_000003.tmp not found)
+file C:\Users\Fernando\AppData\Local\Temp\ST_6be4_000003.tmp saved as .dta format
+(label pc already defined)
+(label ftpt already defined)
+(label pband already defined)
+(label HHINTYPE already defined)
+(label REGION already defined)
+(label STATECENSUS already defined)
+(label OWNERSHP already defined)
+(label FAMINC already defined)
+(label NFAMS already defined)
+(label NCOUPLES already defined)
+(label EARNWEEK2 already defined)
+(label HOURWAGE2 already defined)
+(label RELATE already defined)
+(label AGE already defined)
+(label SEX already defined)
+(label MARST already defined)
+(label POPSTAT already defined)
+(label FAMSIZE already defined)
+(label NCHILD already defined)
+(label NCHLT5 already defined)
+(label FAMUNIT already defined)
+(label ELDCH already defined)
+(label YNGCH already defined)
+(label NSIBS already defined)
+(label FTYPE already defined)
+(label HISPAN already defined)
+(label EMPSTAT already defined)
+(label CLASSWKR already defined)
+(label UHRSWORKT already defined)
+(label UHRSWORK1 already defined)
+(label WKSTAT already defined)
+(label EDUC99 already defined)
+(label CLASSWLY already defined)
+(label FULLPART already defined)
+(label OFFPOV already defined)
+(label OFFPOVUNIV already defined)
+(label OFFREASON already defined)
+(label POVERTY already defined)
+(label SPMNEWFAM already defined)
+(label SPMPOV already defined)
+(label DISABWRK already defined)
+(label HEALTH already defined)
+(label HOURWAGE already defined)
+(label PAIDHOUR already defined)
+(label UNION already defined)
+(label EARNWEEK already defined)
+(label racex already defined)
+(label educ already defined)
+(label famtype already defined)
+(label hfaminc already defined)
+(label srel already defined)
+(label ecivil already defined)
+(label labocc already defined)
+(label labind already defined)
+(label povclass already defined)
+(label htype already defined)
+(label ptype already defined)
+(FULL CPS)
+(130,437 observations deleted)
+(28,454 observations deleted)
+  variable offtotval was double now long
+  (189,636 bytes saved)
+(file C:\Users\Fernando\AppData\Local\Temp\ST_6be4_000004.tmp not found)
+file C:\Users\Fernando\AppData\Local\Temp\ST_6be4_000004.tmp saved as .dta format
+(label pc already defined)
+(label ftpt already defined)
+(label pband already defined)
+(label HHINTYPE already defined)
+(label REGION already defined)
+(label STATECENSUS already defined)
+(label OWNERSHP already defined)
+(label FAMINC already defined)
+(label NFAMS already defined)
+(label NCOUPLES already defined)
+(label EARNWEEK2 already defined)
+(label HOURWAGE2 already defined)
+(label RELATE already defined)
+(label AGE already defined)
+(label SEX already defined)
+(label MARST already defined)
+(label POPSTAT already defined)
+(label FAMSIZE already defined)
+(label NCHILD already defined)
+(label NCHLT5 already defined)
+(label FAMUNIT already defined)
+(label ELDCH already defined)
+(label YNGCH already defined)
+(label NSIBS already defined)
+(label FTYPE already defined)
+(label HISPAN already defined)
+(label EMPSTAT already defined)
+(label CLASSWKR already defined)
+(label UHRSWORKT already defined)
+(label UHRSWORK1 already defined)
+(label WKSTAT already defined)
+(label EDUC99 already defined)
+(label CLASSWLY already defined)
+(label FULLPART already defined)
+(label OFFPOV already defined)
+(label OFFPOVUNIV already defined)
+(label OFFREASON already defined)
+(label POVERTY already defined)
+(label SPMNEWFAM already defined)
+(label SPMPOV already defined)
+(label DISABWRK already defined)
+(label HEALTH already defined)
+(label HOURWAGE already defined)
+(label PAIDHOUR already defined)
+(label UNION already defined)
+(label EARNWEEK already defined)
+(label racex already defined)
+(label educ already defined)
+(label famtype already defined)
+(label hfaminc already defined)
+(label srel already defined)
+(label ecivil already defined)
+(label labocc already defined)
+(label labind already defined)
+(label povclass already defined)
+(label htype already defined)
+(label ptype already defined)
+(FULL CPS)
+(135,424 observations deleted)
+(27,447 observations deleted)
+  variable offtotval was double now long
+  (179,912 bytes saved)
+(file C:\Users\Fernando\AppData\Local\Temp\ST_6be4_000005.tmp not found)
+file C:\Users\Fernando\AppData\Local\Temp\ST_6be4_000005.tmp saved as .dta format
+(label pc already defined)
+(label ftpt already defined)
+(label pband already defined)
+(label HHINTYPE already defined)
+(label REGION already defined)
+(label STATECENSUS already defined)
+(label OWNERSHP already defined)
+(label FAMINC already defined)
+(label NFAMS already defined)
+(label NCOUPLES already defined)
+(label EARNWEEK2 already defined)
+(label HOURWAGE2 already defined)
+(label RELATE already defined)
+(label AGE already defined)
+(label SEX already defined)
+(label MARST already defined)
+(label POPSTAT already defined)
+(label FAMSIZE already defined)
+(label NCHILD already defined)
+(label NCHLT5 already defined)
+(label FAMUNIT already defined)
+(label ELDCH already defined)
+(label YNGCH already defined)
+(label NSIBS already defined)
+(label FTYPE already defined)
+(label HISPAN already defined)
+(label EMPSTAT already defined)
+(label CLASSWKR already defined)
+(label UHRSWORKT already defined)
+(label UHRSWORK1 already defined)
+(label WKSTAT already defined)
+(label EDUC99 already defined)
+(label CLASSWLY already defined)
+(label FULLPART already defined)
+(label OFFPOV already defined)
+(label OFFPOVUNIV already defined)
+(label OFFREASON already defined)
+(label POVERTY already defined)
+(label SPMNEWFAM already defined)
+(label SPMPOV already defined)
+(label DISABWRK already defined)
+(label HEALTH already defined)
+(label HOURWAGE already defined)
+(label PAIDHOUR already defined)
+(label UNION already defined)
+(label EARNWEEK already defined)
+(label racex already defined)
+(label educ already defined)
+(label famtype already defined)
+(label hfaminc already defined)
+(label srel already defined)
+(label ecivil already defined)
+(label labocc already defined)
+(label labind already defined)
+(label povclass already defined)
+(label htype already defined)
+(label ptype already defined)
+(FULL CPS)
+(131,620 observations deleted)
+(28,376 observations deleted)
+  variable offtotval was double now long
+  (198,932 bytes saved)
+(file C:\Users\Fernando\AppData\Local\Temp\ST_6be4_000006.tmp not found)
+file C:\Users\Fernando\AppData\Local\Temp\ST_6be4_000006.tmp saved as .dta format
+(variable spmeqscale was byte, now double to accommodate using data's values)
+(variable spmwt was byte, now long to accommodate using data's values)
+(variable spmftotval was byte, now long to accommodate using data's values)
+(variable spmgeoadj was byte, now double to accommodate using data's values)
+(variable spmwkxpns was byte, now double to accommodate using data's values)
+(label pc already defined)
+(label ftpt already defined)
+(label pband already defined)
+(label ecivil already defined)
+(label srel already defined)
+(label hfaminc already defined)
+(label famtype already defined)
+(label educ already defined)
+(label racex already defined)
+(label EARNWEEK already defined)
+(label UNION already defined)
+(label PAIDHOUR already defined)
+(label HOURWAGE already defined)
+(label HEALTH already defined)
+(label DISABWRK already defined)
+(label SPMPOV already defined)
+(label SPMNEWFAM already defined)
+(label POVERTY already defined)
+(label OFFREASON already defined)
+(label OFFPOVUNIV already defined)
+(label OFFPOV already defined)
+(label FULLPART already defined)
+(label CLASSWLY already defined)
+(label EDUC99 already defined)
+(label WKSTAT already defined)
+(label UHRSWORK1 already defined)
+(label UHRSWORKT already defined)
+(label CLASSWKR already defined)
+(label EMPSTAT already defined)
+(label HISPAN already defined)
+(label FTYPE already defined)
+(label NSIBS already defined)
+(label YNGCH already defined)
+(label ELDCH already defined)
+(label FAMUNIT already defined)
+(label NCHLT5 already defined)
+(label NCHILD already defined)
+(label FAMSIZE already defined)
+(label POPSTAT already defined)
+(label MARST already defined)
+(label SEX already defined)
+(label AGE already defined)
+(label RELATE already defined)
+(label HOURWAGE2 already defined)
+(label EARNWEEK2 already defined)
+(label NCOUPLES already defined)
+(label NFAMS already defined)
+(label FAMINC already defined)
+(label OWNERSHP already defined)
+(label STATECENSUS already defined)
+(label REGION already defined)
+(label HHINTYPE already defined)
+(label labocc already defined)
+(label labind already defined)
+(label povclass already defined)
+(label htype already defined)
+(label ptype already defined)
+(FULL CPS)
+(125,672 observations deleted)
+(28,523 observations deleted)
+  variable offtotval was double now long
+  (202,876 bytes saved)
+(file C:\Users\Fernando\AppData\Local\Temp\ST_6be4_000007.tmp not found)
+file C:\Users\Fernando\AppData\Local\Temp\ST_6be4_000007.tmp saved as .dta format
+(label pc already defined)
+(label ftpt already defined)
+(label pband already defined)
+(label ecivil already defined)
+(label srel already defined)
+(label hfaminc already defined)
+(label famtype already defined)
+(label educ already defined)
+(label racex already defined)
+(label EARNWEEK already defined)
+(label UNION already defined)
+(label PAIDHOUR already defined)
+(label HOURWAGE already defined)
+(label HEALTH already defined)
+(label DISABWRK already defined)
+(label SPMPOV already defined)
+(label SPMNEWFAM already defined)
+(label POVERTY already defined)
+(label OFFREASON already defined)
+(label OFFPOVUNIV already defined)
+(label OFFPOV already defined)
+(label FULLPART already defined)
+(label CLASSWLY already defined)
+(label EDUC99 already defined)
+(label WKSTAT already defined)
+(label UHRSWORK1 already defined)
+(label UHRSWORKT already defined)
+(label CLASSWKR already defined)
+(label EMPSTAT already defined)
+(label HISPAN already defined)
+(label FTYPE already defined)
+(label NSIBS already defined)
+(label YNGCH already defined)
+(label ELDCH already defined)
+(label FAMUNIT already defined)
+(label NCHLT5 already defined)
+(label NCHILD already defined)
+(label FAMSIZE already defined)
+(label POPSTAT already defined)
+(label MARST already defined)
+(label SEX already defined)
+(label AGE already defined)
+(label RELATE already defined)
+(label HOURWAGE2 already defined)
+(label EARNWEEK2 already defined)
+(label NCOUPLES already defined)
+(label NFAMS already defined)
+(label FAMINC already defined)
+(label OWNERSHP already defined)
+(label STATECENSUS already defined)
+(label REGION already defined)
+(label HHINTYPE already defined)
+(label labocc already defined)
+(label labind already defined)
+(label povclass already defined)
+(label htype already defined)
+(label ptype already defined)
+(FULL CPS)
+(127,737 observations deleted)
+(27,128 observations deleted)
+  variable offtotval was double now long
+  (185,796 bytes saved)
+(file C:\Users\Fernando\AppData\Local\Temp\ST_6be4_000008.tmp not found)
+file C:\Users\Fernando\AppData\Local\Temp\ST_6be4_000008.tmp saved as .dta format
+(label pc already defined)
+(label ftpt already defined)
+(label pband already defined)
+(label ecivil already defined)
+(label srel already defined)
+(label hfaminc already defined)
+(label famtype already defined)
+(label educ already defined)
+(label racex already defined)
+(label EARNWEEK already defined)
+(label UNION already defined)
+(label PAIDHOUR already defined)
+(label HOURWAGE already defined)
+(label HEALTH already defined)
+(label DISABWRK already defined)
+(label SPMPOV already defined)
+(label SPMNEWFAM already defined)
+(label POVERTY already defined)
+(label OFFREASON already defined)
+(label OFFPOVUNIV already defined)
+(label OFFPOV already defined)
+(label FULLPART already defined)
+(label CLASSWLY already defined)
+(label EDUC99 already defined)
+(label WKSTAT already defined)
+(label UHRSWORK1 already defined)
+(label UHRSWORKT already defined)
+(label CLASSWKR already defined)
+(label EMPSTAT already defined)
+(label HISPAN already defined)
+(label FTYPE already defined)
+(label NSIBS already defined)
+(label YNGCH already defined)
+(label ELDCH already defined)
+(label FAMUNIT already defined)
+(label NCHLT5 already defined)
+(label NCHILD already defined)
+(label FAMSIZE already defined)
+(label POPSTAT already defined)
+(label MARST already defined)
+(label SEX already defined)
+(label AGE already defined)
+(label RELATE already defined)
+(label HOURWAGE2 already defined)
+(label EARNWEEK2 already defined)
+(label NCOUPLES already defined)
+(label NFAMS already defined)
+(label FAMINC already defined)
+(label OWNERSHP already defined)
+(label STATECENSUS already defined)
+(label REGION already defined)
+(label HHINTYPE already defined)
+(label labocc already defined)
+(label labind already defined)
+(label povclass already defined)
+(label htype already defined)
+(label ptype already defined)
+(FULL CPS)
+(130,931 observations deleted)
+(26,655 observations deleted)
+  variable offtotval was double now long
+  (179,804 bytes saved)
+(file C:\Users\Fernando\AppData\Local\Temp\ST_6be4_000009.tmp not found)
+file C:\Users\Fernando\AppData\Local\Temp\ST_6be4_000009.tmp saved as .dta format
+(label pc already defined)
+(label ftpt already defined)
+(label pband already defined)
+(label ecivil already defined)
+(label srel already defined)
+(label hfaminc already defined)
+(label famtype already defined)
+(label educ already defined)
+(label racex already defined)
+(label EARNWEEK already defined)
+(label UNION already defined)
+(label PAIDHOUR already defined)
+(label HOURWAGE already defined)
+(label HEALTH already defined)
+(label DISABWRK already defined)
+(label SPMPOV already defined)
+(label SPMNEWFAM already defined)
+(label POVERTY already defined)
+(label OFFREASON already defined)
+(label OFFPOVUNIV already defined)
+(label OFFPOV already defined)
+(label FULLPART already defined)
+(label CLASSWLY already defined)
+(label EDUC99 already defined)
+(label WKSTAT already defined)
+(label UHRSWORK1 already defined)
+(label UHRSWORKT already defined)
+(label CLASSWKR already defined)
+(label EMPSTAT already defined)
+(label HISPAN already defined)
+(label FTYPE already defined)
+(label NSIBS already defined)
+(label YNGCH already defined)
+(label ELDCH already defined)
+(label FAMUNIT already defined)
+(label NCHLT5 already defined)
+(label NCHILD already defined)
+(label FAMSIZE already defined)
+(label POPSTAT already defined)
+(label MARST already defined)
+(label SEX already defined)
+(label AGE already defined)
+(label RELATE already defined)
+(label HOURWAGE2 already defined)
+(label EARNWEEK2 already defined)
+(label NCOUPLES already defined)
+(label NFAMS already defined)
+(label FAMINC already defined)
+(label OWNERSHP already defined)
+(label STATECENSUS already defined)
+(label REGION already defined)
+(label HHINTYPE already defined)
+(label labocc already defined)
+(label labind already defined)
+(label povclass already defined)
+(label htype already defined)
+(label ptype already defined)
+(FULL CPS)
+(88,221 observations deleted)
+(18,816 observations deleted)
+  variable offtotval was double now long
+  (129,268 bytes saved)
+(file C:\Users\Fernando\AppData\Local\Temp\ST_6be4_00000a.tmp not found)
+file C:\Users\Fernando\AppData\Local\Temp\ST_6be4_00000a.tmp saved as .dta format
+(label pc already defined)
+(label ftpt already defined)
+(label pband already defined)
+(label ecivil already defined)
+(label srel already defined)
+(label hfaminc already defined)
+(label famtype already defined)
+(label educ already defined)
+(label racex already defined)
+(label EARNWEEK already defined)
+(label UNION already defined)
+(label PAIDHOUR already defined)
+(label HOURWAGE already defined)
+(label HEALTH already defined)
+(label DISABWRK already defined)
+(label SPMPOV already defined)
+(label SPMNEWFAM already defined)
+(label POVERTY already defined)
+(label OFFREASON already defined)
+(label OFFPOVUNIV already defined)
+(label OFFPOV already defined)
+(label FULLPART already defined)
+(label CLASSWLY already defined)
+(label EDUC99 already defined)
+(label WKSTAT already defined)
+(label UHRSWORK1 already defined)
+(label UHRSWORKT already defined)
+(label CLASSWKR already defined)
+(label EMPSTAT already defined)
+(label HISPAN already defined)
+(label FTYPE already defined)
+(label NSIBS already defined)
+(label YNGCH already defined)
+(label ELDCH already defined)
+(label FAMUNIT already defined)
+(label NCHLT5 already defined)
+(label NCHILD already defined)
+(label FAMSIZE already defined)
+(label POPSTAT already defined)
+(label MARST already defined)
+(label SEX already defined)
+(label AGE already defined)
+(label RELATE already defined)
+(label HOURWAGE2 already defined)
+(label EARNWEEK2 already defined)
+(label NCOUPLES already defined)
+(label NFAMS already defined)
+(label FAMINC already defined)
+(label OWNERSHP already defined)
+(label STATECENSUS already defined)
+(label REGION already defined)
+(label HHINTYPE already defined)
+(label labocc already defined)
+(label labind already defined)
+(label povclass already defined)
+(label htype already defined)
+(label ptype already defined)
+(FULL CPS)
+(126,219 observations deleted)
+(26,374 observations deleted)
+  variable offtotval was double now long
+  (185,264 bytes saved)
+(file C:\Users\Fernando\AppData\Local\Temp\ST_6be4_00000b.tmp not found)
+file C:\Users\Fernando\AppData\Local\Temp\ST_6be4_00000b.tmp saved as .dta format
+(label pc already defined)
+(label ftpt already defined)
+(label pband already defined)
+(label ecivil already defined)
+(label srel already defined)
+(label hfaminc already defined)
+(label famtype already defined)
+(label educ already defined)
+(label racex already defined)
+(label EARNWEEK already defined)
+(label UNION already defined)
+(label PAIDHOUR already defined)
+(label HOURWAGE already defined)
+(label HEALTH already defined)
+(label DISABWRK already defined)
+(label SPMPOV already defined)
+(label SPMNEWFAM already defined)
+(label POVERTY already defined)
+(label OFFREASON already defined)
+(label OFFPOVUNIV already defined)
+(label OFFPOV already defined)
+(label FULLPART already defined)
+(label CLASSWLY already defined)
+(label EDUC99 already defined)
+(label WKSTAT already defined)
+(label UHRSWORK1 already defined)
+(label UHRSWORKT already defined)
+(label CLASSWKR already defined)
+(label EMPSTAT already defined)
+(label HISPAN already defined)
+(label FTYPE already defined)
+(label NSIBS already defined)
+(label YNGCH already defined)
+(label ELDCH already defined)
+(label FAMUNIT already defined)
+(label NCHLT5 already defined)
+(label NCHILD already defined)
+(label FAMSIZE already defined)
+(label POPSTAT already defined)
+(label MARST already defined)
+(label SEX already defined)
+(label AGE already defined)
+(label RELATE already defined)
+(label HOURWAGE2 already defined)
+(label EARNWEEK2 already defined)
+(label NCOUPLES already defined)
+(label NFAMS already defined)
+(label FAMINC already defined)
+(label OWNERSHP already defined)
+(label STATECENSUS already defined)
+(label REGION already defined)
+(label HHINTYPE already defined)
+(label labocc already defined)
+(label labind already defined)
+(label povclass already defined)
+(label htype already defined)
+(label ptype already defined)
+(FULL CPS)
+(118,758 observations deleted)
+(24,519 observations deleted)
+  variable offtotval was double now long
+  (168,172 bytes saved)
+(file C:\Users\Fernando\AppData\Local\Temp\ST_6be4_00000c.tmp not found)
+file C:\Users\Fernando\AppData\Local\Temp\ST_6be4_00000c.tmp saved as .dta format
+(label pc already defined)
+(label ftpt already defined)
+(label pband already defined)
+(label ecivil already defined)
+(label srel already defined)
+(label hfaminc already defined)
+(label famtype already defined)
+(label educ already defined)
+(label racex already defined)
+(label EARNWEEK already defined)
+(label UNION already defined)
+(label PAIDHOUR already defined)
+(label HOURWAGE already defined)
+(label HEALTH already defined)
+(label DISABWRK already defined)
+(label SPMPOV already defined)
+(label SPMNEWFAM already defined)
+(label POVERTY already defined)
+(label OFFREASON already defined)
+(label OFFPOVUNIV already defined)
+(label OFFPOV already defined)
+(label FULLPART already defined)
+(label CLASSWLY already defined)
+(label EDUC99 already defined)
+(label WKSTAT already defined)
+(label UHRSWORK1 already defined)
+(label UHRSWORKT already defined)
+(label CLASSWKR already defined)
+(label EMPSTAT already defined)
+(label HISPAN already defined)
+(label FTYPE already defined)
+(label NSIBS already defined)
+(label YNGCH already defined)
+(label ELDCH already defined)
+(label FAMUNIT already defined)
+(label NCHLT5 already defined)
+(label NCHILD already defined)
+(label FAMSIZE already defined)
+(label POPSTAT already defined)
+(label MARST already defined)
+(label SEX already defined)
+(label AGE already defined)
+(label RELATE already defined)
+(label HOURWAGE2 already defined)
+(label EARNWEEK2 already defined)
+(label NCOUPLES already defined)
+(label NFAMS already defined)
+(label FAMINC already defined)
+(label OWNERSHP already defined)
+(label STATECENSUS already defined)
+(label REGION already defined)
+(label HHINTYPE already defined)
+(label labocc already defined)
+(label labind already defined)
+(label povclass already defined)
+(label htype already defined)
+(label ptype already defined)
+(FULL CPS)
+(115,271 observations deleted)
+(26,485 observations deleted)
+  variable offtotval was double now long
+  (175,896 bytes saved)
+(file C:\Users\Fernando\AppData\Local\Temp\ST_6be4_00000d.tmp not found)
+file C:\Users\Fernando\AppData\Local\Temp\ST_6be4_00000d.tmp saved as .dta format
+(variable uhrswork1 was byte, now int to accommodate using data's values)
+(variable spuhrswork1 was byte, now int to accommodate using data's values)
+(label pc already defined)
+(label ftpt already defined)
+(label pband already defined)
+(label ecivil already defined)
+(label srel already defined)
+(label hfaminc already defined)
+(label famtype already defined)
+(label educ already defined)
+(label racex already defined)
+(label EARNWEEK already defined)
+(label UNION already defined)
+(label PAIDHOUR already defined)
+(label HOURWAGE already defined)
+(label HEALTH already defined)
+(label DISABWRK already defined)
+(label SPMPOV already defined)
+(label SPMNEWFAM already defined)
+(label POVERTY already defined)
+(label OFFREASON already defined)
+(label OFFPOVUNIV already defined)
+(label OFFPOV already defined)
+(label FULLPART already defined)
+(label CLASSWLY already defined)
+(label EDUC99 already defined)
+(label WKSTAT already defined)
+(label UHRSWORK1 already defined)
+(label UHRSWORKT already defined)
+(label CLASSWKR already defined)
+(label EMPSTAT already defined)
+(label HISPAN already defined)
+(label FTYPE already defined)
+(label NSIBS already defined)
+(label YNGCH already defined)
+(label ELDCH already defined)
+(label FAMUNIT already defined)
+(label NCHLT5 already defined)
+(label NCHILD already defined)
+(label FAMSIZE already defined)
+(label POPSTAT already defined)
+(label MARST already defined)
+(label SEX already defined)
+(label AGE already defined)
+(label RELATE already defined)
+(label HOURWAGE2 already defined)
+(label EARNWEEK2 already defined)
+(label NCOUPLES already defined)
+(label NFAMS already defined)
+(label FAMINC already defined)
+(label OWNERSHP already defined)
+(label STATECENSUS already defined)
+(label REGION already defined)
+(label HHINTYPE already defined)
+(label labocc already defined)
+(label labind already defined)
+(label povclass already defined)
+(label htype already defined)
+(label ptype already defined)
+(FULL CPS)
+(114,920 observations deleted)
+(23,663 observations deleted)
+  variable offtotval was double now long
+  (165,708 bytes saved)
+(file C:\Users\Fernando\AppData\Local\Temp\ST_6be4_00000e.tmp not found)
+file C:\Users\Fernando\AppData\Local\Temp\ST_6be4_00000e.tmp saved as .dta format
+(label pc already defined)
+(label ftpt already defined)
+(label pband already defined)
+(label ecivil already defined)
+(label srel already defined)
+(label hfaminc already defined)
+(label famtype already defined)
+(label educ already defined)
+(label racex already defined)
+(label EARNWEEK already defined)
+(label UNION already defined)
+(label PAIDHOUR already defined)
+(label HOURWAGE already defined)
+(label HEALTH already defined)
+(label DISABWRK already defined)
+(label SPMPOV already defined)
+(label SPMNEWFAM already defined)
+(label POVERTY already defined)
+(label OFFREASON already defined)
+(label OFFPOVUNIV already defined)
+(label OFFPOV already defined)
+(label FULLPART already defined)
+(label CLASSWLY already defined)
+(label EDUC99 already defined)
+(label WKSTAT already defined)
+(label UHRSWORK1 already defined)
+(label UHRSWORKT already defined)
+(label CLASSWKR already defined)
+(label EMPSTAT already defined)
+(label HISPAN already defined)
+(label FTYPE already defined)
+(label NSIBS already defined)
+(label YNGCH already defined)
+(label ELDCH already defined)
+(label FAMUNIT already defined)
+(label NCHLT5 already defined)
+(label NCHILD already defined)
+(label FAMSIZE already defined)
+(label POPSTAT already defined)
+(label MARST already defined)
+(label SEX already defined)
+(label AGE already defined)
+(label RELATE already defined)
+(label HOURWAGE2 already defined)
+(label EARNWEEK2 already defined)
+(label NCOUPLES already defined)
+(label NFAMS already defined)
+(label FAMINC already defined)
+(label OWNERSHP already defined)
+(label STATECENSUS already defined)
+(label REGION already defined)
+(label HHINTYPE already defined)
+(label labocc already defined)
+(label labind already defined)
+(label povclass already defined)
+(label htype already defined)
+(label ptype already defined)
+(FULL CPS)
+(113,522 observations deleted)
+(23,684 observations deleted)
+  variable offtotval was double now long
+  (171,284 bytes saved)
+(file C:\Users\Fernando\AppData\Local\Temp\ST_6be4_00000f.tmp not found)
+file C:\Users\Fernando\AppData\Local\Temp\ST_6be4_00000f.tmp saved as .dta format
+(label pc already defined)
+(label ftpt already defined)
+(label pband already defined)
+(label ecivil already defined)
+(label srel already defined)
+(label hfaminc already defined)
+(label famtype already defined)
+(label educ already defined)
+(label racex already defined)
+(label EARNWEEK already defined)
+(label UNION already defined)
+(label PAIDHOUR already defined)
+(label HOURWAGE already defined)
+(label HEALTH already defined)
+(label DISABWRK already defined)
+(label SPMPOV already defined)
+(label SPMNEWFAM already defined)
+(label POVERTY already defined)
+(label OFFREASON already defined)
+(label OFFPOVUNIV already defined)
+(label OFFPOV already defined)
+(label FULLPART already defined)
+(label CLASSWLY already defined)
+(label EDUC99 already defined)
+(label WKSTAT already defined)
+(label UHRSWORK1 already defined)
+(label UHRSWORKT already defined)
+(label CLASSWKR already defined)
+(label EMPSTAT already defined)
+(label HISPAN already defined)
+(label FTYPE already defined)
+(label NSIBS already defined)
+(label YNGCH already defined)
+(label ELDCH already defined)
+(label FAMUNIT already defined)
+(label NCHLT5 already defined)
+(label NCHILD already defined)
+(label FAMSIZE already defined)
+(label POPSTAT already defined)
+(label MARST already defined)
+(label SEX already defined)
+(label AGE already defined)
+(label RELATE already defined)
+(label HOURWAGE2 already defined)
+(label EARNWEEK2 already defined)
+(label NCOUPLES already defined)
+(label NFAMS already defined)
+(label FAMINC already defined)
+(label OWNERSHP already defined)
+(label STATECENSUS already defined)
+(label REGION already defined)
+(label HHINTYPE already defined)
+(label labocc already defined)
+(label labind already defined)
+(label povclass already defined)
+(label htype already defined)
+(label ptype already defined)
+(FULL CPS)
+(102,893 observations deleted)
+(20,659 observations deleted)
+  variable offtotval was double now long
+  (137,312 bytes saved)
+(file C:\Users\Fernando\AppData\Local\Temp\ST_6be4_00000g.tmp not found)
+file C:\Users\Fernando\AppData\Local\Temp\ST_6be4_00000g.tmp saved as .dta format
+(label pc already defined)
+(label ftpt already defined)
+(label pband already defined)
+(label ecivil already defined)
+(label srel already defined)
+(label hfaminc already defined)
+(label famtype already defined)
+(label educ already defined)
+(label racex already defined)
+(label EARNWEEK already defined)
+(label UNION already defined)
+(label PAIDHOUR already defined)
+(label HOURWAGE already defined)
+(label HEALTH already defined)
+(label DISABWRK already defined)
+(label SPMPOV already defined)
+(label SPMNEWFAM already defined)
+(label POVERTY already defined)
+(label OFFREASON already defined)
+(label OFFPOVUNIV already defined)
+(label OFFPOV already defined)
+(label FULLPART already defined)
+(label CLASSWLY already defined)
+(label EDUC99 already defined)
+(label WKSTAT already defined)
+(label UHRSWORK1 already defined)
+(label UHRSWORKT already defined)
+(label CLASSWKR already defined)
+(label EMPSTAT already defined)
+(label HISPAN already defined)
+(label FTYPE already defined)
+(label NSIBS already defined)
+(label YNGCH already defined)
+(label ELDCH already defined)
+(label FAMUNIT already defined)
+(label NCHLT5 already defined)
+(label NCHILD already defined)
+(label FAMSIZE already defined)
+(label POPSTAT already defined)
+(label MARST already defined)
+(label SEX already defined)
+(label AGE already defined)
+(label RELATE already defined)
+(label HOURWAGE2 already defined)
+(label EARNWEEK2 already defined)
+(label NCOUPLES already defined)
+(label NFAMS already defined)
+(label FAMINC already defined)
+(label OWNERSHP already defined)
+(label STATECENSUS already defined)
+(label REGION already defined)
+(label HHINTYPE already defined)
+(label labocc already defined)
+(label labind already defined)
+(label povclass already defined)
+(label htype already defined)
+(label ptype already defined)
+(FULL CPS)
+(100,667 observations deleted)
+(22,811 observations deleted)
+  variable offtotval was double now long
+  (160,016 bytes saved)
+(file C:\Users\Fernando\AppData\Local\Temp\ST_6be4_00000h.tmp not found)
+file C:\Users\Fernando\AppData\Local\Temp\ST_6be4_00000h.tmp saved as .dta format
+(label pc already defined)
+(label ftpt already defined)
+(label pband already defined)
+(label ecivil already defined)
+(label srel already defined)
+(label hfaminc already defined)
+(label famtype already defined)
+(label educ already defined)
+(label racex already defined)
+(label EARNWEEK already defined)
+(label UNION already defined)
+(label PAIDHOUR already defined)
+(label HOURWAGE already defined)
+(label HEALTH already defined)
+(label DISABWRK already defined)
+(label SPMPOV already defined)
+(label SPMNEWFAM already defined)
+(label POVERTY already defined)
+(label OFFREASON already defined)
+(label OFFPOVUNIV already defined)
+(label OFFPOV already defined)
+(label FULLPART already defined)
+(label CLASSWLY already defined)
+(label EDUC99 already defined)
+(label WKSTAT already defined)
+(label UHRSWORK1 already defined)
+(label UHRSWORKT already defined)
+(label CLASSWKR already defined)
+(label EMPSTAT already defined)
+(label HISPAN already defined)
+(label FTYPE already defined)
+(label NSIBS already defined)
+(label YNGCH already defined)
+(label ELDCH already defined)
+(label FAMUNIT already defined)
+(label NCHLT5 already defined)
+(label NCHILD already defined)
+(label FAMSIZE already defined)
+(label POPSTAT already defined)
+(label MARST already defined)
+(label SEX already defined)
+(label AGE already defined)
+(label RELATE already defined)
+(label HOURWAGE2 already defined)
+(label EARNWEEK2 already defined)
+(label NCOUPLES already defined)
+(label NFAMS already defined)
+(label FAMINC already defined)
+(label OWNERSHP already defined)
+(label STATECENSUS already defined)
+(label REGION already defined)
+(label HHINTYPE already defined)
+(label labocc already defined)
+(label labind already defined)
+(label povclass already defined)
+(label htype already defined)
+(label ptype already defined)
+(FULL CPS)
+(94,480 observations deleted)
+(21,755 observations deleted)
+  variable offtotval was double now long
+  (145,728 bytes saved)
+(file C:\Users\Fernando\AppData\Local\Temp\ST_6be4_00000i.tmp not found)
+file C:\Users\Fernando\AppData\Local\Temp\ST_6be4_00000i.tmp saved as .dta format
+(label pc already defined)
+(label ftpt already defined)
+(label pband already defined)
+(label ecivil already defined)
+(label srel already defined)
+(label hfaminc already defined)
+(label famtype already defined)
+(label educ already defined)
+(label racex already defined)
+(label EARNWEEK already defined)
+(label UNION already defined)
+(label PAIDHOUR already defined)
+(label HOURWAGE already defined)
+(label HEALTH already defined)
+(label DISABWRK already defined)
+(label SPMPOV already defined)
+(label SPMNEWFAM already defined)
+(label POVERTY already defined)
+(label OFFREASON already defined)
+(label OFFPOVUNIV already defined)
+(label OFFPOV already defined)
+(label FULLPART already defined)
+(label CLASSWLY already defined)
+(label EDUC99 already defined)
+(label WKSTAT already defined)
+(label UHRSWORK1 already defined)
+(label UHRSWORKT already defined)
+(label CLASSWKR already defined)
+(label EMPSTAT already defined)
+(label HISPAN already defined)
+(label FTYPE already defined)
+(label NSIBS already defined)
+(label YNGCH already defined)
+(label ELDCH already defined)
+(label FAMUNIT already defined)
+(label NCHLT5 already defined)
+(label NCHILD already defined)
+(label FAMSIZE already defined)
+(label POPSTAT already defined)
+(label MARST already defined)
+(label SEX already defined)
+(label AGE already defined)
+(label RELATE already defined)
+(label HOURWAGE2 already defined)
+(label EARNWEEK2 already defined)
+(label NCOUPLES already defined)
+(label NFAMS already defined)
+(label FAMINC already defined)
+(label OWNERSHP already defined)
+(label STATECENSUS already defined)
+(label REGION already defined)
+(label HHINTYPE already defined)
+(label labocc already defined)
+(label labind already defined)
+(label povclass already defined)
+(label htype already defined)
+(label ptype already defined)
+(FULL CPS)
+(87,632 observations deleted)
+(21,031 observations deleted)
+  variable offtotval was double now long
+  (149,552 bytes saved)
+(file C:\Users\Fernando\AppData\Local\Temp\ST_6be4_00000j.tmp not found)
+file C:\Users\Fernando\AppData\Local\Temp\ST_6be4_00000j.tmp saved as .dta format
+(variable wgti was int, now float to accommodate using data's values)
+(label pc already defined)
+(label ftpt already defined)
+(label pband already defined)
+(label ecivil already defined)
+(label srel already defined)
+(label hfaminc already defined)
+(label famtype already defined)
+(label educ already defined)
+(label racex already defined)
+(label EARNWEEK already defined)
+(label UNION already defined)
+(label PAIDHOUR already defined)
+(label HOURWAGE already defined)
+(label HEALTH already defined)
+(label DISABWRK already defined)
+(label SPMPOV already defined)
+(label SPMNEWFAM already defined)
+(label POVERTY already defined)
+(label OFFREASON already defined)
+(label OFFPOVUNIV already defined)
+(label OFFPOV already defined)
+(label FULLPART already defined)
+(label CLASSWLY already defined)
+(label EDUC99 already defined)
+(label WKSTAT already defined)
+(label UHRSWORK1 already defined)
+(label UHRSWORKT already defined)
+(label CLASSWKR already defined)
+(label EMPSTAT already defined)
+(label HISPAN already defined)
+(label FTYPE already defined)
+(label NSIBS already defined)
+(label YNGCH already defined)
+(label ELDCH already defined)
+(label FAMUNIT already defined)
+(label NCHLT5 already defined)
+(label NCHILD already defined)
+(label FAMSIZE already defined)
+(label POPSTAT already defined)
+(label MARST already defined)
+(label SEX already defined)
+(label AGE already defined)
+(label RELATE already defined)
+(label HOURWAGE2 already defined)
+(label EARNWEEK2 already defined)
+(label NCOUPLES already defined)
+(label NFAMS already defined)
+(label FAMINC already defined)
+(label OWNERSHP already defined)
+(label STATECENSUS already defined)
+(label REGION already defined)
+(label HHINTYPE already defined)
+(label labocc already defined)
+(label labind already defined)
+(label povclass already defined)
+(label htype already defined)
+(label ptype already defined)
+
+. frame change agg
+
+. frame drop default
+
+. frame put *, into(default)
+
+. frame change default
+
+. 
+. **
+. ** Classification
+. gen byte new_class = 1 if sex == 1 & couple_in_sample == 1
+(525,083 missing values generated)
+
+. replace  new_class = 2 if sex == 2 & couple_in_sample == 1
+(319,057 real changes made)
+
+. replace  new_class = 3 if couple_in_sample != 1
+(206,026 real changes made)
+
+. label define new_class 1 "Married: Men", modify
+
+. label define new_class 2 "Married: Women", modify
+
+. label define new_class 3 "Other Member", modify
+
+. label values new_class new_class 
+
+. 
+. capture frame drop coll
+
+. frame put tpoor tpoor_sc1 tpoor_sc2 tpoor_sc3  tdef tdef_sc1 tdef_sc2 tdef_sc3 tbal* new_class asecwth pty
+> pe, into(coll)
+
+. frame coll: {
+.     foreach i of varlist tbal* {
+  2.                 replace `i'=max(`i',0)
+  3.     }    
+(393,350 real changes made)
+(226,747 real changes made)
+(199,780 real changes made)
+(236,752 real changes made)
+. }
+
+. frame coll: collapse tpoor tpoor_sc1 tpoor_sc2 tpoor_sc3  tdef tdef_sc1 tdef_sc2 tdef_sc3 tbal* [w=asecwth
+> ], by(ptype new_class)
+(analytic weights assumed)
+
+. frame coll: {
+.     foreach i of varlist tpoor*   {
+  2.                 replace `i'=`i'*100
+  3.     }    
+(9 real changes made)
+(12 real changes made)
+(12 real changes made)
+(12 real changes made)
+.     foreach i of varlist tpoor* {
+  2.                 replace `i'=100-`i' if ptype !=0
+  3.     }
+(9 real changes made)
+(9 real changes made)
+(9 real changes made)
+(9 real changes made)
+. }
+
+. 
+. ** Figures
+. set scheme white2
+
+. color_style  bay
+
+. cd "C:\Users\Fernando\Documents\GitHub\Redistribution\resources_brief"
+C:\Users\Fernando\Documents\GitHub\Redistribution\resources_brief
+
+. frame coll: {
+.     graph bar (asis) tpoor_sc1 tpoor_sc2 tpoor_sc3 if new_class==1, over(ptype) ///
+>         legend(order(1 "Scenario 1" 2 "Scenario 2" 3 "Scenario 3") pos(6) row(1)) ///
+>         ytitle("Transition Rate") graphregion(margin(zero)) blabel(bar, format(%3.1f)) ///
+>         xsize(10) ysize(5) scale(1.5)
+.     graph export "poverty_men.pdf", replace
+file poverty_men.pdf saved as PDF format
+.     graph export "poverty_men.png", replace width(1500)           
+file poverty_men.png saved as PNG format
+.     
+.     graph bar (asis) tpoor_sc1 tpoor_sc2 tpoor_sc3 if new_class==2, over(ptype) ///
+>         legend(order(1 "Scenario 1" 2 "Scenario 2" 3 "Scenario 3") pos(6) row(1)) ///
+>         ytitle("Transition Rate") graphregion(margin(zero)) blabel(bar, format(%3.1f)) ///
+>         xsize(10) ysize(5) scale(1.5)
+.     graph export "poverty_wmen.pdf", replace
+file poverty_wmen.pdf saved as PDF format
+.     graph export "poverty_wmen.png", replace width(1500)                   
+file poverty_wmen.png saved as PNG format
+.     
+.     graph bar (asis) tpoor_sc1 tpoor_sc2 tpoor_sc3 if new_class==3, over(ptype) ///
+>         legend(order(1 "Scenario 1" 2 "Scenario 2" 3 "Scenario 3") pos(6) row(1)) ///
+>         ytitle("Transition Rate") graphregion(margin(zero)) blabel(bar, format(%3.1f)) ///
+>         xsize(10) ysize(5) scale(1.5)
+.     graph export "poverty_other.pdf", replace
+file poverty_other.pdf saved as PDF format
+.     graph export "poverty_other.png", replace width(1500)           
+file poverty_other.png saved as PNG format
+.     
+.     graph bar (asis) tdef tdef_sc1 tdef_sc2 tdef_sc3 if new_class==1, over(ptype) ///
+>         legend(order(1 "Baseline" 2 "Scenario 1" 3 "Scenario 2" 4 "Scenario 3") pos(6) row(1)) ///
+>         ytitle("Time Deficit") graphregion(margin(zero)) ///
+>         blabel(bar, format(%3.1f)) ///
+>         bar(1, color(gs4))  bar(2, bstyle(p1)) bar(3, bstyle(p2)) bar(4, bstyle(p3)) ///
+>         xsize(10) ysize(5) scale(1.5) 
+.     graph export "tdef_men.pdf", replace
+file tdef_men.pdf saved as PDF format
+.     graph export "tdef_men.png", replace width(1500)                   
+file tdef_men.png saved as PNG format
+.     
+.     graph bar (asis) tdef tdef_sc1 tdef_sc2 tdef_sc3 if new_class==2, over(ptype) ///
+>         legend(order(1 "Baseline" 2 "Scenario 1" 3 "Scenario 2" 4 "Scenario 3") pos(6) row(1)) ///
+>         ytitle("Time Deficit") graphregion(margin(zero)) ///
+>         blabel(bar, format(%3.1f)) ///
+>         bar(1, color(gs4))  bar(2, bstyle(p1)) bar(3, bstyle(p2)) bar(4, bstyle(p3)) ///
+>         xsize(10) ysize(5) scale(1.5)
+.     graph export "tdef_wmen.pdf", replace
+file tdef_wmen.pdf saved as PDF format
+.     graph export "tdef_wmen.png", replace width(1500)                   
+file tdef_wmen.png saved as PNG format
+.     
+.     graph bar (asis) tdef tdef_sc1 tdef_sc2 tdef_sc3 if new_class==3, over(ptype) ///
+>         legend(order(1 "Baseline" 2 "Scenario 1" 3 "Scenario 2" 4 "Scenario 3") pos(6) row(1)) ///
+>         ytitle("Time Deficit") graphregion(margin(zero)) ///
+>         blabel(bar, format(%3.1f)) ///
+>         bar(1, color(gs4))  bar(2, bstyle(p1)) bar(3, bstyle(p2)) bar(4, bstyle(p3)) ///
+>         xsize(10) ysize(5) scale(1.5)   
+.     graph export "tdef_other.pdf", replace
+file tdef_other.pdf saved as PDF format
+.     graph export "tdef_other.png", replace width(1500)                           
+file tdef_other.png saved as PNG format
+. }
+
+. 
+. ** Out of Poverty household
+. 
+. capture frame drop coll
+
+. frame put h_tpoor* new_class htype asecwth , into(coll)
+
+.  frame coll: collapse h_tpoor*, by(htype new_class)
+
+. frame coll:{
+.     foreach i of varlist h_tpoor* {
+  2.         replace `i' = 100-`i'*100
+  3.     }
+(9 real changes made)
+(9 real changes made)
+(9 real changes made)
+(9 real changes made)
+. }
+
+. frame coll:{
+.     
+.     graph bar (asis) h_tpoor_* if htype==4, over(new_class) ///
+>        legend(order(1 "Scenario 1" 2 "Scenario 2" 3 "Scenario 3") pos(6) row(1)) ///
+>         ytitle("H.H. Transition Rate") graphregion(margin(zero)) blabel(bar, format(%3.1f)) ///
+>         xsize(10) ysize(5) scale(1.5)
+.     graph export "hhtrate.pdf", replace
+file hhtrate.pdf saved as PDF format
+.     graph export "hhtrate.png", replace width(1500)     
+file hhtrate.png saved as PNG format
+.     
+. }
+
+. 
+. ss
+command ss is unrecognized
+r(199);
+
+end of do-file
+
+r(199);
+
+. do "C:\Users\Fernando\AppData\Local\Temp\STD6be4_000000.tmp"
+
+. capture frame drop coll
+
+. frame put spmpov adjpoor adjpoor_sc1 adjpoor_sc2 adjpoor_sc3 new_class htype asecwth , into(coll)
+
+. frame coll: collapse spmpov adjpoor adjpoor_sc1 adjpoor_sc2 adjpoor_sc3 [w=asecwth], by(htype new_class)
+(analytic weights assumed)
+
+. 
+end of do-file
+
+. do "C:\Users\Fernando\AppData\Local\Temp\STD6be4_000000.tmp"
+
+. frame coll:{
+.     graph bar (asis) spmpov adjpoor adjpoor_sc1 adjpoor_sc2 adjpoor_sc3 if new_class==2, over(htype) ///
+>     legend(order(1 "Baseline" 2 "Scenario 1" 3 "Scenario 2" 4 "Scenario 3") pos(6) row(1)) ///
+>     ytitle("Time Deficit") graphregion(margin(zero)) ///
+>     blabel(bar, format(%3.1f)) ///
+>     bar(1, color(gs4))  bar(2, bstyle(p1)) bar(3, bstyle(p2)) bar(4, bstyle(p3)) ///
+>     xsize(10) ysize(5) scale(1.5) 
+. }
+
+. 
+end of do-file
+
+. do "C:\Users\Fernando\AppData\Local\Temp\STD6be4_000000.tmp"
+
+. frame coll: {
+.     foreach i of varlist spmpov adjpoor adjpoor_sc1 adjpoor_sc2 adjpoor_sc3 {
+  2.         replace `i'=`i'*100
+  3.     }
+(9 real changes made)
+(9 real changes made)
+(9 real changes made)
+(9 real changes made)
+(9 real changes made)
+. }
+
+. frame coll:{
+.     
+.     graph bar (asis) spmpov adjpoor adjpoor_sc1 adjpoor_sc2 adjpoor_sc3 if new_class==2, over(htype) ///
+>     legend(order(1 "Baseline" 2 "Scenario 1" 3 "Scenario 2" 4 "Scenario 3") pos(6) row(1)) ///
+>     ytitle("Time Deficit") graphregion(margin(zero)) ///
+>     blabel(bar, format(%3.1f)) ///
+>     bar(1, color(gs4))  bar(2, bstyle(p1)) bar(3, bstyle(p2)) bar(4, bstyle(p3)) ///
+>     xsize(10) ysize(5) scale(1.5) 
+. }
+
+. 
+end of do-file
+
+. do "C:\Users\Fernando\AppData\Local\Temp\STD6be4_000000.tmp"
+
+. frame coll:{
+.     
+.     graph bar (asis) spmpov adjpoor adjpoor_sc1 adjpoor_sc2 adjpoor_sc3 if new_class==2, over(htype) ///
+>     legend(order(1 "Baseline" 2 "Scenario 1" 3 "Scenario 2" 4 "Scenario 3") pos(6) row(1)) ///
+>     ytitle("Time Deficit") graphregion(margin(zero)) ///
+>     blabel(bar, format(%3.1f)) ///
+>     bar(1, color(gs4)) bar(2, color(gs7)) ///
+>     bar(3, bstyle(p1)) bar(4, bstyle(p2)) bar(5, bstyle(p3)) ///
+>     xsize(10) ysize(5) scale(1.5) 
+. }
+
+. 
+end of do-file
+
+. do "C:\Users\Fernando\AppData\Local\Temp\STD6be4_000000.tmp"
+
+. frame coll:{
+.     
+.     graph bar (asis) spmpov adjpoor adjpoor_sc1 adjpoor_sc2 adjpoor_sc3 if new_class==2, over(htype) ///
+>     legend(order(1 "Baseline" 2 "LIMTIP" 3 "Scenario 1" 4 "Scenario 2" 5 "Scenario 3") pos(6) row(1)) ///
+>     ytitle("Time Deficit") graphregion(margin(zero)) ///
+>     blabel(bar, format(%3.1f)) ///
+>     bar(1, color(gs4)) bar(2, color(gs7)) ///
+>     bar(3, bstyle(p1)) bar(4, bstyle(p2)) bar(5, bstyle(p3)) ///
+>     xsize(10) ysize(5) scale(1.5) 
+. }
+
+. 
+end of do-file
+
+. do "C:\Users\Fernando\AppData\Local\Temp\STD6be4_000000.tmp"
+
+. frame coll:{
+.     
+.     graph bar (asis) spmpov adjpoor adjpoor_sc1 adjpoor_sc2 adjpoor_sc3 if new_class==1, over(htype) ///
+>     legend(order(1 "Baseline" 2 "LIMTIP" 3 "Scenario 1" 4 "Scenario 2" 5 "Scenario 3") pos(6) row(1)) ///
+>     ytitle("Time Deficit") graphregion(margin(zero)) ///
+>     blabel(bar, format(%3.1f)) ///
+>     bar(1, color(gs4)) bar(2, color(gs7)) ///
+>     bar(3, bstyle(p1)) bar(4, bstyle(p2)) bar(5, bstyle(p3)) ///
+>     xsize(10) ysize(5) scale(1.5) 
+. }
+
+. 
+end of do-file
+
+. do "C:\Users\Fernando\AppData\Local\Temp\STD6be4_000000.tmp"
+
+. 
+. frame coll:{
+.     
+.     graph bar (asis) spmpov adjpoor adjpoor_sc1 adjpoor_sc2 adjpoor_sc3 if new_class==1, over(htype) ///
+>     legend(order(1 "Baseline" 2 "LIMTIP" 3 "Scenario 1" 4 "Scenario 2" 5 "Scenario 3") pos(6) row(1)) ///
+>     ytitle("Time Deficit") graphregion(margin(zero)) ///
+>     blabel(bar, format(%3.1f)) ///
+>     bar(1, color(gs4)) bar(2, color(gs7)) ///
+>     bar(3, bstyle(p1)) bar(4, bstyle(p2)) bar(5, bstyle(p3)) ///
+>     xsize(10) ysize(5) scale(1.5) 
+.     
+.         graph bar (asis) spmpov adjpoor adjpoor_sc1 adjpoor_sc2 adjpoor_sc3 if new_class==3, over(htype) /
+> //
+>     legend(order(1 "Baseline" 2 "LIMTIP" 3 "Scenario 1" 4 "Scenario 2" 5 "Scenario 3") pos(6) row(1)) ///
+>     ytitle("Time Deficit") graphregion(margin(zero)) ///
+>     blabel(bar, format(%3.1f)) ///
+>     bar(1, color(gs4)) bar(2, color(gs7)) ///
+>     bar(3, bstyle(p1)) bar(4, bstyle(p2)) bar(5, bstyle(p3)) ///
+>     xsize(10) ysize(5) scale(1.5) 
+. 
+. }
+
+. 
+end of do-file
+
+. do "C:\Users\Fernando\AppData\Local\Temp\STD6be4_000000.tmp"
+
+.     graph bar (asis) spmpov adjpoor adjpoor_sc1 adjpoor_sc2 adjpoor_sc3 if new_class==1, over(htype) ///
+>     legend(order(1 "Baseline" 2 "LIMTIP" 3 "Scenario 1" 4 "Scenario 2" 5 "Scenario 3") pos(6) row(1)) ///
+>     ytitle("Time Deficit") graphregion(margin(zero)) ///
+>     blabel(bar, format(%3.1f)) ///
+>     bar(1, color(gs4)) bar(2, color(gs7)) ///
+>     bar(3, bstyle(p1)) bar(4, bstyle(p2)) bar(5, bstyle(p3)) ///
+>     xsize(10) ysize(5) scale(1.5) yscale(range(0 20))
+variables htype and _variables do not uniquely identify the observations
+r(459);
+
+end of do-file
+
+r(459);
+
+. do "C:\Users\Fernando\AppData\Local\Temp\STD6be4_000000.tmp"
+
+. frame coll:{
+.     
+.     graph bar (asis) spmpov adjpoor adjpoor_sc1 adjpoor_sc2 adjpoor_sc3 if new_class==1, over(htype) ///
+>     legend(order(1 "Baseline" 2 "LIMTIP" 3 "Scenario 1" 4 "Scenario 2" 5 "Scenario 3") pos(6) row(1)) ///
+>     ytitle("Time Deficit") graphregion(margin(zero)) ///
+>     blabel(bar, format(%3.1f)) ///
+>     bar(1, color(gs4)) bar(2, color(gs7)) ///
+>     bar(3, bstyle(p1)) bar(4, bstyle(p2)) bar(5, bstyle(p3)) ///
+>     xsize(10) ysize(5) scale(1.5) yscale(range(0 20))
+.     
+.         graph bar (asis) spmpov adjpoor adjpoor_sc1 adjpoor_sc2 adjpoor_sc3 if new_class==3, over(htype) /
+> //
+>     legend(order(1 "Baseline" 2 "LIMTIP" 3 "Scenario 1" 4 "Scenario 2" 5 "Scenario 3") pos(6) row(1)) ///
+>     ytitle("Time Deficit") graphregion(margin(zero)) ///
+>     blabel(bar, format(%3.1f)) ///
+>     bar(1, color(gs4)) bar(2, color(gs7)) ///
+>     bar(3, bstyle(p1)) bar(4, bstyle(p2)) bar(5, bstyle(p3)) ///
+>     xsize(10) ysize(5) scale(1.5) 
+. 
+. }
+
+. 
+end of do-file
+
+. do "C:\Users\Fernando\AppData\Local\Temp\STD6be4_000000.tmp"
+
+. frame coll:{
+.     
+.     graph bar (asis) spmpov adjpoor adjpoor_sc1 adjpoor_sc2 adjpoor_sc3 if new_class==1, over(htype) ///
+>     legend(order(1 "Baseline" 2 "LIMTIP" 3 "Scenario 1" 4 "Scenario 2" 5 "Scenario 3") pos(6) row(1)) ///
+>     ytitle("Time Deficit") graphregion(margin(zero)) ///
+>     blabel(bar, format(%3.1f)) ///
+>     bar(1, color(gs4)) bar(2, color(gs7)) ///
+>     bar(3, bstyle(p1)) bar(4, bstyle(p2)) bar(5, bstyle(p3)) ///
+>     xsize(10) ysize(5) scale(1.5) yscale(range(0 20)) name(s, replace)
+.     
+.         graph bar (asis) spmpov adjpoor adjpoor_sc1 adjpoor_sc2 adjpoor_sc3 if new_class==3, over(htype) /
+> //
+>     legend(order(1 "Baseline" 2 "LIMTIP" 3 "Scenario 1" 4 "Scenario 2" 5 "Scenario 3") pos(6) row(1)) ///
+>     ytitle("Time Deficit") graphregion(margin(zero)) ///
+>     blabel(bar, format(%3.1f)) ///
+>     bar(1, color(gs4)) bar(2, color(gs7)) ///
+>     bar(3, bstyle(p1)) bar(4, bstyle(p2)) bar(5, bstyle(p3)) ///
+>     xsize(10) ysize(5) scale(1.5) 
+. 
+. }
+
+. 
+end of do-file
+
+. do "C:\Users\Fernando\AppData\Local\Temp\STD6be4_000000.tmp"
+
+. frame coll:{
+.     
+.     graph bar (asis) spmpov adjpoor adjpoor_sc1 adjpoor_sc2 adjpoor_sc3 if new_class==1, over(htype) ///
+>     legend(order(1 "Baseline" 2 "LIMTIP" 3 "Scenario 1" 4 "Scenario 2" 5 "Scenario 3") pos(6) row(1)) ///
+>     ytitle("Time Deficit") graphregion(margin(zero)) ///
+>     blabel(bar, format(%3.1f)) ///
+>     bar(1, color(gs4)) bar(2, color(gs7)) ///
+>     bar(3, bstyle(p1)) bar(4, bstyle(p2)) bar(5, bstyle(p3)) ///
+>     xsize(10) ysize(5) scale(1.5) ylabel(0(5)20) name(s, replace)
+.     
+.         graph bar (asis) spmpov adjpoor adjpoor_sc1 adjpoor_sc2 adjpoor_sc3 if new_class==3, over(htype) /
+> //
+>     legend(order(1 "Baseline" 2 "LIMTIP" 3 "Scenario 1" 4 "Scenario 2" 5 "Scenario 3") pos(6) row(1)) ///
+>     ytitle("Time Deficit") graphregion(margin(zero)) ///
+>     blabel(bar, format(%3.1f)) ///
+>     bar(1, color(gs4)) bar(2, color(gs7)) ///
+>     bar(3, bstyle(p1)) bar(4, bstyle(p2)) bar(5, bstyle(p3)) ///
+>     xsize(10) ysize(5) scale(1.5) 
+. 
+. }
+
+. 
+end of do-file
+
+. do "C:\Users\Fernando\AppData\Local\Temp\STD6be4_000000.tmp"
+
+.     graph bar (asis) spmpov adjpoor adjpoor_sc1 adjpoor_sc2 adjpoor_sc3 if new_class==1, over(htype) ///
+>     legend(order(1 "Baseline" 2 "LIMTIP" 3 "Scenario 1" 4 "Scenario 2" 5 "Scenario 3") pos(6) row(1)) ///
+>     ytitle("Time Deficit") graphregion(margin(zero)) ///
+>     blabel(bar, format(%3.1f)) ///
+>     bar(1, color(gs4)) bar(2, color(gs7)) ///
+>     bar(3, bstyle(p1)) bar(4, bstyle(p2)) bar(5, bstyle(p3)) ///
+>     xsize(10) ysize(5) scale(1.5) ylabel(20 0(5)20) name(s, replace)
+variables htype and _variables do not uniquely identify the observations
+r(459);
+
+end of do-file
+
+r(459);
+
+. frame change coll
+
+. do "C:\Users\Fernando\AppData\Local\Temp\STD6be4_000000.tmp"
+
+.     graph bar (asis) spmpov adjpoor adjpoor_sc1 adjpoor_sc2 adjpoor_sc3 if new_class==1, over(htype) ///
+>     legend(order(1 "Baseline" 2 "LIMTIP" 3 "Scenario 1" 4 "Scenario 2" 5 "Scenario 3") pos(6) row(1)) ///
+>     ytitle("Time Deficit") graphregion(margin(zero)) ///
+>     blabel(bar, format(%3.1f)) ///
+>     bar(1, color(gs4)) bar(2, color(gs7)) ///
+>     bar(3, bstyle(p1)) bar(4, bstyle(p2)) bar(5, bstyle(p3)) ///
+>     xsize(10) ysize(5) scale(1.5) ylabel(20 0(5)20) name(s, replace)
+
+. 
+end of do-file
+
+. set scheme white
+
+. do "C:\Users\Fernando\AppData\Local\Temp\STD6be4_000000.tmp"
+
+.     graph bar (asis) spmpov adjpoor adjpoor_sc1 adjpoor_sc2 adjpoor_sc3 if new_class==1, over(htype) ///
+>     legend(order(1 "Baseline" 2 "LIMTIP" 3 "Scenario 1" 4 "Scenario 2" 5 "Scenario 3") pos(6) row(1)) ///
+>     ytitle("Time Deficit") graphregion(margin(zero)) ///
+>     blabel(bar, format(%3.1f)) ///
+>     bar(1, color(gs4)) bar(2, color(gs7)) ///
+>     bar(3, bstyle(p1)) bar(4, bstyle(p2)) bar(5, bstyle(p3)) ///
+>     xsize(10) ysize(5) scale(1.5) ylabel(20 0(5)20) name(s, replace)
+
+. 
+end of do-file
+
+. set scheme white_tableau
+scheme white_tableau not found
+r(111);
+
+. set scheme white2
+
+. do "C:\Users\Fernando\AppData\Local\Temp\STD6be4_000000.tmp"
+
+.     graph bar (asis) spmpov adjpoor adjpoor_sc1 adjpoor_sc2 adjpoor_sc3 if new_class==1, over(htype) ///
+>     legend(order(1 "Baseline" 2 "LIMTIP" 3 "Scenario 1" 4 "Scenario 2" 5 "Scenario 3") pos(6) row(1)) ///
+>     ytitle("Time Deficit") graphregion(margin(zero)) ///
+>     blabel(bar, format(%3.1f)) ///
+>     bar(1, color(gs4)) bar(2, color(gs7)) ///
+>     bar(3, bstyle(p1)) bar(4, bstyle(p2)) bar(5, bstyle(p3)) ///
+>     xsize(10) ysize(5) scale(1.5) ylabel(21 19 0(5)20) name(s, replace)
+
+. 
+end of do-file
+
+. do "C:\Users\Fernando\AppData\Local\Temp\STD6be4_000000.tmp"
+
+.     graph bar (asis) spmpov adjpoor adjpoor_sc1 adjpoor_sc2 adjpoor_sc3 if new_class==1, over(htype) ///
+>     legend(order(1 "Baseline" 2 "LIMTIP" 3 "Scenario 1" 4 "Scenario 2" 5 "Scenario 3") pos(6) row(1)) ///
+>     ytitle("Time Deficit") graphregion(margin(zero)) ///
+>     blabel(bar, format(%3.1f)) ///
+>     bar(1, color(gs4)) bar(2, color(gs7)) ///
+>     bar(3, bstyle(p1)) bar(4, bstyle(p2)) bar(5, bstyle(p3)) ///
+>     xsize(10) ysize(5) scale(1.5) ylabel(0(5)20) yscale(range(0 21) name(s, replace)
+parentheses do not balance
+r(198);
+
+end of do-file
+
+r(198);
+
+. do "C:\Users\Fernando\AppData\Local\Temp\STD6be4_000000.tmp"
+
+.     graph bar (asis) spmpov adjpoor adjpoor_sc1 adjpoor_sc2 adjpoor_sc3 if new_class==1, over(htype) ///
+>     legend(order(1 "Baseline" 2 "LIMTIP" 3 "Scenario 1" 4 "Scenario 2" 5 "Scenario 3") pos(6) row(1)) ///
+>     ytitle("Time Deficit") graphregion(margin(zero)) ///
+>     blabel(bar, format(%3.1f)) ///
+>     bar(1, color(gs4)) bar(2, color(gs7)) ///
+>     bar(3, bstyle(p1)) bar(4, bstyle(p2)) bar(5, bstyle(p3)) ///
+>     xsize(10) ysize(5) scale(1.5) ylabel(0(5)20) yscale(range(0 21)) name(s, replace)
+
+. 
+end of do-file
+
+. do "C:\Users\Fernando\AppData\Local\Temp\STD6be4_000000.tmp"
+
+.     graph bar (asis) spmpov adjpoor adjpoor_sc1 adjpoor_sc2 adjpoor_sc3 if new_class==1, over(htype) ///
+>     legend(order(1 "Baseline" 2 "LIMTIP" 3 "Scenario 1" 4 "Scenario 2" 5 "Scenario 3") pos(6) row(1)) ///
+>     ytitle("Time Deficit") graphregion(margin(zero)) ///
+>     blabel(bar, format(%3.1f)) ///
+>     bar(1, color(gs4)) bar(2, color(gs7)) ///
+>     bar(3, bstyle(p1)) bar(4, bstyle(p2)) bar(5, bstyle(p3)) ///
+>     xsize(10) ysize(5) scale(1.5) ylabel(0(5)20) yscale(range(0 20.1)) name(s, replace)
+
+. 
+end of do-file
+
+. do "C:\Users\Fernando\AppData\Local\Temp\STD6be4_000000.tmp"
+
+. color_style  bay
+
+. 
+end of do-file
+
+. do "C:\Users\Fernando\AppData\Local\Temp\STD6be4_000000.tmp"
+
+.     graph bar (asis) spmpov adjpoor adjpoor_sc1 adjpoor_sc2 adjpoor_sc3 if new_class==1, over(htype) ///
+>     legend(order(1 "Baseline" 2 "LIMTIP" 3 "Scenario 1" 4 "Scenario 2" 5 "Scenario 3") pos(6) row(1)) ///
+>     ytitle("Time Deficit") graphregion(margin(zero)) ///
+>     blabel(bar, format(%3.1f)) ///
+>     bar(1, color(gs4)) bar(2, color(gs7)) ///
+>     bar(3, bstyle(p1)) bar(4, bstyle(p2)) bar(5, bstyle(p3)) ///
+>     xsize(10) ysize(5) scale(1.5) ylabel(0(5)20) yscale(range(0 20.1)) name(s, replace)
+
+.     graph export "hh_pov_hw.pdf", replace
+file hh_pov_hw.pdf saved as PDF format
+
+.     graph export "hh_pov_hw.png", replace width(1500)       
+(file hh_pov_hw.png not found)
+file hh_pov_hw.png saved as PNG format
+
+.         graph bar (asis) spmpov adjpoor adjpoor_sc1 adjpoor_sc2 adjpoor_sc3 if new_class==3, over(htype) /
+> //
+>     legend(order(1 "Baseline" 2 "LIMTIP" 3 "Scenario 1" 4 "Scenario 2" 5 "Scenario 3") pos(6) row(1)) ///
+>     ytitle("Time Deficit") graphregion(margin(zero)) ///
+>     blabel(bar, format(%3.1f)) ///
+>     bar(1, color(gs4)) bar(2, color(gs7)) ///
+>     bar(3, bstyle(p1)) bar(4, bstyle(p2)) bar(5, bstyle(p3)) ///
+>     xsize(10) ysize(5) scale(1.5) 
+
+.     graph export "hh_pov_oth.pdf", replace
+file hh_pov_oth.pdf saved as PDF format
+
+.     graph export "hh_pov_oth.png", replace width(1500)       
+(file hh_pov_oth.png not found)
+file hh_pov_oth.png saved as PNG format
+
+. 
+end of do-file
+
