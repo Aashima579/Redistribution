@@ -142,7 +142,7 @@ frame coll:{
     graph export "hh_pov_hw.png", replace width(1500)       
         graph bar (asis) spmpov adjpoor adjpoor_sc1 adjpoor_sc2 adjpoor_sc3 if new_class==3, over(htype) ///
     legend(order(1 "Baseline" 2 "LIMTIP" 3 "Scenario 1" 4 "Scenario 2" 5 "Scenario 3") pos(6) row(1)) ///
-    ytitle("Time Deficit") graphregion(margin(zero)) ///
+    ytitle("Poverty rate") graphregion(margin(zero)) ///
     blabel(bar, format(%3.1f)) ///
     bar(1, color(gs4)) bar(2, color(gs7)) ///
     bar(3, bstyle(p1)) bar(4, bstyle(p2)) bar(5, bstyle(p3)) ///
