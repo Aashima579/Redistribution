@@ -3706,3 +3706,6 @@ file hh_pov_oth.png saved as PNG format
 . 
 end of do-file
 
+. clear all
+
+. exit, clear
