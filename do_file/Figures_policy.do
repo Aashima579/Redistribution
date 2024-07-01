@@ -187,3 +187,78 @@ frame coll:{
     graph export "hh_pov_oth.pdf", replace
     graph export "hh_pov_oth.png", replace width(1500)       
 }
+
+tabstat2 spmpov adj* [w=asecwth] , by(htype) save
+matrix res = r(tmatrix2)\r(StatTotal)
+matrix res = res*100   
+
+frame toplot: {
+    clear
+    svmat res
+    gen n=_n
+    replace n=0 if n==4
+    ren n group
+label define group 0 "All Households" 1 "H.H. Type I" 2 "H.H. Type II" 3 "H.H. Type III", modify
+label values group group
+set scheme white2
+color_style bay
+graph bar res1 res2 res3 res4 res5, by(group, note("") row(1) scale(1.5)) ///
+    blabel(bar, format(%3.1f))  ///
+    bar(1, color(gs4)) bar(2, color(gs7)) ///
+    bar(3, bstyle(p1)) bar(4, bstyle(p2)) bar(5, bstyle(p3)) ///
+    legend(order(1 "Baseline" 2 "LIMTIP" 3 "Scenario 1" 4 "Scenario 2" 5 "Scenario 3") pos(6) row(1)) ///
+    ytitle("Poverty rate") graphregion(margin(zero))   scale(1.5) yscale(range(0 12)) ///    
+    ysize(4) xsize(10) 
+    graph export "hh_pov.pdf", replace
+    graph export "hh_pov.png", replace width(1500) 
+}
+
+tabstat2 spmpov adj* [w=asecwth] if couple_in_sample, by(htype) save
+matrix res = r(tmatrix2)\r(StatTotal)
+matrix res = res*100   
+
+frame toplot: {
+    clear
+    svmat res
+    gen n=_n
+    replace n=0 if n==4
+    ren n group
+label define group 0 "All Households" 1 "H.H. Type I" 2 "H.H. Type II" 3 "H.H. Type III", modify
+label values group group
+set scheme white2
+color_style bay
+graph bar res1 res2 res3 res4 res5, by(group, note("") row(1) scale(1.5)) ///
+    blabel(bar, format(%3.1f))  ///
+    bar(1, color(gs4)) bar(2, color(gs7)) ///
+    bar(3, bstyle(p1)) bar(4, bstyle(p2)) bar(5, bstyle(p3)) ///
+    legend(order(1 "Baseline" 2 "LIMTIP" 3 "Scenario 1" 4 "Scenario 2" 5 "Scenario 3") pos(6) row(1)) ///
+    ytitle("Poverty rate") graphregion(margin(zero))   scale(1.5) yscale(range(0 12)) ///    
+    ysize(4) xsize(10) 
+    graph export "hh_pov_couple.pdf", replace
+    graph export "hh_pov_couple.png", replace width(1500) 
+}
+ 
+tabstat2 spmpov adj* [w=asecwth] if !couple_in_sample, by(htype) save
+matrix res = r(tmatrix2)\r(StatTotal)
+matrix res = res*100   
+ 
+ frame toplot: {
+    clear
+    svmat res
+    gen n=_n
+    replace n=0 if n==4
+    ren n group
+label define group 0 "All Households" 1 "H.H. Type I" 2 "H.H. Type II" 3 "H.H. Type III", modify
+label values group group
+set scheme white2
+color_style bay
+graph bar res1 res2 res3 res4 res5, by(group, note("") row(1) scale(1.5)) ///
+    blabel(bar, format(%3.1f))  ///
+    bar(1, color(gs4)) bar(2, color(gs7)) ///
+    bar(3, bstyle(p1)) bar(4, bstyle(p2)) bar(5, bstyle(p3)) ///
+    legend(order(1 "Baseline" 2 "LIMTIP" 3 "Scenario 1" 4 "Scenario 2" 5 "Scenario 3") pos(6) row(1)) ///
+    ytitle("Poverty rate") graphregion(margin(zero))   scale(1.5) yscale(range(0 12)) ///    
+    ysize(4) xsize(10) 
+    graph export "hh_pov_Other.pdf", replace
+    graph export "hh_pov_Other.png", replace width(1500) 
+}
