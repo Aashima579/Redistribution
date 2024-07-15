@@ -189,7 +189,7 @@ Z_{ij} &=\max{\Big(168-M-D_{ij}(L_{ij}+T_{ij}-E_{ij}(S_{ij}),0\Big)} \\
 \end{aligned}
 $$ {#eq-r2}
 
-Because there are individuals (young adults) who may still be in school, the standard definition of $Z_{ij}$ may not capture their true time availability. To address this, we add a correction to time availability for all individuals who declared attending school, subtracting from their available time ($Z_{ij}$) the average number of hours people spend in education activities per week. This correction does not affect the time balance used for the identification of the time poor, only the estimation of time available and the adjusted shares $\alpha_{ij}^A$. 
+Because there are individuals (young adults) who may still be in school, the standard definition of $Z_{ij}$ may not capture their true time availability. To address this, we add a correction to time availability for all individuals who declared attending school, subtracting from their available time ($Z_{ij}$) the average number of hours people spend in education activities per week ($S_{ij}$). This correction does not affect the time balance used for the identification of the time poor, only the estimation of time available and the adjusted shares $\alpha_{ij}^A$. 
 
 ## Scenario 3: Opportunity Cost
 
@@ -295,7 +295,7 @@ We first consider the household as a whole. As shown earlier, time-poor househol
 
 [^3]: This estimate is different from @tbl-limtip because @fig-limtip1 does not include "single" households.
 
-When considering the different scenarios, despite the different nature of the redistribution criteria, they all have considerably similar effects on time poverty, reducing the incidence of hidden poor by 1-2% , with Scenario 2 (time availability) proving to be the most effective in reducing hidden poverty. 
+When considering the different scenarios, despite the different nature of the redistribution criteria, they all have considerably similar effects on time poverty, reducing the incidence of hidden poor to 1-2% for all households combined, with Scenario 2 (time availability) proving to be the most effective in reducing hidden poverty. The decline in the incidence of hidden poor is the highest in households Type II, about 4-5%. 
 
 The only case where this does not happen is among households Type I. Because everyone in this household is time-poor, redistribution is able to reduce the incidence of time poverty at the individual level, at the expense of sometimes increasing household time poverty, and hence LIMTIP poverty. In addition, because of the limited room for redistribution, households type II are only able to reduce hidden poverty by half, whereas in households type III, the hidden poor are practically eliminated (0.2-1.2%). 
 
