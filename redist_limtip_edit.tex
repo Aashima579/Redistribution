@@ -207,7 +207,7 @@ Aashima Sinha\\
 Levy Economics Institute\\
 \\
 }
-\date{2024-06-28}
+\date{2024-07-15}
 \begin{document}
 
 
@@ -311,13 +311,13 @@ paid work. At the household level, even if a single individual struggles
 to meet their responsibilities, the whole family is considered to be
 living under time poverty. In this framework, as pointed out in
 (\textbf{policybrief\_USLIMTIP?}), it is not uncommon to see households
-with a mixture of time availability among its members. In fact, just
-over 20\% of the working-age population are not time-poor but live in a
-household where at least one person lives under time poverty. In spite
-of the growing recognition of the importance of time constraints and the
-responsibility of household production, the issue of time poverty has
-received limited attention in the U.S., partially due to data
-availability constraints.
+with a mixture of time availability (i.e deficts and sur) among its
+members. In fact, just over 20\% of the working-age population are not
+time-poor but live in a household where at least one person lives under
+time poverty. In spite of the growing recognition of the importance of
+time constraints and the responsibility of household production, the
+issue of time poverty has received limited attention in the U.S.,
+partially due to data availability constraints.
 
 Over the last decades, the Levy Economic Institute has been at the
 forefront of recognizing the importance of time for understanding income
@@ -496,9 +496,10 @@ the redistribution of household production responsibilities across all
 working-age members in the household. At best, household members with
 time surpluses could take on more household responsibilities, reducing
 the burden of those with time deficits, and potentially lifting the
-household out of poverty. At worst, the redistribution could make the
-time deficits more equal among the household members, even if the
-household remains time-poor.
+household out of poverty. Even if the household remains time-poor,
+redistribution could still make the time deficits more equal among the
+household members, particulalry balancing the share between men and
+women.
 
 Before we start analyzing the potential that redistribution could have
 in reducing time poverty, we must first identify the households where
@@ -689,7 +690,7 @@ tasks within the household. The new share is defined as:
 
 \begin{equation}\phantomsection\label{eq-r2}{
 \begin{aligned}
-Z_{ij} &=\max{\Big(168-M-D_{ij}(L_{ij}+T_{ij}),0\Big)} \\
+Z_{ij} &=\max{\Big(168-M-D_{ij}(L_{ij}+T_{ij}-E_{ij}(S_{ij}),0\Big)} \\
 \alpha_{ij}^A &= \frac{Z_{ij}}{\sum Z_{ij}} (1-\alpha_{j}^{nw})
 \end{aligned}
 }\end{equation}
@@ -699,9 +700,10 @@ the standard definition of \(Z_{ij}\) may not capture their true time
 availability. To address this, we add a correction to time availability
 for all individuals who declared attending school, subtracting from
 their available time (\(Z_{ij}\)) the average number of hours people
-spend in education activities per week. This correction does not affect
-the time balance used for the identification of the time poor, only the
-estimation of time available and the adjusted shares \(\alpha_{ij}^A\).
+spend in education activities per week (\(S_{ij}\)). This correction
+does not affect the time balance used for the identification of the time
+poor, only the estimation of time available and the adjusted shares
+\(\alpha_{ij}^A\).
 
 \subsection{Scenario 3: Opportunity
 Cost}\label{scenario-3-opportunity-cost}
@@ -755,7 +757,8 @@ in helping time-poor individuals exit time poverty, as well as to what
 extent non-time poor individuals are affected by the redistribution
 scenarios, falling into time poverty. We refer to both of these as
 transition rates (into and out of time poverty). We focus on providing
-results that average the impacts of redistribution across all years.
+results that average the impacts of redistribution across all year
+(2005-2023).
 
 \subsection{Redistribution Scenarios and Time
 Poverty}\label{redistribution-scenarios-and-time-poverty}
@@ -773,20 +776,20 @@ We start by looking at the transition rates among couples. As shown in
 Table~\ref{tbl-class2}, husbands were less likely to be time-poor
 compared to wives, which also implies they are more likely to have time
 available. Because they will have to take on more household production
-responsibilities under the redistribution scenarios, men should be more
-likely to fall into time poverty compared to their wives. As observed in
-Figure~\ref{fig-transition1}, a considerable share (14.2\% to 26.1\%) of
-non-time poor men will fall into time poverty under different scenarios,
-with a relatively smaller share among non-time poor women (except for
-Scenario 3). Overall, Scenario I (equal share) has the highest impact
-pushing men into time poverty (26.1\%). In contrast, see
-Figure~\ref{fig-transition2}, because women are already more likely to
-be in charge of the largest share of household responsibilities,
-Scenario 1 has a much smaller impact in terms of transition into time
-poverty (8.3\%). The second scenario, which fosters a more equitable
-redistribution of responsibilities across household members, has very
-similar impacts in terms of transition into poverty, regardless of
-gender.
+responsibilities under the redistribution scenarios, non-time poor men
+would be more likely to fall into time poverty compared to their
+non-time poor wives. As observed in Figure~\ref{fig-transition1}, a
+considerable share (14.2\% to 26.1\%) of non-time poor men will fall
+into time poverty under different scenarios, with a relatively smaller
+share among non-time poor women (except for Scenario 3). Overall,
+Scenario I (equal share) has the highest impact pushing men into time
+poverty (26.1\%). In contrast, see Figure~\ref{fig-transition2}, because
+women are already more likely to be in charge of the largest share of
+household responsibilities, Scenario 1 has a much smaller impact in
+terms of transition into time poverty (8.3\%). The second scenario,
+which fosters a more equitable redistribution of responsibilities across
+household members, has very similar impacts in terms of transition into
+poverty, regardless of gender.
 
 \begin{figure}[H]
 
@@ -1027,9 +1030,11 @@ which translates to 5.7\% of individuals being hidden poor.
 
 When considering the different scenarios, despite the different nature
 of the redistribution criteria, they all have considerably similar
-effects on time poverty, reducing the incidence of hidden poor by 1-2\%,
-with Scenario 2 (time availability) proving to be the most effective in
-reducing hidden poverty.
+effects on time poverty, reducing the incidence of hidden poor to 1-2\%
+for all households combined, with Scenario 2 (time availability) proving
+to be the most effective in reducing hidden poverty. The decline in the
+incidence of hidden poor is the highest for households Type II, about
+4-5\%.
 
 The only case where this does not happen is among households Type I.
 Because everyone in this household is time-poor, redistribution is able
@@ -1111,8 +1116,8 @@ effects across household types and scenarios suggest that a
 one-size-fits-all approach may not be optimal, and that further research
 on this area is needed.
 
-In conclusion, while redistribution of household production shows
-promise in alleviating time poverty, and the hidden poor, it should be
+In conclusion, while redistribution of household production is promising
+in alleviating time poverty, and the hidden poor, it should be
 considered as part of strategies that also addresses societal and
 structural factors that contribute to time and income poverty.
 
