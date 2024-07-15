@@ -184,7 +184,7 @@ To implement this, we first calculate the time available ($Z_{ij}$) for each ind
 
 $$
 \begin{aligned}
-Z_{ij} &=\max{\Big(168-M-D_{ij}(L_{ij}+T_{ij}),0\Big)} \\
+Z_{ij} &=\max{\Big(168-M-D_{ij}(L_{ij}+T_{ij}-E_{ij}(S_{ij}),0\Big)} \\
 \alpha_{ij}^A &= \frac{Z_{ij}}{\sum Z_{ij}} (1-\alpha_{j}^{nw})
 \end{aligned}
 $$ {#eq-r2}
