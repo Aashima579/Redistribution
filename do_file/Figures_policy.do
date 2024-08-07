@@ -1,5 +1,8 @@
 *** Redistribution Graphs
-cd "g:\Shared drives\levy_distribution\Time Poverty\US\LIMTIP\redistribution_simulation"
+*cd "g:\Shared drives\levy_distribution\Time Poverty\US\LIMTIP\redistribution_simulation"
+global server "/Users/aashimasinha/Library/CloudStorage/GoogleDrive-asinha@levy.org/"
+cd "$server/Shared drives/levy_distribution/Time Poverty/US/LIMTIP/redistribution_simulation"
+
 *** First Agg all years
 capture frame drop agg
 capture frame create agg
@@ -19,16 +22,19 @@ frame change default
 
 replace couple_in_sample = couple_in_sample==1
 
+/*
 tabstat2 spmpov tpoor adjpoor [aw= asecwth ], by(h_tpoor) save
 
 matrix res =  r(tmatrix2)'*100
 tab h_tpoor [iw= asecwth ], matcell(s0)
 mata:st_matrix("shr",(st_matrix("s0"):/sum(st_matrix("s0"))*100)')
-matrix res = shr\res
+matrix res = shr/res
 matrix colname res = "Time not-poor Household" "Time poor Household"
 matrix rowname res = "Share" "SPM-Poverty" "Ind Time Poverty" "Adj Poverty/LIMTIP"
 
 esttab matrix(res, fmt(%3.1f)), tex
+*/
+
 
 drop2 ptype2 
 gen byte ptype2 = 0 if disable==1
@@ -84,7 +90,9 @@ frame coll: {
 ** Figures
 set scheme white2
 color_style  bay
-cd "C:\Users\Fernando\Documents\GitHub\Redistribution\resources_brief"
+*cd "C:\Users\Fernando\Documents\GitHub\Redistribution\resources_brief"
+cd "/Users/aashimasinha/Documents/GitHub/Redistribution/resources_brief"
+
 frame coll: {
     graph bar (asis) tpoor_sc1 tpoor_sc2 tpoor_sc3 if new_class==1, over(ptype) ///
         legend(order(1 "Scenario 1" 2 "Scenario 2" 3 "Scenario 3") pos(6) row(1)) ///
@@ -188,10 +196,13 @@ frame coll:{
     graph export "hh_pov_oth.png", replace width(1500)       
 }
 
+
 tabstat2 spmpov adj* [w=asecwth] , by(htype) save
 matrix res = r(tmatrix2)\r(StatTotal)
 matrix res = res*100   
 
+
+frame create toplot
 frame toplot: {
     clear
     svmat res
