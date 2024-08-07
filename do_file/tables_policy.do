@@ -19,7 +19,7 @@ frame change default
 replace couple_in_sample = couple_in_sample==1
 
 
-
+*Table 1
 tabstat2 spmpov tpoor adjpoor [aw= asecwth ], by(h_tpoor) save
 
 matrix res =  r(tmatrix2)'*100
@@ -43,6 +43,16 @@ label define new_class 2 "Married: Women", modify
 label define new_class 3 "Other Member", modify
 label values new_class new_class 
 
-tabstat2 new_class[aw= asecwth ], by(htype) save
+*Table 3
+
+tabstat2 new_class [aw= asecwth ], by(htype) save
+tabulate htype new_class , matcell(freq)
+matrix res2 =  r(tmatrix2)'*100
+tab htype [aw= asecwth ], matcell(s0)
+mata:st_matrix("shr2",(st_matrix("s0"):/sum(st_matrix("s0"))*100)')
+matrix res2 = shr2\res2
+matrix list res2
+
+tabulate htype new_class , matcell(freq)
 
 
