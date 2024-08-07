@@ -87,12 +87,6 @@ It is also evident from @tbl-limtip that not everyone in a time-poor household i
 
 Lastly, the table also shows the adjusted poverty rates (or LIMTIP Income poverty). As mentioned earlier, official poverty and LIMTIP income poverty do not change for non-time poor households. However, for time-poor households, the incidence of LIMTIP income poverty is 13.1%, compared to 6% for official poverty, which suggests that just over 7% of individuals in time-poor households are hidden poor.
 
-\singlespacing
-:::{#tbl-limtip tbl-pos="H"}
-{{< include resources_brief/table1.tex.tex >}}
-
-\footnotesize  Note: 
-\normalsize
  
 :::{#tbl-limtip tbl-pos="H"}
 
