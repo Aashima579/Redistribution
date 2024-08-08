@@ -44,6 +44,10 @@ label define new_class 3 "Other Member", modify
 label values new_class new_class 
 
 *Table 3
+
+*table htype new_class [aw= asecwth], statistic(percent tpoor)  statistic(sd htype)  nformat(%5.2f) sformat((%s) sd) style(table-tab2)  
+
+
 tabulate htype new_class [aw= asecwth] , matcell(freq)
 
 tabstat2 new_class [aw= asecwth ], by(htype) columns(variables) save
