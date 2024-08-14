@@ -4,7 +4,7 @@ cd "$server/Shared drives/levy_distribution/Time Poverty/US/LIMTIP/redistributio
 *** First Agg all years
 capture frame drop agg
 capture frame create agg
-forvalues i = 2005/2023 {
+forvalues i = 2005/2022 {
     use red_scenarios_`i', clear
     keep if inrange(age,18,64)
     compress
