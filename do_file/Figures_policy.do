@@ -6,7 +6,7 @@ cd "$server/Shared drives/levy_distribution/Time Poverty/US/LIMTIP/redistributio
 *** First Agg all years
 capture frame drop agg
 capture frame create agg
-forvalues i = 2005/2023 {
+forvalues i = 2005/2022 {
     use red_scenarios_`i', clear
     drop if htype == 0 | htype == 1
     keep if inrange(age,18,64)
@@ -201,7 +201,7 @@ tabstat2 spmpov adj* [w=asecwth] , by(htype) save
 matrix res = r(tmatrix2)\r(StatTotal)
 matrix res = res*100   
 
-
+capture frame drop toplot
 frame create toplot
 frame toplot: {
     clear
@@ -226,8 +226,8 @@ graph bar res1 res2 res3 res4 res5, by(group, note("") row(1) scale(1.5)) ///
 
 tabstat2 spmpov adj* [w=asecwth] if couple_in_sample, by(htype) save
 matrix res = r(tmatrix2)\r(StatTotal)
-matrix res = res*100   
-
+matrix res = res*100  
+ 
 frame toplot: {
     clear
     svmat res
