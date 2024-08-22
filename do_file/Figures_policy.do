@@ -1,6 +1,7 @@
 *** Redistribution Graphs
 *cd "g:\Shared drives\levy_distribution\Time Poverty\US\LIMTIP\redistribution_simulation"
 global server "/Users/aashimasinha/Library/CloudStorage/GoogleDrive-asinha@levy.org/"
+global server "g:\"
 cd "$server/Shared drives/levy_distribution/Time Poverty/US/LIMTIP/redistribution_simulation"
 
 *** First Agg all years
@@ -90,8 +91,8 @@ frame coll: {
 ** Figures
 set scheme white2
 color_style  bay
-*cd "C:\Users\Fernando\Documents\GitHub\Redistribution\resources_brief"
-cd "/Users/aashimasinha/Documents/GitHub/Redistribution/resources_brief"
+cd "C:\Users\Fernando\Documents\GitHub\Redistribution\resources_brief"
+*cd "/Users/aashimasinha/Documents/GitHub/Redistribution/resources_brief"
 
 frame coll: {
     graph bar (asis) tpoor_sc1 tpoor_sc2 tpoor_sc3 if new_class==1, over(ptype) ///
@@ -197,7 +198,7 @@ frame coll:{
 }
 
 
-tabstat2 spmpov adj* [w=asecwth] , by(htype) save
+tabstat2 spmpov adjp* [w=asecwth] , by(htype) save
 matrix res = r(tmatrix2)\r(StatTotal)
 matrix res = res*100   
 
@@ -224,7 +225,7 @@ graph bar res1 res2 res3 res4 res5, by(group, note("") row(1) scale(1.5)) ///
     graph export "hh_pov.png", replace width(1500) 
 }
 
-tabstat2 spmpov adj* [w=asecwth] if couple_in_sample, by(htype) save
+tabstat2 spmpov adjp* [w=asecwth] if couple_in_sample, by(htype) save
 matrix res = r(tmatrix2)\r(StatTotal)
 matrix res = res*100  
  
@@ -249,7 +250,7 @@ graph bar res1 res2 res3 res4 res5, by(group, note("") row(1) scale(1.5)) ///
     graph export "hh_pov_couple.png", replace width(1500) 
 }
  
-tabstat2 spmpov adj* [w=asecwth] if !couple_in_sample, by(htype) save
+tabstat2 spmpov adjp* [w=asecwth] if !couple_in_sample, by(htype) save
 matrix res = r(tmatrix2)\r(StatTotal)
 matrix res = res*100   
  
