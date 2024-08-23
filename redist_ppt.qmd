@@ -1,0 +1,342 @@
+---
+title: "The Hidden Poor"
+subtitle: "Solving Time Poverty through Redistribution of Household Production"
+author: 
+    - Fernando Rios-Avila
+    - Aashima Sinha
+format:
+  revealjs:
+    theme: [ clean2.scss]
+    slide-number: true
+    footer: "Levy Economics Institute of Bard College"
+    width:  1200
+    height: 675
+    title-slide-attributes:
+        data-background-image: blog2.jpg
+        data-background-size: contain 
+        data-background-opacity: 15%
+---
+
+## Introduction
+
+- Time poverty is a critical yet often overlooked dimension of well-being. It refers to the lack of time for essential activities such as self-care, household responsibilities, and leisure. 
+
+- Traditional poverty measures focus on income, but time poverty can significantly impact individuals' quality of life and overall welfare.
+
+- In this study we use The Levy Institute Measure of Time and Income Poverty (LIMTIP) to evaluate how redistributing of household production responsibilities can alleviate time poverty.
+ 
+  - Three distinct redistribution scenarios and their impacts
+
+::: {.notes}
+- Emphasize the importance of considering time alongside income in poverty measures
+- Mention that this study focuses on the United States
+- Highlight that redistribution is examined within households, particularly between men and women
+:::
+
+## What is LIMTIP?
+
+The Levy Institute Measure of Time and Income Poverty (LIMTIP) is an approach that:
+
+- Incorporates the dimension of time into traditional poverty measures
+- Allow us to identify the "hidden poor" - those who appear non-poor by income but are time-poor given their responsibilities and constraints (how much they need to "buy" time to meet their needs)
+- It combines data from the American Time Use Survey (ATUS) and the Current Population Survey (CPS) to provide a more comprehensive understanding of poverty
+
+::: {.notes}
+- LIMTIP was developed by the Levy Economics Institute
+- It provides a more comprehensive understanding of poverty
+- The hidden poor are often overlooked in traditional poverty measures
+:::
+
+## Time Balance Equation
+
+The core of LIMTIP is the time balance equation:
+
+$$X_{ij} = 168 - M - \alpha_{ij}R_j-D_{ij}(L_{ij}+T_{ij})$$
+
+Where:
+
+- $X_{ij}$: Time left after required activities
+- $M$: Personal maintenance time
+- $\alpha_{ij}R_j$: Individual's share of household responsibilities
+- $D_{ij}(L_{ij}+T_{ij})$: Time spent on paid work and commuting
+
+::: {.notes}
+- 168 represents the total hours in a week
+- Personal maintenance includes activities like sleeping and eating
+- Negative $X_{ij}$ indicates time poverty
+:::
+
+## Household Time Poverty
+
+LIMTIP considers household-level time poverty:
+
+$$X_{j} = \sum_{i=1}^{I_j} \min(X_{ij},0)$$
+
+- A household is time-poor if at least one member has a time deficit
+- This assumes no redistribution of responsibilities among household members
+- It captures the household's overall time stress
+
+::: {.notes}
+- This approach recognizes that time poverty affects the entire household
+- It's possible for some members to have time surpluses while others have deficits
+- This formula sums up all individual time deficits in the household
+:::
+
+## LIMTIP Poverty Line
+
+LIMTIP adjusts the official poverty line to account for time deficits:
+
+$$Z_{j}^{adj} = Z_{j} + 52*P* |X_{j}|$$
+
+Where:
+
+- $Z_{j}$: Official poverty line
+- $P$: Price used to monetize time deficits
+- $52*P* |X_{j}|$: Annual cost of buying out time deficits
+
+This adjustment helps identify the "hidden poor" - those who fall below the adjusted poverty line.
+
+::: {.notes}
+- $P$ is based on the average hourly wage for the private household industry
+- The adjustment represents the cost of outsourcing household production to eliminate time deficits
+- This captures the full extent of poverty, considering both time and income dimensions
+:::
+
+## LIMTIP Estimates for the U.S.
+
+Analysis of U.S. data from 2005-2022 reveals:
+
+- 38.7% of individuals live in time-poor households
+- Among those in time-poor households:
+  - 52.1% are themselves time-poor
+  - 6% are "hidden poor" (non-poor by official measures, poor by LIMTIP)
+- Time poverty is more prevalent among women (58%) than men (46%) in couples
+
+::: {.notes}
+- These figures highlight the significance of time poverty in the U.S.
+- The gender disparity in time poverty reflects unequal distribution of household responsibilities
+- The hidden poor represent a significant group overlooked by traditional poverty measures
+:::
+
+## Household Classification
+
+For the redistribution analysis, households are classified into:
+
+1. Non-Time Poor (61.3%): No time-poor members
+2. Single Person Eligible (5.1%): Only one working-age, non-disabled member
+3. Household Type I (1.4%): All members are time-poor
+4. Household Type II (5.2%): At least one non-time poor member, but cannot eliminate household time poverty
+5. Household Type III (27.0%): Can potentially eliminate household time poverty through redistribution
+
+::: {.notes}
+- Focus of the study is on Types I, II, and III
+- Type III households have the most potential for improvement through redistribution
+- The classification helps in understanding the different contexts of time poverty
+:::
+
+## Redistribution Scenarios
+
+The study explores three redistribution scenarios:
+
+1. Equal Shares: Divides household production time equally
+2. Time Available: Distributes based on individual time availability
+3. Opportunity Cost: Assigns shares based on earning potential
+
+Each scenario represents a different principle of fairness or efficiency.
+
+::: {.notes}
+- These scenarios are theoretical and used to understand potential impacts
+- They represent different philosophical approaches to household work distribution
+- The goal is to compare outcomes and identify the most effective approach
+:::
+
+## Scenario 1: Equal Shares
+
+Equal Shares scenario distributes household production equally:
+
+$$\alpha_{ij}^E= \frac{1}{I_j}*(1-\alpha_{j}^{nw})$$
+
+Where:
+
+- $I_j$: Number of working-age persons in household
+- $\alpha_{j}^{nw}$: Total share of non-working age members
+
+This approach emphasizes equality but ignores individual circumstances.
+
+::: {.notes}
+- This is the simplest approach to redistribution
+- It may not be the most efficient or fair in all cases
+- Could potentially increase time poverty for some while alleviating it for others
+:::
+
+## Scenario 2: Time Available
+
+Time Available scenario distributes based on individual time availability:
+
+$$\alpha_{ij}^A = \frac{Z_{ij}}{\sum Z_{ij}} (1-\alpha_{j}^{nw})$$
+
+Where $Z_{ij}$ is available time after personal maintenance and income generation.
+
+This approach aims for equity in time distribution.
+
+::: {.notes}
+- This scenario considers individual circumstances
+- It tries to balance the time burden across household members
+- May be more equitable but could be complex to implement in reality
+:::
+
+## Scenario 3: Opportunity Cost
+
+Opportunity Cost scenario distributes based on earning potentials:
+
+$$\alpha_{ij}^O = \frac{rw_{ij}}{\sum rw_{ij}} (1-\alpha_{j}^{nw})$$
+
+Where $rw_{ij}$ is the inverse of individual (predicted) wages.
+
+This approach aims to allocate responsibilities based on economic efficiency.
+
+::: {.notes}
+- Based on economic efficiency principles
+- Could potentially increase household income but may reinforce gender inequalities
+- Requires estimating potential wages for non-working members
+:::
+
+## Results: Transition Rates for Couples
+
+![Transition rates for men](resources_brief/poverty_men.png)
+
+:::{.small-text}
+- Scenario 1 (Equal Shares) has the highest impact on men's time poverty
+- Scenario 2 (Time Available) shows similar impacts across genders
+- Scenario 3 (Opportunity Cost) affects women more than men
+:::
+
+::: {.notes}
+- Transition rates show the percentage of individuals moving into or out of time poverty
+- Results vary significantly across household types
+- In Type III households, all scenarios show high poverty exit rates
+:::
+
+## Results: Transition Rates for Couples
+
+![Transition rates for Women](resources_brief/poverty_wmen.png)
+
+:::{.small-text}
+- Scenario 1 (Equal Shares) has the highest impact on men's time poverty
+- Scenario 2 (Time Available) shows similar impacts across genders
+- Scenario 3 (Opportunity Cost) affects women more than men
+:::
+
+::: {.notes}
+- Transition rates show the percentage of individuals moving into or out of time poverty
+- Results vary significantly across household types
+- In Type III households, all scenarios show high poverty exit rates
+:::
+
+## Results: Time Deficits for Couples
+
+![Time deficits for men in couples](resources_brief/tdef_men.png)
+
+:::{.small-text}
+- Scenario 1 tends to increase men's time deficits in Type I households
+- Scenario 2 generally reduces time deficits for both genders
+- Scenario 3 shows mixed results depending on household type
+:::
+
+::: {.notes}
+- Time deficits are measured in hours per week
+- Negative values indicate time poverty
+- The impact on time deficits doesn't always correlate with poverty transition rates
+:::
+
+## Results: Time Deficits for Couples
+
+![Time deficits for women in couples](resources_brief/tdef_wmen.png)
+
+:::{.small-text}
+- Scenario 1 tends to increase men's time deficits in Type I households
+- Scenario 2 generally reduces time deficits for both genders
+- Scenario 3 shows mixed results depending on household type
+:::
+
+::: {.notes}
+- Time deficits are measured in hours per week
+- Negative values indicate time poverty
+- The impact on time deficits doesn't always correlate with poverty transition rates
+:::
+ 
+
+## Changes in LIMTIP Poverty
+
+![Changes in poverty estimates across redistribution scenarios](resources_brief/hh_pov.png)
+
+:::{.small-text}
+- All scenarios reduce the incidence of hidden poor
+- Scenario 2 (Time Available) is most effective in reducing hidden poverty
+- Type I households show little improvement or even increased LIMTIP poverty
+:::
+
+::: {.notes}
+- LIMTIP poverty includes both income poverty and time poverty
+- Hidden poor are those who are not income-poor but are time-poor
+- Results highlight the importance of considering both time and income in poverty measures
+:::
+
+## Key Findings
+
+- Redistribution can significantly reduce time poverty, especially in households with time surpluses
+- The equity-based approach (Scenario 2) is most effective overall in reducing poverty rates
+- Gender disparities in time poverty can be reduced through redistribution
+
+::: {.notes}
+- Emphasize that no single approach works best for all household types
+- Highlight the potential of redistribution in addressing gender inequalities
+- Mention that redistribution alone may not solve time poverty in all cases
+:::
+
+## Policy Implications
+
+The findings suggest several policy considerations:
+
+- Intra-household redistribution can be an effective tool for reducing time poverty
+- Context-specific approaches are needed, considering household composition and circumstances
+- Targeted redistribution policies may be more effective than one-size-fits-all approaches
+- Analysis of household production composition could inform more detailed public policies
+
+::: {.notes}
+- Discuss potential challenges in implementing redistribution policies
+- Mention the need for cultural shifts alongside policy changes
+- Suggest areas for future research, such as impact on child well-being or economic productivity
+:::
+
+## Conclusion
+
+This study on time poverty and household production redistribution reveals:
+
+- Time poverty affects 38.7% of individuals in time-poor households
+- Redistribution can significantly reduce time poverty and hidden poverty
+- No single redistribution approach works best for all households
+- Time poverty should be considered alongside income in poverty alleviation strategies
+
+::: {.notes}
+- Reiterate the importance of considering time poverty in policy discussions
+- Emphasize the potential of redistribution but also its limitations
+- Suggest directions for future research and policy development
+:::
+
+## Thank You!
+
+Questions?
+
+Contact: 
+
+- Fernando Rios-Avila (friosavi@levy.org)
+- Aashima Sinha (asinha@levy.org)
+
+Levy Economics Institute of Bard College
+
+::: {.notes}
+- Be prepared to discuss methodology details if asked
+- Have key statistics ready for potential questions
+- Consider mentioning any ongoing or future related research
+:::
