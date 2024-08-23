@@ -12,9 +12,10 @@ format:
     width:  1200
     height: 675
     title-slide-attributes:
-        data-background-image: blog2.jpg
+        data-background-image: ppt_fig.jpg
         data-background-size: contain 
         data-background-opacity: 15%
+        data-background-position: right
 ---
 
 ## Introduction
