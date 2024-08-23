@@ -36,7 +36,7 @@ matrix rowname res = "Share" "SPM-Poverty" "Ind Time Poverty" "Adj Poverty/LIMTI
 esttab matrix(res, fmt(%3.1f)), tex
 */
 
-
+replace tdef=ytdef/52
 drop2 ptype2 
 gen byte ptype2 = 0 if disable==1
 replace  ptype2 = 1 if disable==0 & couple_in_sample ==1 & sex == 1 

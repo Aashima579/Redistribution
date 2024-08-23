@@ -46,9 +46,10 @@ label values new_class new_class
 *Table 3
 
 *table htype new_class [aw= asecwth], statistic(percent tpoor)  statistic(sd htype)  nformat(%5.2f) sformat((%s) sd) style(table-tab2)  
+replace new_class=0 if disable==1 
 
-
-tabulate htype new_class [aw= asecwth] , matcell(freq)
+tabulate htype new_class [aw= asecwth] , matcell(freq) row
+tabulate htype new_class [aw= asecwth] , sum(tpoor) noobs nofreq nost
 
 tabstat2 new_class [aw= asecwth ], by(htype) columns(variables) save
 matrix res2 =  r(tmatrix2)'*100
