@@ -25,6 +25,14 @@ author:
       affiliations:
         - name: "Levy Economics Institute"
           address: Annandale-on-Hudson, NY 12504
+    - name: "Ajit Zacharias"
+      affiliations:
+        - name: "Levy Economics Institute"
+          address: Annandale-on-Hudson, NY 12504   
+    - name: "Thomas Masterson"
+      affiliations:
+        - name: "Levy Economics Institute"
+          address: Annandale-on-Hudson, NY 12504       
 date: today
 keywords: "Time Poverty, Income Poverty, Redistribution, household production, care work, gender equality, LIMTIP"
 abstract: |
