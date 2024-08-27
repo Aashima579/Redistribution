@@ -43,28 +43,14 @@
 \setlength{\emergencystretch}{3em} % prevent overfull lines
 \setcounter{secnumdepth}{3}
 % Make \paragraph and \subparagraph free-standing
-\makeatletter
 \ifx\paragraph\undefined\else
   \let\oldparagraph\paragraph
-  \renewcommand{\paragraph}{
-    \@ifstar
-      \xxxParagraphStar
-      \xxxParagraphNoStar
-  }
-  \newcommand{\xxxParagraphStar}[1]{\oldparagraph*{#1}\mbox{}}
-  \newcommand{\xxxParagraphNoStar}[1]{\oldparagraph{#1}\mbox{}}
+  \renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
 \fi
 \ifx\subparagraph\undefined\else
   \let\oldsubparagraph\subparagraph
-  \renewcommand{\subparagraph}{
-    \@ifstar
-      \xxxSubParagraphStar
-      \xxxSubParagraphNoStar
-  }
-  \newcommand{\xxxSubParagraphStar}[1]{\oldsubparagraph*{#1}\mbox{}}
-  \newcommand{\xxxSubParagraphNoStar}[1]{\oldsubparagraph{#1}\mbox{}}
+  \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
 \fi
-\makeatother
 
 
 \providecommand{\tightlist}{%
@@ -179,7 +165,6 @@
 \@ifpackageloaded{caption}{}{\usepackage{caption}}
 \@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
 \makeatother
-
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
@@ -198,7 +183,6 @@ production, care work, gender equality, LIMTIP},
   citecolor={Blue},
   urlcolor={Blue},
   pdfcreator={LaTeX via pandoc}}
-
 
 
 \usepackage{datetime}
@@ -223,7 +207,7 @@ Aashima Sinha\\
 Levy Economics Institute\\
 \\
 }
-\date{2024-08-22}
+\date{2024-08-23}
 \begin{document}
 
 
@@ -262,7 +246,6 @@ household production, care work, gender equality, LIMTIP
 \clearpage\pagenumbering{arabic}
 \newpage
 \spacingset{1.2} % DON'T change the spacing!
-
 \section{Introduction}\label{introduction}
 
 Redistribution of household production, which includes unpaid caregiving
@@ -1270,7 +1253,6 @@ Levy Economics Institute of Bard
 College.\href{\%20https://www.bls.gov/cex/consumption/integrating-nonmarket-consumption-bls-consumer-expenditure-survey.pdf}{https://www.bls.gov/cex/consumption/integrating-nonmarket-consumption-bls-consumer-expenditure-survey.pdf}
 
 \end{CSLReferences}
-
 
 
 
