@@ -320,7 +320,7 @@ The findings in this policy brief suggest that intra-household redistribution of
 
 However, the effectiveness of redistribution policies is contingent on the context of each household. For instance, in households where all members are time-poor, redistribution may not be effective and could potentially (slightly) increase LIMTIP poverty. In contrast, households with sufficient time surpluses to absorb time deficits can effectively eliminate time poverty under any of the proposed redistribution policies.
 
-Among the three redistribution scenarios considered, the equity-based approach emerged as the most effective in reducing poverty rates and enabling individuals to exit poverty. Nevertheless, it proved to be less effective in reducing time deficits compared to other scenarios. 
+Among the three redistribution scenarios considered, the equity-based approach emerged as the most effective in reducing poverty rates and enabling individuals to exit poverty.
 
 While the study examined redistribution among all working-age members (18-64 years), future research and policy development should consider more targeted approaches. Specifically, focusing on redistribution between men and women within specific age groups, or with or without children, could provide better information to propose policies that avoid potential negative impacts of penalizing younger or older household members.
 
