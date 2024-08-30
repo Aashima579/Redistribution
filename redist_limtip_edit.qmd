@@ -322,7 +322,7 @@ However, the effectiveness of redistribution policies is contingent on the conte
 
 Among the three redistribution scenarios considered, the equity-based approach emerged as the most effective in reducing poverty rates and enabling individuals to exit poverty.
 
-While the study examined redistribution among all working-age members (18-64 years), future research and policy development should consider more targeted approaches. Specifically, focusing on redistribution between men and women within specific age groups, or with or without children, could provide better information to propose policies that avoid potential negative impacts of penalizing younger or older household members.
+While the study examined redistribution among all working-age members (18-64 years), future research and policy development should consider more targeted approaches. Specifically, focusing on redistribution between men and women within specific age groups, or with or without children, could provide better information to propose policies that avoid potential negative impacts of penalizing younger or older household members by redistributing household burden to members of these age groups. This as evidence supports may prove to be detrimental and have vicous cycle effects if the penalizing is particulalry restricted to younger girls [will elaborate and add citations]. 
 
 Future work should consider analyzing the composition of household production, in addition to redistribution. This would allow for the elaboration of more detailed public policies that consider the specific needs of households such as provision of childcare, eldercare, or other services that could help reduce household production requirements and time deficits.
 
