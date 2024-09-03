@@ -215,7 +215,7 @@ Thomas Masterson\\
 Levy Economics Institute\\
 \\
 }
-\date{2024-08-27}
+\date{2024-09-02}
 \begin{document}
 
 
@@ -234,8 +234,7 @@ equality, equity, and opportunity cost principles. Findings indicate
 that redistribution can significantly reduce time poverty, particularly
 in households where time surpluses exceed time deficits. The
 equity-based approach emerges as most effective in reducing poverty
-rates overall, though less effective in reducing time deficits compared
-to other scenarios. Redistribution is found to be less impactful in
+rates overall. Redistribution is found to be less impactful in
 households where all members are already time-poor. The brief highlights
 how redistribution can promote more equitable sharing of
 responsibilities between men and women and potentially lift entire
@@ -411,14 +410,15 @@ expressed in the following equation (see Equation~\ref{eq-bal}):
 The minimum time required for each of the components in
 Equation~\ref{eq-bal} are estimated using a mixture of assumptions, the
 synthetic dataset, and the ATUS dataset (see (\textbf{wp\_qmatch?}) for
-details).
+details). An individual is classified as time poor if they have a a
+negative time balance based on equation Equation~\ref{eq-bal}.
 
 At the household level, however, we assume that individuals with time
 surpluses are unable or unwilling to share and redistribute some of the
 responsibilities of those with time deficits. In this framework, a
-household is considered to be time-poor as long as there is one person
-with a time deficit living in the household.\footnote{To identify time
-  poverty status, we only consider the time deficits of household
+household is considered to be time-poor as long as there is atleast one
+person with a time deficit living in the household.\footnote{To identify
+  time poverty status, we only consider the time deficits of household
   members age 18 or older.} This is expressed in the following equation
 (see Equation~\ref{eq-hbal}):
 
@@ -449,23 +449,26 @@ households is considered to be the hidden poor.
 In Table~\ref{tbl-limtip}, we provide LIMTIP estimates for the U.S.
 using averages for the years 2005-2022. As the table shows, time poverty
 is a significant issue in the U.S., with 38.7\% of individuals living in
-a time-poor household. Individuals living in a non-poor household,
-however, do face other problems. As discussed in
+a time-poor household. Some individuals living in a non-poor household,
+however, may face other problems. As discussed in
 (\textbf{policybrief\_USLIMTIP?}), one of the drivers of individual time
 poverty is the time spent at work. In this framework, households may be
-non-time poor because few of their members may be working, which may
-also reflect on the household's access to resources. This is also
-evident from Table~\ref{tbl-limtip}, where the incidence of income
-poverty among people living in a non-time poor household is 17.9\%,
-compared to 6\% among those living in a time-poor household.
+non-time poor because few of their members may be working in the labor
+market, which in turn may also be reflected in the household's access to
+resources. This is also evident from Table~\ref{tbl-limtip}, where the
+incidence of income poverty among people living in a non-time poor
+household is 17.8\%, compared to 6\% among those living in a time-poor
+household.
 
 It is also evident from Table~\ref{tbl-limtip} that not everyone in a
-time-poor household is themselves time-poor. In fact, only 52.1\% of
-individuals living in a time-poor household are themselves time-poor.
-This suggests that there is potential for redistribution of household
-production responsibilities that could help reduce the incidence of time
-poverty if the time surpluses of some individuals could be used to help
-those with time deficits.
+time-poor household is time-poor {[}recall that a housheold is
+classified as time poor, if atleast one member experiences time
+deficit{]}. In fact, only 52.1\% of individuals living in a time-poor
+household are themselves time-poor. This suggests that there is
+potential for redistribution of household production responsibilities
+that could help reduce the incidence of time poverty if the time
+surpluses of some individuals could be used to help those with time
+deficits.
 
 Lastly, the table also shows the adjusted poverty rates (or LIMTIP
 Income poverty). As mentioned earlier, official poverty and LIMTIP
@@ -509,17 +512,16 @@ redistribution could still make the time deficits more equal among the
 household members, particulalry balancing the share between men and
 women.
 
-Before we start analyzing the potential that redistribution could have
-in reducing time poverty, we must first identify the households where
-redistribution is possible. Specifically, we exclude from the analysis
-households that are not time-poor, because the goal of the current
-analysis is to evaluate the potential of redistribution in lifting
-individuals and households out of time poverty while reducing the gender
-time-poverty gaps. While non-time poor households could potentially
-benefit from redistribution, reducing the gaps of time surpluses among
-household members, resulting in more gender-equitable sharing of
-household work, this second-order effect is beyond the current scope of
-this policy brief.
+Before we start analyzing the potential of redistribution to reduce time
+poverty, we must first identify the households where redistribution is
+possible. Specifically, we exclude from the analysis households that are
+not time-poor, because the goal of the current analysis is to evaluate
+the potential of redistribution to lift individuals and households out
+of time poverty while reducing the gender time-poverty gaps. While
+non-time poor households could potentially benefit from redistribution,
+reducing the gaps of time surpluses among household members and/or
+resulting in more gender-equitable sharing of household work, this is
+beyond the current scope of this policy brief.
 
 While we allow for redistribution to happen across all working-age,
 non-disabled household members, our main focus is on analyzing the
@@ -532,12 +534,12 @@ Under these considerations, we use an adaptation of the household
 classification proposed in Zacharias et al. (2021), with two main
 differences. First, we do not differentiate cases where, as described in
 Zacharias et al. (2021), time poverty is driven by employment. Second,
-for the household classification, we do not consider the disabled when
-counting the number of members for whom redistribution is possible
-within a household. Thus, a ``single'' household refers to a household
-(SPM unit) where there is only 1 working-age, non-disabled household
-member. Under these considerations, Table~\ref{tbl-class} provides the
-household classification used for the analysis.
+for the household classification, we exclude the disabled when counting
+the number of members for whom redistribution is possible within a
+household. Thus, a ``single'' household refers to a household (SPM unit)
+where there is only 1 working-age, non-disabled household member. Under
+these considerations, Table~\ref{tbl-class} provides the household
+classification used for the analysis.
 
 \begin{longtable}[]{@{}
   >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.2273}}
@@ -575,10 +577,13 @@ HH Type I & 1.4\% & All members in the household are time-poor.
 Household poverty cannot be eliminated, but individual time poverty
 could change. \\
 HH Type II & 5.2\% & There is at least one non-time poor individual
-living in the household. Household poverty cannot be eliminated, but
-individual time poverty can be reduced. \\
+living in the household. Household poverty cannot be eliminated because
+total household time surplus is less than total household time deficit,
+however individual time poverty can be reduced. \\
 HH Type III & 27.0\% & There is at least one non-time poor individual
-living in the household. Household poverty can be eliminated. \\
+living in the household. Household poverty can be eliminated because
+total household time surplus is greater than total housheold time
+deficit. \\
 \end{longtable}
 
 Across all these households, we will concentrate only on Households Type
@@ -588,7 +593,8 @@ main focus will be on HH Type III, where redistribution could
 potentially lift the household out of time poverty. In addition to this
 classification, we also consider if the individual is part of a couple
 or not. Table~\ref{tbl-class2} provides the individual time poverty rate
-across these categories.
+{[}i.e share of time poor indiviudals in the household{]} across these
+categories.
 
 \begin{table}[H]
 
@@ -773,8 +779,8 @@ results that average the impacts of redistribution across all year
 Poverty}\label{redistribution-scenarios-and-time-poverty}
 
 To understand the impact of redistribution scenarios on time poverty, we
-focus on transition rates (i.e., the share of individuals who exit or
-enter time poverty as a result of redistribution simulation) at the
+first focus on transition rates (i.e., the share of individuals who exit
+or enter time poverty as a result of redistribution simulation) at the
 individual level. For individuals who are currently not time-poor, the
 statistic of interest would be the share of individuals that fall into
 time poverty, whereas for time-poor individuals, we will consider their
@@ -790,15 +796,16 @@ would be more likely to fall into time poverty compared to their
 non-time poor wives. As observed in Figure~\ref{fig-transition1}, a
 considerable share (12.8\% to 23.2\%) of non-time poor men will fall
 into time poverty under different scenarios, with a relatively smaller
-share among non-time poor women (except for Scenario 3). Overall,
-Scenario I (equal share) has the highest impact pushing men into time
-poverty (23.2\%). In contrast, see Figure~\ref{fig-transition2}, because
-women are already more likely to be in charge of the largest share of
-household responsibilities, Scenario 1 has a much smaller impact in
-terms of transition into time poverty (6.5\%). The second scenario,
-which fosters a more equitable redistribution of responsibilities across
-household members, has very similar impacts in terms of transition into
-poverty, regardless of gender.
+share among non-time poor women (except for Scenario 3) (see
+Figure~\ref{fig-transition2}). Overall, Scenario I (equal share) has the
+highest impact pushing men into time poverty (23.2\%). In contrast, see
+Figure~\ref{fig-transition2}, because women are already more likely to
+be time poor and in charge of the major share of household
+responsibilities, Scenario 1 has a much smaller impact in terms of
+transition into time poverty (6.5\%). The second scenario, which fosters
+a more equitable redistribution of responsibilities across household
+members, has very similar impacts in terms of transition into poverty,
+regardless of gender.
 
 \begin{figure}[H]
 
@@ -830,8 +837,10 @@ transition rates out of poverty are small (4\% under Scenario 1 and 1\%
 under Scenario 2). This is expected, as there is very little room for
 redistribution. Interestingly, however, women's transition rates out of
 time poverty are much higher (32.3\%) under scenario 1, and a small
-1.5\% under scenario 2. This suggests that both redistribution scenarios
-may favor women/wives in these households.
+1.5\% under scenario 2. In all three redistribution scenarios
+women/wives are more likely than men to exit poverty, and while the
+houshold would not be aboe to get out of poverty, there are likely some
+gender-equitable redistribution outcomes.
 
 Something unexpected was that under scenario 3, both men and women in
 households type I and II show similar transition rates out of time
@@ -1080,15 +1089,14 @@ lifting entire households out of poverty.
 However, the effectiveness of redistribution policies is contingent on
 the context of each household. For instance, in households where all
 members are time-poor, redistribution may not be effective and could
-potentially increase LIMTIP poverty. In contrast, households with
-sufficient time surpluses to absorb time deficits can effectively
+potentially (slightly) increase LIMTIP poverty. In contrast, households
+with sufficient time surpluses to absorb time deficits can effectively
 eliminate time poverty under any of the proposed redistribution
 policies.
 
 Among the three redistribution scenarios considered, the equity-based
 approach emerged as the most effective in reducing poverty rates and
-enabling individuals to exit poverty. Nevertheless, it proved to be less
-effective in reducing time deficits compared to other scenarios.
+enabling individuals to exit poverty.
 
 While the study examined redistribution among all working-age members
 (18-64 years), future research and policy development should consider
@@ -1096,7 +1104,10 @@ more targeted approaches. Specifically, focusing on redistribution
 between men and women within specific age groups, or with or without
 children, could provide better information to propose policies that
 avoid potential negative impacts of penalizing younger or older
-household members.
+household members by redistributing household burden to members of these
+age groups. This as evidence supports may prove to be detrimental and
+have vicous cycle effects if the penalizing is particulalry restricted
+to younger girls {[}will elaborate and add citations{]}.
 
 Future work should consider analyzing the composition of household
 production, in addition to redistribution. This would allow for the
