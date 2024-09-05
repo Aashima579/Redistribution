@@ -1,7 +1,6 @@
 *** Redistribution Graphs
 *cd "g:\Shared drives\levy_distribution\Time Poverty\US\LIMTIP\redistribution_simulation"
 global server "/Users/aashimasinha/Library/CloudStorage/GoogleDrive-asinha@levy.org/"
-global server "g:\"
 cd "$server/Shared drives/levy_distribution/Time Poverty/US/LIMTIP/redistribution_simulation"
 
 *** First Agg all years
@@ -187,7 +186,7 @@ frame coll:{
     graph export "hh_pov_hw.pdf", replace
     graph export "hh_pov_hw.png", replace width(1500)       
         graph bar (asis) spmpov adjpoor adjpoor_sc1 adjpoor_sc2 adjpoor_sc3 if new_class==3, over(htype) ///
-    legend(order(1 "Baseline" 2 "LIMTIP" 3 "Scenario 1" 4 "Scenario 2" 5 "Scenario 3") pos(6) row(1)) ///
+    legend(order(1 "SPM Poverty" 2 "LIMTIP" 3 "Scenario 1" 4 "Scenario 2" 5 "Scenario 3") pos(6) row(1)) ///
     ytitle("Poverty rate") graphregion(margin(zero)) ///
     blabel(bar, format(%3.1f)) ///
     bar(1, color(gs4)) bar(2, color(gs7)) ///
@@ -218,7 +217,7 @@ graph bar res1 res2 res3 res4 res5, by(group, note("") row(1) scale(1.5)) ///
     blabel(bar, format(%3.1f))  ///
     bar(1, color(gs4)) bar(2, color(gs7)) ///
     bar(3, bstyle(p1)) bar(4, bstyle(p2)) bar(5, bstyle(p3)) ///
-    legend(order(1 "Baseline" 2 "LIMTIP" 3 "Scenario 1" 4 "Scenario 2" 5 "Scenario 3") pos(6) row(1)) ///
+    legend(order(1 "SPM Poverty" 2 "LIMTIP" 3 "Scenario 1" 4 "Scenario 2" 5 "Scenario 3") pos(6) row(1)) ///
     ytitle("Poverty rate") graphregion(margin(zero))   scale(1.5) yscale(range(0 12)) ///    
     ysize(4) xsize(10) 
     graph export "hh_pov.pdf", replace
@@ -243,7 +242,7 @@ graph bar res1 res2 res3 res4 res5, by(group, note("") row(1) scale(1.5)) ///
     blabel(bar, format(%3.1f))  ///
     bar(1, color(gs4)) bar(2, color(gs7)) ///
     bar(3, bstyle(p1)) bar(4, bstyle(p2)) bar(5, bstyle(p3)) ///
-    legend(order(1 "Baseline" 2 "LIMTIP" 3 "Scenario 1" 4 "Scenario 2" 5 "Scenario 3") pos(6) row(1)) ///
+    legend(order(1 "SPM Poverty" 2 "LIMTIP" 3 "Scenario 1" 4 "Scenario 2" 5 "Scenario 3") pos(6) row(1)) ///
     ytitle("Poverty rate") graphregion(margin(zero))   scale(1.5) yscale(range(0 12)) ///    
     ysize(4) xsize(10) 
     graph export "hh_pov_couple.pdf", replace
@@ -268,7 +267,7 @@ graph bar res1 res2 res3 res4 res5, by(group, note("") row(1) scale(1.5)) ///
     blabel(bar, format(%3.1f))  ///
     bar(1, color(gs4)) bar(2, color(gs7)) ///
     bar(3, bstyle(p1)) bar(4, bstyle(p2)) bar(5, bstyle(p3)) ///
-    legend(order(1 "Baseline" 2 "LIMTIP" 3 "Scenario 1" 4 "Scenario 2" 5 "Scenario 3") pos(6) row(1)) ///
+    legend(order(1 "SPM Poverty" 2 "LIMTIP" 3 "Scenario 1" 4 "Scenario 2" 5 "Scenario 3") pos(6) row(1)) ///
     ytitle("Poverty rate") graphregion(margin(zero))   scale(1.5) yscale(range(0 12)) ///    
     ysize(4) xsize(10) 
     graph export "hh_pov_Other.pdf", replace
