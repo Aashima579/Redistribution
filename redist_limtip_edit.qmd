@@ -6,16 +6,6 @@ format:
     fontsize: 11pt
     number-depth: 3
   docx: default
-crossref:
-  custom:
-    - kind: float
-      reference-prefix: Table A
-      space-before-numbering: false
-      key: atbl
-      latex-env: atbl
-      latex-list-of-description: Appendix Tables
-      caption-location: top
-
 author:
     - name: "Fernando Rios-Avila"
       affiliations:
@@ -141,8 +131,7 @@ Household Classification for Redistribution Analysis
 Across all these households, we will concentrate only on Households Type I, II and III, since redistribution could modify the time poverty status of individuals or households in these three categories. Among these, however, the main focus will be on HH Type III, where redistribution could potentially lift the household out of time poverty. In addition to this classification, we also consider if the individual is part of a couple or not. @tbl-class2 provides the individual time poverty rate [i.e share of time poor indiviudals in the household] across these categories.
 
 :::{#tbl-class2 tbl-pos="H"}
-
-
+ 
 \begin{tabular}{l*{4}{c}}
 \hline\hline
             &  Disabled & Husband & Wife & Other \\
@@ -227,7 +216,7 @@ To understand the impact of redistribution scenarios on time poverty, we first f
 We start by looking at the transition rates among couples. As shown in @tbl-class2, husbands were less likely to be time-poor compared to wives, which also implies they are more likely to have time available. Because they will have to take on more household production responsibilities under the redistribution scenarios, non-time poor men would be more likely to fall into time poverty compared to their non-time poor wives. As observed in @fig-transition1, a considerable share (12.8% to 23.2%) of non-time poor men will fall into time poverty under different scenarios, with a relatively smaller share among non-time poor women (except for Scenario 3) (see @fig-transition2). Overall, Scenario I (equal share) has the highest impact pushing men into time poverty (23.2%). In contrast, see @fig-transition2, because women are already more likely to be time poor and in charge of the major share of household responsibilities, Scenario 1 has a much smaller impact in terms of transition into time poverty (6.5%). The second scenario, which fosters a more equitable redistribution of responsibilities across household members, has very similar impacts in terms of transition into poverty, regardless of gender. 
 
 ::: {#fig-transition1 fig-pos="H"}
-![](resources_brief/poverty_men.pdf){fig-align="center"}
+![](resources_brief/poverty_men.png){fig-align="center"}
 
 \footnotesize Note: The transition rates are calculated as the share of individuals who change their time poverty status as a result of the redistribution simulation.
 
@@ -244,7 +233,7 @@ The last group of interest are those living in households type III. As described
 
 ::: {#fig-transition2 fig-pos="H"}
 
-![](resources_brief/poverty_wmen.pdf){fig-align="center"}
+![](resources_brief/poverty_wmen.png){fig-align="center"}
 
 \footnotesize Note: The transition rates are calculated as the share of individuals who change their time poverty status as a result of the redistribution simulation.
 
@@ -255,7 +244,7 @@ Transition rates: Women in Couple
 Across all these scenarios, the remaining question is what is happening with other household members. As shown in @tbl-class2, other individuals in the household have a similar or lower time poverty rate compared to couples. And while they represent less than 8% of the population living in households type I and II, they represent 28% of the population in households type III, which makes them a relevant group to consider. As shown in @fig-transition3, there is a small proportion of non-time poor that fall into time poverty, with the highest impact under Scenario 3 (7%), still lower compared to couples in the household. Among household type III, where they represent a sizable share of the sample, their transition rates out of poverty are just as high as for couples, but showing less variation across scenarios. This suggests that the redistribution scenarios are also effective in helping them exit time poverty, hinting at the possibility that they are taking up some of the extra responsibilities without pushing them into time poverty.
 
 ::: {#fig-transition3 fig-pos="H"}
-![](resources_brief/poverty_other.pdf){fig-align="center"}
+![](resources_brief/poverty_other.png){fig-align="center"}
 
 \footnotesize Note: The transition rates are calculated as the share of individuals who change their time poverty status as a result of the redistribution simulation.
 
@@ -275,13 +264,13 @@ For households type II, it is interesting to notice that those who are time-poor
 In households type III, both men and women (who were time-poor) have similar time deficits before redistribution (about 10 hours per week). However, after redistribution, the average time deficits among women practically disappear, although reductions are less dramatic for men. In both cases, the remarkable reduction in time deficits is explained by the large poverty exit rates observed before. A simple transformation suggests that, among men, those who remain time-poor still face a time deficit of nearly 10 hours per week, except under scenario 2, where the time deficit is reduced to 5.5 hours. For women who remain time-poor, however, their time deficit is reduced by at least 3 hours per week (Scenario 2) or up to 5 hours (Scenario 3). 
 
 ::: {#fig-def1 fig-pos="H"}
-![](resources_brief/tdef_men.pdf){fig-align="center"}
+![](resources_brief/tdef_men.png){fig-align="center"}
 
 Time Deficits by Individual type: Men
 :::
 
 ::: {#fig-def2 fig-pos="H"}
-![](resources_brief/tdef_wmen.pdf){fig-align="center"}
+![](resources_brief/tdef_wmen.png){fig-align="center"}
 
 Time Deficits by Individual type: Women
 :::
@@ -289,7 +278,7 @@ Time Deficits by Individual type: Women
 There is, of course, the question of what happens for other members. As shown in @fig-def3, the redistribution scenarios have, on average, a small impact on those who were not time-poor before redistribution. Although those who enter time poverty face deficits of about 2-5 hours per week, depending on the scenario. This is still below the time deficit time-poor people face before redistribution. In contrast with couples, non-couple household members face almost no change in their time deficits if they live in households type I. For those living in households type II, scenario 2 (time available) generates the largest benefits in terms of deficit reduction (~14 hours), but they seem to be somewhat indifferent between scenarios 1 and 3. 
 
 ::: {#fig-def3 fig-pos="H"}
-![](resources_brief/tdef_other.pdf){fig-align="center"}
+![](resources_brief/tdef_other.png){fig-align="center"}
 
 Time Deficits by Individual type: Other Individuals (not in a couple)
 :::
@@ -309,7 +298,7 @@ When considering the different scenarios, despite the different nature of the re
 The only case where this does not happen is among households Type I. Because everyone in this household is time-poor, redistribution is able to reduce the incidence of time poverty at the individual level, at the expense of sometimes increasing household time poverty, and hence LIMTIP poverty. In addition, because of the limited room for redistribution, households type II are only able to reduce hidden poverty by half, whereas in households type III, the hidden poor are practically eliminated (0.2-0.6%). 
 
 ::: {#fig-limtip1 fig-pos="H"}
-![](resources_brief//hh_pov.pdf)
+![](resources_brief//hh_pov.png)
 
 Changes in Poverty estimates across redistribution scenarios: Household
 :::
