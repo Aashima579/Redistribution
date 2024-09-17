@@ -11,35 +11,20 @@
    - Include sensitivity analyses to test the robustness of results under different assumptions.
        - Perhaps play around the Redistributing policies
        - Or the Time poverty threshold
-
-4. Improve statistical analysis:
+  
+3. Improve statistical analysis:
 
    - Provide confidence intervals or standard errors for key estimates.
        - CI's may be difficult
    - Conduct formal statistical tests to compare outcomes across different scenarios.
        - Yes, could be useful
   
-6. Enhance the discussion section:
+4. Enhance the discussion section:
    - Relate findings more explicitly to existing literature and theories.
    - Discuss limitations of the study more thoroughly.
 
-7. Improve structure and formatting:
+5. Improve structure and formatting:
    - Reorganize sections to follow a more standard academic paper format (e.g., Introduction, Literature Review, Methodology, Results, Discussion, Conclusion).
-   - Ensure all tables and figures are properly numbered, titled, and referenced in the text.
-   - Move some technical details to appendices to improve readability of the main text.
-        - Imputation, and LIMTIP Construction
-
-9.  Improve language and style:
-   - Adopt a more formal academic tone throughout.
-   - Ensure consistent use of terminology.
   
-10. Update and expand references:
-    - Ensure all citations are up to date and relevant.
-    - Include more recent studies on time use and poverty.
-    - Consider citing relevant theoretical works to strengthen the conceptual framework.
-
-11. Include a separate section on limitations and future research:
-    - Discuss data limitations more explicitly.
-
-12. Consider adding a theoretical model:
+6.  Consider adding a theoretical model:
     - Develop a simple economic model to formalize the relationship between time allocation, household production, and poverty.
