@@ -1,0 +1,28 @@
+## Lit and Methodology
+
+1. Improve Lit Review, analyzing time poverty, and policies on how to reduce it. (Aashima)
+2. Write down the methodology in more detail. Sintetic data construction and Limtip construction. (Fernando)
+   1. Condensed version of the working paper. 
+3. We already have Redistribution (read again both) Add Imputation to Appendix. (Fernando)
+
+## Results 
+
+4. Last 5-year Pool data
+   1. **2015-19** Not 2018-22
+We will concentrate on Gender Disparities. Thus we concentrate on the following:
+   1. Time Poor Households with Couples, both eligible (Methodology)
+1. Small Section on Baselines <- 
+   1. Time Poverty, TIme Deficits and Time Surpluses, Time Balance
+   2. Describe The 4-way classification
+2. Then concentrate on Time Poor Households
+   1. Time Poverty, time balance, time deficits
+      1. Aggregated by sex
+   2. Break down by groups: All by Gender
+      1. *Hh Size*
+      2. *Children*
+      3. *Race*
+      4. *Employment Status*
+   by SPM Poor - Hidden Poor - Limtip Non-Poor
+   
+   
+   
