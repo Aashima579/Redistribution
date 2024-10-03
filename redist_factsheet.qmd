@@ -1,0 +1,67 @@
+---
+title: "Can we redistribute household production to solve Time Poverty?
+If so, can this also lead to gender-equitable sharing?"
+author:
+    - name: "Fernando Rios-Avila"
+      affiliations:
+        - name: "Levy Economics Institute"
+          address: Annandale-on-Hudson, NY 12504
+    - name: "Aashima Sinha"
+      affiliations:
+        - name: "Levy Economics Institute"
+          address: Annandale-on-Hudson, NY 12504
+date: today
+format: html
+bibliography:
+  - publications.bib
+  - biblio.bib
+  - references.bib
+---
+
+# Introduction
+
+Time poverty refers to the lack of sufficient time to engage in essential activities, such as employment, household production, personal maintenance, leisure, and socializing. It occurs when an individual’s time balance is negative, meaning they cannot meet the minimum required time for these activities. Time poverty is particularly prevalent among working age (18-64) population and in households where unpaid labor, such as housework and caregiving, is unequally distributed, often burdening women more heavily due to gender norms (check this).
+In our redistribution research, we examine whether redistributing household production can alleviate time poverty and create more gender-equitable time-sharing within households. In this highlight we provide some key findings.
+Or
+Time poverty can be in the simplest terms understood as lack of time to engage in critical routine activities. In other words, time poverty refers to a negative time balance if we incorporate to a weekly time balance equation in addition to employment and commute time, the time thresholds (minimum required time) of other key activities such as required hours of household production, employment and related commute, personal maintenance, leisure, and socializing. 
+If we sum the deficits at household-level, a household will be considered time poor if there is at least one member experiencing a negative time balance. This assumes that there is no exchange of time surplus and time deficit among members. Which in theory and evidence may hold true. Consider for example: Gender unequal division labor may result in women experiencing time deficits and may not be able to reallocate that time to men in the hh or other women due to say discriminatory gender norms in addition to economic factors. 
+What we try to explore in our redistribution research project is to see if we can redistribute hh production to achieve gender equitable sharing as well as to lift hh out of poverty.
+
+
+
+
+# Background
+Our analysis draws on the Levy Institute Measure of Time and Income Poverty (LIMTIP) for the U.S., covering the period from 2007 to 2022. Using a matched dataset from the American Time Use Survey (ATUS) and the Annual Social and Economic Supplement (ASEC), we estimate that 38% of households are time-poor, with working-age adults (18-64) particularly affected. This suggests a pressing need to focus policy on redistributing time burdens across household members.xxxx
+
+
+# Research highlight [add 3-4 charts]
+
+Time poverty disproportionately affects women due to the unequal division of household labor. Key findings include:
+•	Unequal Sharing of Household Work: The share of household work carried out by women has remained largely stagnant over time.
+•	Gender Time Deficits: Women in working-age households experience time deficits significantly more often than men, by approximately XX%.
+•	Married Households: Married women tend to have larger time deficits compared to their married male counterparts.
+•	Households with Children: Gender disparities in time poverty are particularly pronounced in households with children, where women shoulder a greater share of care responsibilities.
+
+To address these disparities, we consider various methods of redistributing household production:
+
+
+# Redistribution of Household Production: Key Approaches [graphics?]
+1.	Equal Redistribution: All household members share domestic work equally.
+2.	Time Availability: Redistribution based on who has more free time.
+3.	Opportunity Cost: Redistribution based on the economic opportunity costs of each member’s time.
+
+#  Key Findings [add 3-4 charts]
+•	Married Couples: In households where both partners are employed, equitable redistribution of household tasks can substantially reduce time deficits for women.
+•	Households with Children: Redistribution becomes more challenging, as care needs increase time demands on women, even with policy interventions.
+•	Scenario Comparisons: Different redistribution models yield varied outcomes, but policies promoting equal sharing of unpaid labor offer the most promise for reducing time poverty.
+
+
+# Are All Time-Poor Households Equally Capable of Redistributing?
+No. Not all households have the same capacity to redistribute unpaid labor. Household structure and income levels play significant roles. For example:
+•	Single-Parent Households: Time poverty is more severe, and redistribution within the household is less feasible.
+•	Low-Income Households: Economic constraints limit the capacity for equitable time redistribution, as paid domestic help is often unaffordable.
+
+
+# Conclusion
+Redistributing household production holds the potential to reduce time poverty and address gender inequality. However, not all households can redistribute time equitably, particularly those with severe time or income deficits. Policymakers should consider targeted interventions, such as public childcare services and incentives for equitable labor division, to reduce the structural barriers to time redistribution.
+
