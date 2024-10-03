@@ -1,5 +1,5 @@
 ---
-title: "The Hidden Poor: Solving Time Poverty through Redistribution of Household Production"
+title: "Can Redistribution of Household Production make Married Couple escape time poverty?"
 format:
   simart-pdf:  
     keep-tex: true  
@@ -26,7 +26,7 @@ author:
 date: today
 keywords: "Time Poverty, Income Poverty, Redistribution, household production, care work, gender equality, LIMTIP"
 abstract: |
-    This policy brief examines the potential of redistributing household production responsibilities to alleviate time poverty in the United States. Using the Levy Institute Measure of Time and Income Poverty (LIMTIP), the brief explores three redistribution scenarios based on equality, equity, and opportunity cost principles. Findings indicate that redistribution can significantly reduce time poverty, particularly in households where time surpluses exceed time deficits. The equity-based approach emerges as most effective in reducing poverty rates overall. Redistribution is found to be less impactful in households where all members are already time-poor. The brief highlights how redistribution can promote more equitable sharing of responsibilities between men and women and potentially lift entire households out of poverty. However, effects vary across household types and scenarios, suggesting a one-size-fits-all approach may not be optimal. 
+    This policy brief examines the potential of redistributing household production responsibilities to alleviate time poverty in the United States. Using the Levy Institute Measure of Time and Income Poverty (LIMTIP), the brief explores three redistribution scenarios based on equality, equity, and opportunity cost principles. We focus on what happens to married men and women by assessing their time poverty, time deficits, transition rates out of poverty among other outcomes. Findings indicate that redistribution can significantly reduce time poverty for xx and xx, particularly in households with/without children???. The equity-based approach emerges as most effective in reducing poverty rates overall. Redistribution is found to be less impactful in households where all members are already time-poor. The brief highlights how redistribution can promote more equitable sharing of responsibilities between men and women and potentially lift entire households out of poverty. However, effects vary across the structure of the household and difefernt scenarios, suggesting a one-size-fits-all approach may not be optimal. 
 
 bibliography:
   - publications.bib
