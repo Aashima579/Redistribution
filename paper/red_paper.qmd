@@ -1,0 +1,29 @@
+---
+title: "Cane we Solve Time Poverty through Redistribution of Household Production"
+format:
+  simart-pdf:  
+    keep-tex: true  
+    fontsize: 11pt
+    number-depth: 3
+  docx: default
+author:
+    - name: "Fernando Rios-Avila"
+      affiliations:
+        - name: "Levy Economics Institute"
+          address: Annandale-on-Hudson, NY 12504
+    - name: "Aashima Sinha"
+      affiliations:
+        - name: "Levy Economics Institute"
+          address: Annandale-on-Hudson, NY 12504
+    - name: "Ajit Zacharias"
+      affiliations:
+        - name: "Levy Economics Institute"
+          address: Annandale-on-Hudson, NY 12504   
+    - name: "Thomas Masterson"
+      affiliations:
+        - name: "Levy Economics Institute"
+          address: Annandale-on-Hudson, NY 12504       
+date: today
+keywords: "Time Poverty, Income Poverty, Redistribution, household production, care work, gender equality, LIMTIP"
+abstract: |
+    This policy brief examines the potential of redistributing household production responsibilities to alleviate time poverty in the United States. Using the Levy Institute Measure of Time and Income Poverty (LIMTIP), the brief explores three redistribution scenarios based on equality, equity, and opportunity cost principles. Findings indicate that redistribution can significantly reduce time poverty, particularly in households where time surpluses exceed time deficits. The equity-based approach emerges as most effective in reducing poverty rates overall. Redistribution is found to be less impactful in households where all members are already time-poor. The brief highlights how redistribution can promote more equitable sharing of responsibilities between men and women and potentially lift entire households out of poverty. However, effects vary across household types and scenarios, suggesting a one-size-fits-all approach may not be optimal. 
