@@ -67,9 +67,8 @@ Time Poverty and transition rates
 
 :::{#tbl-tb2 tab-pos="H" }
 
-\resizebox{\textwidth}{!}{%
 {{< include table/tb2.tex >}}
-}
+
 
 Time Poverty and Transition Rates
 
@@ -79,9 +78,8 @@ Perhaps add a table with all changes in time poverty for each scenario and sub g
 
 :::{#tbl-tb3 tab-pos="H" }
 
-\resizebox{\textwidth}{!}{%
 {{< include table/tb3.tex >}}
-}
+
 
 Time Poverty by Household Structure
 
@@ -92,9 +90,8 @@ Adjusted Income Poverty
 :::{#tbl-tb4 tab-pos="H" }
 
 
-\resizebox{\textwidth}{!}{%
 {{< include table/tb4.tex >}}
-}
+
 
 Time Poverty by Income
 
