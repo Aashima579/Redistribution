@@ -1,0 +1,79 @@
+---
+title: "Redistribution and Time Poverty: Balancing Responsibilities in Couple Households"
+format:
+  simart-pdf:  
+    keep-tex: true  
+    fontsize: 11pt
+    number-depth: 3
+  docx: default
+author:
+    - name: "Fernando Rios-Avila"
+      affiliations:
+        - name: "Levy Economics Institute"
+          address: Annandale-on-Hudson, NY 12504
+    - name: "Aashima Sinha"
+      affiliations:
+        - name: "Levy Economics Institute"
+          address: Annandale-on-Hudson, NY 12504
+    
+date: today
+keywords: "Time Poverty, Income Poverty, Redistribution, household production, care work, gender equality, LIMTIP"
+abstract: |
+     To be rewritten
+
+bibliography:
+  - publications.bib
+  - biblio.bib
+  - references.bib
+---
+
+# Introduction
+
+<!-- Words ~1500 -->
+
+RRR and time poverty
+
+What is LIMTIP? What is Time Poverty?
+
+Explain LIMTIP (Levy Institute Measure of Time and Income Poverty), focusing on how time poverty affects households with couples. Introduce the main question: "To what extent can the redistribution of responsibilities within households reduce time poverty?"
+
+# Where we are, where we are going: Redistribution Scenarios
+
+<!-- Words ~1500 -->
+
+Explain the three redistribution scenarios: equality, equity, and opportunity cost principles.
+
+Also explain Briefly how LIMTIP is used to measure time poverty.
+
+Provide Baseline Statistics for Time poverty in the US. Include basic statistics on time poverty in the US.
+
+Also explain the data used for the analysis. Also ID restrictions for the analysis.
+
+# Impact of Redistribution on Time Poverty: Time Povery and time deficits
+
+<!-- Words ~3500 -->
+
+Time Poverty and transition rates
+
+Perhaps add a table with all changes in time poverty for each scenario and sub groups. Or do 3 , one for each scenario.
+
+Time Balance and Time deficits 
+
+Adjusted Income Poverty
+
+# Policy Implications: Opportunities and Challenges
+
+<!-- Words ~2000 -->
+
+Redistribution can reduce time poverty, but only so much
+
+Which is more effective? Are the results consistent with expectations?
+
+What about based on household characteristics?
+
+
+# Conclusion/recommendations
+
+<!-- Words ~1500 -->
+
+
