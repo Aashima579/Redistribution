@@ -215,7 +215,7 @@ As described in the previous section, we consider three scenarios to analyze the
 ## Redistribution Scenarios and Time poverty
 
 
-## Redistribution Scenarios and time-adjusted income poverty (LIMTIP)
+## Redistribution Scenarios and Hidden poor
 
 
 
