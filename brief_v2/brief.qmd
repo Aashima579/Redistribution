@@ -49,17 +49,65 @@ Provide Baseline Statistics for Time poverty in the US. Include basic statistics
 
 Also explain the data used for the analysis. Also ID restrictions for the analysis.
 
+:::{#tbl-stat tab-pos="H" }
+
+\resizebox{\textwidth}{!}{%
+{{< include table/tb1.tex >}}
+}
+
+Summary Statisitcs Population
+
+:::
+
 # Impact of Redistribution on Time Poverty: Time Povery and time deficits
 
 <!-- Words ~3500 -->
 
 Time Poverty and transition rates
 
+:::{#tbl-tb2 tab-pos="H" }
+
+{{< include table/tb2.tex >}}
+
+
+Time Poverty and Transition Rates
+
+:::
+
 Perhaps add a table with all changes in time poverty for each scenario and sub groups. Or do 3 , one for each scenario.
 
-Time Balance and Time deficits 
+:::{#tbl-tb3 tab-pos="H" }
+
+{{< include table/tb3.tex >}}
+
+
+Time Poverty by Household Structure
+
+:::
 
 Adjusted Income Poverty
+
+:::{#tbl-tb4 tab-pos="H" }
+
+
+{{< include table/tb4.tex >}}
+
+
+Time Poverty by Income
+
+:::
+
+Statistics on the hidden poor
+
+:::{#tbl-tb5 tab-pos="H" }
+
+{{< include table/tb5.tex >}}
+ 
+
+Hidden Poor by Characteristics
+
+:::
+
 
 # Policy Implications: Opportunities and Challenges
 
