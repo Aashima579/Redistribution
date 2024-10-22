@@ -100,7 +100,36 @@ Moroever, xx % hh are time poor, i.e atleast one member in these hh experiences 
 In Table xx we present the four-way classification of limtip estimates for individuals. We find that xx % women experience double poverty: income poor and time poor. Given these time poverty outcomes, we investigate the impact of redistribution of household production work among all eligible members in time poor housheolds (18-64 and abled). Our focus is on married couples and we examine if redistribution between them and to other hh members can reduce time poverty. 
 We also look at the incidence of hidden poor housheolds, i.e those who are not classified poor based on official poverty estimates but are poor based on LIMTIP estimation. We further explore the potential of redistribution to lift households out of poverty and reduce the share of hidden poor. 
 
- In @tbl-stat we provide an overview of the sample distribution, i.e share of households by hosuehold characteristics and employment status of husband and wife (check with FRA)
+
+
+
+# Household classification
+
+Households can vary in  terms of the presence of time poor an dtime non-poor members and in terms of the total time deficit and surplus.  Members with time surpluses could take on more household responsibilities, reducing the burden of those with time deficits, and potentially lifting the household out of poverty.  Even if the household remains time-poor, redistribution could still make the time deficits more equal among the household members, particulalry balancing the share between men and women.
+
+We fisrt identify the households where redistribution is possible. Specifically, we exclude from the analysis households that are not time-poor, because the goal of the current analysis is to evaluate the potential of redistribution to lift individuals and households out of time poverty while reducing the gender time-poverty gaps. While non-time poor households could potentially benefit from redistribution, reducing the gaps of time surpluses among household members and/or resulting in more gender-equitable sharing of household work, this is beyond the current scope of this policy brief.
+
+While we allow for redistribution to happen across all working-age (18-64 years) and non-disabled household members (we call this group the elgible sample), our main focus is on analyzing the impact of redistribution between men and women. Thus, we will concentrate on exploring the impact of redistribution on heterosexual couples, where both partners are working-age, non-disabled individuals.
+
+Under these considerations, we use an adaptation of the household classification proposed in @zacharias2021, with two main differences. First, we do not differentiate cases where, as described in @zacharias2021, time poverty is driven by employment. Second, for the household classification, we exclude the disabled when counting the number of members for whom redistribution is possible within a household. Thus, a "single" household refers to a household (SPM unit) where there is only 1 working-age, non-disabled household member. Under these considerations, @tbl-class provides the household classification used for the analysis.
+
+:::{#tbl-class tbl-pos="H"}
+
+| Household Type | Share | Description |
+|-----|---|--------------|
+| Non-Time Poor | 61.3% | Individuals living in households where no one is time-poor. |
+| Single Person Elig | 5.1% | The household has only one working-age, non-disabled individual. Redistribution is not possible. |
+| HH Type I | 1.4% | All members in the household are time-poor. Household poverty cannot be eliminated, but individual time poverty could change. |
+| HH Type II | 5.2% | There is at least one non-time poor individual living in the household. Household poverty cannot be eliminated because total household time surplus is less than total household time deficit, however individual time poverty can be reduced. |
+| HH Type III | 27.0% | There is at least one non-time poor individual living in the household. Household poverty can be eliminated because total household time surplus is greater than total housheold time deficit.|
+
+Household Classification for Redistribution Analysis
+
+:::
+
+Across all these households, we will concentrate only on Households Type I, II and III, since redistribution could modify the time poverty status of individuals or households in these three categories. 
+
+ In @tbl-stat we present an overview of the sample distribution, i.e share of individuals by hosuehold types, characteristics and employment status of husband and wife (check with FRA)
 
 
 :::{#tbl-stat tab-pos="H" }
@@ -112,7 +141,6 @@ We also look at the incidence of hidden poor housheolds, i.e those who are not c
 Summary Statisitcs Population
 
 :::
-
 
 # Redistribution Scenarios
 
@@ -164,31 +192,6 @@ Because we do not observe wage data for non-working household members, we use th
 
 
 
-# Household classification
-
-Households can vary in  terms of the presence of time poor an dtime non-poor members and in terms of the total time deficit and surplus.  Members with time surpluses could take on more household responsibilities, reducing the burden of those with time deficits, and potentially lifting the household out of poverty.  Even if the household remains time-poor, redistribution could still make the time deficits more equal among the household members, particulalry balancing the share between men and women.
-
-We fisrt identify the households where redistribution is possible. Specifically, we exclude from the analysis households that are not time-poor, because the goal of the current analysis is to evaluate the potential of redistribution to lift individuals and households out of time poverty while reducing the gender time-poverty gaps. While non-time poor households could potentially benefit from redistribution, reducing the gaps of time surpluses among household members and/or resulting in more gender-equitable sharing of household work, this is beyond the current scope of this policy brief.
-
-While we allow for redistribution to happen across all working-age (18-64 years) and non-disabled household members (we call this group the elgible sample), our main focus is on analyzing the impact of redistribution between men and women. Thus, we will concentrate on exploring the impact of redistribution on heterosexual couples, where both partners are working-age, non-disabled individuals.
-
-Under these considerations, we use an adaptation of the household classification proposed in @zacharias2021, with two main differences. First, we do not differentiate cases where, as described in @zacharias2021, time poverty is driven by employment. Second, for the household classification, we exclude the disabled when counting the number of members for whom redistribution is possible within a household. Thus, a "single" household refers to a household (SPM unit) where there is only 1 working-age, non-disabled household member. Under these considerations, @tbl-class provides the household classification used for the analysis.
-
-:::{#tbl-class tbl-pos="H"}
-
-| Household Type | Share | Description |
-|-----|---|--------------|
-| Non-Time Poor | 61.3% | Individuals living in households where no one is time-poor. |
-| Single Person Elig | 5.1% | The household has only one working-age, non-disabled individual. Redistribution is not possible. |
-| HH Type I | 1.4% | All members in the household are time-poor. Household poverty cannot be eliminated, but individual time poverty could change. |
-| HH Type II | 5.2% | There is at least one non-time poor individual living in the household. Household poverty cannot be eliminated because total household time surplus is less than total household time deficit, however individual time poverty can be reduced. |
-| HH Type III | 27.0% | There is at least one non-time poor individual living in the household. Household poverty can be eliminated because total household time surplus is greater than total housheold time deficit.|
-
-Household Classification for Redistribution Analysis
-
-:::
-
-Across all these households, we will concentrate only on Households Type I, II and III, since redistribution could modify the time poverty status of individuals or households in these three categories. 
 
 # Impact of Redistribution on Time Poverty: Time Povery and time deficits
 
