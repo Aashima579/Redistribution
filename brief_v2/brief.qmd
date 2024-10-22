@@ -94,11 +94,9 @@ Provide Baseline Statistics for Time poverty in the US. Include basic statistics
 
 Also explain the data used for the analysis. Also ID restrictions for the analysis.
 
-
-In the US,for the period 2015-19, xx% married men and yy% married women experience time poverty. The shares of required hours of household production reflects gender disparity in sharing of hh work and that it has stayed more or less stagnant during this period (add a figure 2015-19 srhp by sex). In Figures 1 and 2, we present the shares of housheold production and time defeicits experienced by married men and women.
-Moroever, xx % hh are time poor, i.e atleast one member in these hh experiences time poverty. 
-In Table xx we present the four-way classification of limtip estimates for individuals. We find that xx % women experience double poverty: income poor and time poor. Given these time poverty outcomes, we investigate the impact of redistribution of household production work among all eligible members in time poor housheolds (18-64 and abled). Our focus is on married couples and we examine if redistribution between them and to other hh members can reduce time poverty. 
-We also look at the incidence of hidden poor housheolds, i.e those who are not classified poor based on official poverty estimates but are poor based on LIMTIP estimation. We further explore the potential of redistribution to lift households out of poverty and reduce the share of hidden poor. 
+In the U.S, during 2015-19 on average 36.4% households are time poor, i.e atleast one member in these hh experiences time poverty. Within these housheolds, 44% married men and 61% married women experience time poverty. The shares of required hours of household production reflects gender disparity in sharing of hh work and  it has stayed more or less stagnant during this period (add a figure 2015-19 srhp by sex). In Figures 1 and 2, we present the shares of housheold production and time defeicits experienced by married men and women.
+Further, in Table xx we present the four-way classification of limtip estimates for individuals. We find that xx % women experience double poverty: income poor and time poor. Given these time poverty outcomes, we investigate the impact of redistribution of household production work among all eligible members in time poor housheolds (18-64 and abled). Our focus is on married couples and we examine if redistribution between them and to other hh members can reduce time poverty. 
+Moroever, 5.6% of households are hidden poor, i.e those who are not classified poor based on official poverty estimates but are poor based on LIMTIP estimation. We finally explore the potential of redistribution in lifting households out of poverty and reducing the share of hidden poor. 
 
 
 
@@ -193,7 +191,7 @@ Because we do not observe wage data for non-working household members, we use th
 
 
 
-# Impact of Redistribution on Time Poverty: Time Povery and time deficits
+# Impact of Redistribution
 
 <!-- Words ~3500 -->
 
@@ -250,8 +248,8 @@ Time Poverty by Income
 :::
 
 Statistics on the hidden poor
-Finally, in @tbl-tb5, we look at share of hidden poor, i.e share of housheolds who are not counted as poor according to the official poverty line but are classified as poor based on LIMTIP calculations because of individuals’ time poverty. At the baseline, 4.7 % hh are hidden poor. With redistribution we can decrease the share of hidden poor and make them visible in poverty alleviation programs. Scenario 2 is most effective in reducing the share of hidden poor. xxxx [To add]
-
+Finally, in @tbl-tb5, we look at share of hidden poor, i.e share of housheolds who are not counted as poor according to the official poverty line but are classified as poor based on LIMTIP calculations because of individuals’ time poverty. At the baseline, 4.7 % hh are hidden poor. With redistribution we can decrease the share of hidden poor and make them visible in poverty alleviation programs. Scenario 2 is most effective in reducing the share of hidden poor. When we look at the share of hidden poor by household types, we find that that the scope of reducing hidden poor is negligible in scenario 1 where everyone is time poor and greatest in scenario 3 where time surplus exceeds time deficits, giving room for more effective redistribution and to the extent of lifiting housheolds out of poverty. Moreover, scenario 2 is the most effective in reducing the share of hidden poor. 
+Next, we look at the share of hidden poor if children are present. Hidden poverty rate is higher when children are present compared to in the absence of children (6.6% vs. 2.5%). This aligns with higher time poverty rates for married couple with children. These finding are crucial indicators of the need for publicly provided childcare services that can relieve households of some of these responsibilities and reducing the incidence of time-adjusted income poverty. We also find that intra-hh redistribution can be effective in reducing hidden poverty , particlulary for hosueholds with children and in scenario 2. 
 
 :::{#tbl-tb5 tab-pos="H" }
 
