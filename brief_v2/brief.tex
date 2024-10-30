@@ -43,14 +43,28 @@
 \setlength{\emergencystretch}{3em} % prevent overfull lines
 \setcounter{secnumdepth}{3}
 % Make \paragraph and \subparagraph free-standing
+\makeatletter
 \ifx\paragraph\undefined\else
   \let\oldparagraph\paragraph
-  \renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+  \renewcommand{\paragraph}{
+    \@ifstar
+      \xxxParagraphStar
+      \xxxParagraphNoStar
+  }
+  \newcommand{\xxxParagraphStar}[1]{\oldparagraph*{#1}\mbox{}}
+  \newcommand{\xxxParagraphNoStar}[1]{\oldparagraph{#1}\mbox{}}
 \fi
 \ifx\subparagraph\undefined\else
   \let\oldsubparagraph\subparagraph
-  \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+  \renewcommand{\subparagraph}{
+    \@ifstar
+      \xxxSubParagraphStar
+      \xxxSubParagraphNoStar
+  }
+  \newcommand{\xxxSubParagraphStar}[1]{\oldsubparagraph*{#1}\mbox{}}
+  \newcommand{\xxxSubParagraphNoStar}[1]{\oldsubparagraph{#1}\mbox{}}
 \fi
+\makeatother
 
 
 \providecommand{\tightlist}{%
@@ -152,6 +166,7 @@
 \@ifpackageloaded{caption}{}{\usepackage{caption}}
 \@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
 \makeatother
+
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
@@ -170,6 +185,7 @@ production, care work, gender equality, LIMTIP},
   citecolor={Blue},
   urlcolor={Blue},
   pdfcreator={LaTeX via pandoc}}
+
 
 
 \usepackage{datetime}
@@ -194,7 +210,7 @@ Aashima Sinha\\
 Levy Economics Institute\\
 \\
 }
-\date{2024-10-22}
+\date{2024-10-30}
 \begin{document}
 
 
@@ -205,27 +221,16 @@ Levy Economics Institute\\
 
 \maketitle
 \begin{abstract}
-This policy brief examines the potential of redistributing household
-production responsibilities to alleviate time poverty for married
-couples in the United States. Using the Levy Institute Measure of Time
-and Income Poverty (LIMTIP), the brief explores three redistribution
-scenarios based on equality, equity, and opportunity cost principles. We
-focus on what happens to married men and women by assessing their time
-poverty, time deficits, transition rates out of poverty among other
-outcomes. Findings show that redistribution can be an effective tool to
-reduce time poverty, particularly in households with children and where
-other household members are present. The equity-based approach emerges
-as most effective in reducing poverty rates overall. Redistribution is
-found to be less impactful in households where all members are already
-time-poor suggesting intra-household redistribution may not be
-effective, whereas for household types where there is a mmix of time
-poor and non-poor such that time surplus outweighs time defeicits,
-redistribution can serve to bring married couples out of poverty. The
-brief highlights how redistribution can promote more equitable sharing
-of responsibilities between married men and women and potentially lift
-entire households out of poverty. However, effects vary across the
-structure of the household and different scenarios, suggesting a
-one-size-fits-all approach may not be optimal.
+This policy brief examines how redistributing household production
+responsibilities could reduce time poverty among married U.S. couples.
+Using the Levy Institute Measure of Time and Income Poverty (LIMTIP), we
+analyze three scenarios based on equality, equity, and opportunity cost
+principles. Our findings show that redistribution could effectively
+reduce time poverty in households where time surplus exceeds deficits,
+with the equity-based approach proving most successful. However,
+redistribution has limited impact when all household members are already
+time-poor. The effectiveness varies across household structures,
+suggesting targeted approaches may work better than universal solutions.
 \end{abstract}
  
 \vspace{.2in}
@@ -238,26 +243,22 @@ household production, care work, gender equality, LIMTIP
 \clearpage\pagenumbering{arabic}
 \newpage
 \spacingset{1.2} % DON'T change the spacing!
-\section{Introduction}\label{introduction}
 
-Explain LIMTIP (Levy Institute Measure of Time and Income Poverty),
-focusing on how time poverty affects households with couples. Introduce
-the main question: ``To what extent can the redistribution of
-responsibilities within households reduce time poverty?''
+\section{Introduction}\label{introduction}
 
 Redistribution of household production, which includes unpaid caregiving
 and domestic chores, has been identified as an important tool to achieve
 gender equality. The United Nations Sustainable Development Goal 5,
 Target 5.4, has incorporated the recognition, reduction, and
 redistribution of unpaid work staretgy, popularly known as the 3R
-startegy, which is a testament to decades of activism and advocacy
-emphasizing that gender inequality on this front cannot be justified as
-a ``private family matter'' rather is a matter of public policy.
-Redistribution can take place from households to the public and/or
-private spheres, as well as among household members. While all household
-members may share household work, evidence shows that it is
-disproportionately undertaken by girls and women globally (Addati et
-al., 2018).
+strategy. This is a testament to decades of activism and advocacy
+emphasizing that gender inequality on this front cannot be simply
+justified as a ``private family matter'', but rather be considered a
+matter of public policy. Redistribution can take place from households
+to the public and/or private spheres, as well as among household
+members. While all household members should share household work,
+evidence shows that it is disproportionately undertaken by girls and
+women globally (Addati et al., 2018).
 
 Redistribution of household production responsibilities from women to
 men is important intrinsically for human rights and fairness concerns;
@@ -267,15 +268,15 @@ demonstrated that gender gaps in the workforce and the unequal sharing
 of household responsibilities can severely impede economic growth and
 development (Berik et al., 2009; Duflo, 2012; Elson, 2009). Yet, public
 policies and collective actions have been less than adequate, especially
-in poorer countries with constrained fiscal capacity, widespread absence
-of formal wage labor, and weak welfare states. Moreover, in patriarchal
-contexts, cultural barriers restrict redistribution of household
-production, particularly unpaid care work from women to men and to the
+in poorer countries due to constrained fiscal capacity, widespread
+absence of formal wage labor, and weak welfare states. Moreover, in
+patriarchal contexts, cultural barriers also restrict redistribution of
+household production among their members, or redistribution between the
 public and private spheres. While in some developed countries such as
 Norway and Sweden, public policies have been able to promote
 gender-equitable sharing of household production, such as paid paternity
-leaves in addition to paid maternity leaves, they have attained limited
-attention and success in other countries.
+and maternity leaves, they have attained limited attention and success
+in other countries.
 
 The U.S. is not an exception. Issues related to lack of public
 provisioning of care infrastructure and services, widespread existence
@@ -283,19 +284,20 @@ of childcare deserts, and lack of paid parental leave laws, among
 others, have drawn attention. In 2021, the value of unpaid household
 work in the U.S. amounted to \$600 billion, constituting approximately
 2.6\% of the GDP (Reinhard et al., 2023). Moreover, like most other
-countries, we observe gender disparity in sharing of household work such
-that women disproportionately shoulder the burden. According to the 2018
-American Time Use Survey, among adults aged 15 and older, women on
-average spent 5.7 hours per day on unpaid household and care work,
-compared with 3.6 hours for men. In other words, women spent 37 percent
-more time on unpaid household and care work than men (Hess et al.,
-2020). The disparity is more significant between married men and married
-women xxxx(TBD) and also in households where children are present.
-Additionally, the U.S. falls behind many OECD countries in effective
+countries, we observe gender disparity in sharing of household work,
+with women being in charge of a disproportionately larger share of the
+burden. According to the 2018 American Time Use Survey, among adults
+aged 15 and older, women on average spent 5.7 hours per day on unpaid
+household and care work, compared with 3.6 hours for men. In other
+words, women spent 37 percent more time on unpaid household and care
+work than men (Hess et al., 2020).
+
+Unfortunately, the U.S. also falls behind in other dimensions of this
+problem. Compared to other OECD countries, the U.S lacks of effective
 childcare policies, spending only 0.4\% of GDP on early childhood
 education and care (ECEC), compared to the OECD average of 0.8\% (OECD,
-2020). Notably, the U.S. lacks federal laws granting paid parental
-leave, setting it apart from other OECD nations. Around 51\% of the U.S.
+2020). The U.S. also lacks federal laws granting paid parental leave,
+setting it apart from other OECD nations. Around 51\% of the U.S.
 population resides in childcare deserts, defined as census tracts with
 more than 50 children under the age of 5 and either no childcare
 providers or significantly limited options, resulting in a severe
@@ -307,23 +309,9 @@ poverty?}\label{what-does-this-means-for-time-poverty}
 The lack of public provisioning of care infrastructure and services, and
 the disproportionate burden of household production on women, has
 implications for time poverty, both at the individual and the
-household/family level. Individual time poverty refers to the lack of
-time available for individuals to engage in activities that are
-essential for taking care of the household, its members, self-care, and
-paid work. At the household level, even if a single individual struggles
-to meet their responsibilities, the whole family is considered to be
-living under time poverty. In this framework, as pointed out in
-(\textbf{policybrief\_USLIMTIP?}), it is not uncommon to see households
-with a mixture of time availability (i.e deficts and surpluses) among
-its members. In fact, just over 20\% of the working-age population are
-not time-poor but live in a household where at least one person lives
-under time poverty. In spite of the growing recognition of the
-importance of time constraints and the responsibility of household
-production, the issue of time poverty has received limited attention in
-the U.S., partially due to data availability constraints.
+household/family level.
 
-The question remains, can redistribution of housheold responsibilities
-reduce time poverty?
+But what should we understand as time poverty?
 
 Over the last decades, the Levy Economic Institute has been at the
 forefront of recognizing the importance of time for understanding income
@@ -340,6 +328,41 @@ for the identification of the hidden poor, i.e., individuals whose
 families do not have enough monetary resources to accommodate for the
 time deficits they face (Antonopoulos et al., 2017; Masterson, 2012;
 Zacharias et al., 2012, 2014, 2018, 2021).
+
+In priciple, individual time poverty refers to the lack of time
+available for individuals to engage in activities that are essential for
+taking care of the household, its members, self-care, and paid work.
+This on itself its a difficult concept to grasp, because every
+individual has different responsibilities and needs, and thus, different
+time constraints. To formalize this definition, LIMTIP assumes that all
+individuals have the same time constraints (168 hours per week) that
+they need to allocate among household production, personal maintenance,
+and paid work. Some of this components are identified based on peoples
+decisions (ie Time spend on Paid work), but others are assumed to have
+some minimum time requirements, such as the case for household
+production and personal maintenance. If the responsabilities of
+individual exceeds the 168 hours per week,
+
+To identify time poverty at the household level, LIMTIP imposes the
+assumption that individuals are unable or unwilling to help those with
+time deficits. Thus, even if a single individual struggles to meet their
+responsibilities, the whole family is considered to be living under time
+poverty. In this framework, as pointed out in
+(\textbf{policybrief\_USLIMTIP?}), it is not uncommon to see households
+with a mixture of time availability (i.e deficts and surpluses) among
+its members. In fact, just over 20\% of the working-age population are
+not time-poor but live in a household where at least one person lives
+under time poverty. Because the LIMTIP assumes household production is
+the only component that can be shared among household members, this
+mixture of time availability among household members suggests that not
+everyone is pulling their weight in terms of household production.
+
+In spite of the growing recognition of the importance of time
+constraints and the responsibility of household production, the issue of
+time poverty has received limited attention in the U.S., partially due
+to data availability constraints.
+
+What does this means for time Poverty in the U.S.?
 
 While most of the earlier work on LIMTIP has focused on the analysis of
 time poverty in developing countries (Masterson, 2012; Masterson et al.,
@@ -363,77 +386,65 @@ for LIMTIP for the U.S., we provide insights into how redistributing
 household production can reduce the incidence of poverty not only for
 individuals but also of the households they live in. Specifically, given
 the marked responsibilities gap between men and women, we focus on
-analyzing the benefits of redistribution among married couples. To do
+analyzing the impact of redistribution among married couples. To do
 this, we consider three redistribution scenarios based on equality,
 equity, and opportunity cost principles and assess the impact of
 redistribution on time poverty of working-age (18-64 years) household
 members who are part of a heterosexual couple. Further, we present the
-impacts for differnt household types, household structures (presence of
-young childrena nd other members), poverty groups and employment status.
+impacts for different household types, household structures (presence of
+young children and other members), poverty groups and employment status.
 
-In the next section, we start by briefly describing the LIMTIP measure
-and our estimates for the US. We then move on to identifying the
-different types of households experiencing time poverty, the
-redistribution scenarios, followed by results and policy implications.
-
-\section{LIMTIP: A New Measure of Time Poverty for the United
-States}\label{limtip-a-new-measure-of-time-poverty-for-the-united-states}
+\section{How to Measure Time Poverty?: The Levy Institute Measure of
+Time and Income
+Poverty}\label{how-to-measure-time-poverty-the-levy-institute-measure-of-time-and-income-poverty}
 
 Poverty is a multidimensional concept that goes beyond the simple notion
 of lack of income. In addition to income, poverty can be understood as a
 lack of access to resources, including time. The LIMTIP is a metric
 that, in addition to income poverty, incorporates aspects of time
 poverty that better capture the control households have over their
-resources. In this framework, time poverty refers to a scenario wherein
-people may not have any time left after engaging in activities that are
-essential for taking care of the household, its members, self-care, and
-paid work. At the household level, we consider an even more restrictive
-definition. Under the assumption that individuals with time surpluses
-are unable or unwilling to help those with time deficits, we consider a
-household to be time-poor if at least one member is time-poor.
+resources.
 
 As described in (\textbf{policybrief\_USLIMTIP?}) and
 (\textbf{wp\_qmatch?}), the LIMTIP is built using a synthetic dataset
 that combines information from the American Time Use Survey (ATUS) and
 the Annual Social and Economic Supplements (ASEC) of the Current
-Population Survey (CPS). For the identification of time poverty, using
-weekly hours as the unit of analysis (168 hrs per week), we identify the
+Population Survey (CPS). Using this synthetic data, and considering a
+period of reference, such as hours per week or year, we identify the
 amount of time individuals would have left (\(X_{ij}\)) after engaging
 in required activities for taking care of their share of
 responsibilities (\(\alpha_{ij}\)) in household production (\(R_j\)),
 personal maintenance (\(M\)), and paid work (commuting \(T_{ij}\) and
-time spent at work \(L_{ij}\)). This is expressed in the following
-equation (see Equation~\ref{eq-bal}):
+time spent at work \(L_{ij}\)).\^{} The minimum time required for each
+of the components in~\ref{eq-bal}.
 
 \begin{equation}\phantomsection\label{eq-bal}{X_{ij} = 168 - M - \alpha_{ij}R_j-D_{ij}(L_{ij}+T_{ij})
 }\end{equation}
 
-The minimum time required for each of the components in
-Equation~\ref{eq-bal} are estimated using a mixture of assumptions, the
-synthetic dataset, and the ATUS dataset (see (\textbf{wp\_qmatch?}) for
-details). An individual is classified as time poor if they have a a
-negative time balance based on equation Equation~\ref{eq-bal}.
+Based on Equation~\ref{eq-bal}, an individual is classified as time poor
+if they have a negative time balance.
 
 At the household level, however, we assume that individuals with time
-surpluses are unable or unwilling to share and redistribute some of the
-responsibilities of those with time deficits. In this framework, a
-household is considered to be time-poor as long as there is atleast one
-person with a time deficit living in the household.\footnote{To identify
-  time poverty status, we only consider the time deficits of household
-  members age 18 or older.} This is expressed in the following equation
-(see Equation~\ref{eq-hbal}):
+surpluses are unable take up extra responsibilities from those with time
+deficits. In this framework, a household is considered to be time-poor
+as long as there is at least one person with a time deficit living in
+the household.\footnote{To identify time poverty status, we only
+  consider the time deficits of household members age 18 or older.}
+Thus, as stated in Equation~\ref{eq-hbal}, the household time deficit is
+calculated as the sum of all individual time deficits in the household,
+ignoring any time surpluses that may exist.
 
 \begin{equation}\phantomsection\label{eq-hbal}{X_{j} = \sum_{i=1}^{I_j} \min(X_{ij},0)
 }\end{equation}
 
-Once household time deficits \(X_{j}\) are identified, we can adjust the
-official income poverty thresholds to account for the monetized value of
-the time deficits. For the U.S. case, we use a three-year average hourly
-wage for the industry private households obtained from Merged Outgoing
-Rotation Groups (MORG) to value the household time deficit. This value
-represents the amount of income that may be required to outsource some
-of the time responsibilities and eliminate time poverty. The adjusted
-poverty line is then calculated as:
+Once household time deficits \(X_{j}\) are identified, the official
+income poverty thresholds is adjusted to account for the monetized value
+of the time deficits. For the U.S. case, we use a three-year average
+hourly wage for the industry private households obtained from Merged
+Outgoing Rotation Groups (MORG) to value the household time deficit.
+This value represents the amount of income that may be required to
+outsource some of the time responsibilities and eliminate time poverty.
+The adjusted poverty line is then calculated as:
 
 \begin{equation}\phantomsection\label{eq-limtip}{Z_{j}^{adj} = Z_{j} + 52*P* |X_{j}|
 }\end{equation}
@@ -447,140 +458,91 @@ that are time-poor could have their poverty status change if, after
 considering the adjusted poverty line, they fall below it. This group of
 households is considered to be the hidden poor.
 
-\section{Where we are, where we are going: Redistribution
-Scenarios}\label{where-we-are-where-we-are-going-redistribution-scenarios}
-
-Explain the three redistribution scenarios: equality, equity, and
-opportunity cost principles.
-
-Also explain Briefly how LIMTIP is used to measure time poverty.
-
-Provide Baseline Statistics for Time poverty in the US. Include basic
-statistics on time poverty in the US.
-
-Also explain the data used for the analysis. Also ID restrictions for
-the analysis.
-
-In the U.S, during 2015-19 on average 36.4\% households are time poor,
-i.e atleast one member in these hh experiences time poverty. Within
-these housheolds, 44\% married men and 61\% married women experience
-time poverty. The shares of required hours of household production
-reflects gender disparity in sharing of hh work and it has stayed more
-or less stagnant during this period (add a figure 2015-19 srhp by sex).
-In Figures 1 and 2, we present the shares of housheold production and
-time defeicits experienced by married men and women. Further, in Table
-xx we present the four-way classification of limtip estimates for
-individuals. We find that xx \% women experience double poverty: income
-poor and time poor. Given these time poverty outcomes, we investigate
-the impact of redistribution of household production work among all
-eligible members in time poor housheolds (18-64 and abled). Our focus is
-on married couples and we examine if redistribution between them and to
-other hh members can reduce time poverty. Moroever, 5.6\% of households
-are hidden poor, i.e those who are not classified poor based on official
-poverty estimates but are poor based on LIMTIP estimation. We finally
-explore the potential of redistribution in lifting households out of
-poverty and reducing the share of hidden poor.
-
-\section{Household classification}\label{household-classification}
-
-Households can vary in terms of the presence of time poor an dtime
-non-poor members and in terms of the total time deficit and surplus.
-Members with time surpluses could take on more household
-responsibilities, reducing the burden of those with time deficits, and
-potentially lifting the household out of poverty. Even if the household
-remains time-poor, redistribution could still make the time deficits
-more equal among the household members, particulalry balancing the share
-between men and women.
-
-We fisrt identify the households where redistribution is possible.
-Specifically, we exclude from the analysis households that are not
-time-poor, because the goal of the current analysis is to evaluate the
+While there is something to learn from analyzing the impact of the
+redistribution scenarios across the whole population, we will
+concentrate only on time poor households, as the goal is to evaluate the
 potential of redistribution to lift individuals and households out of
-time poverty while reducing the gender time-poverty gaps. While non-time
-poor households could potentially benefit from redistribution, reducing
-the gaps of time surpluses among household members and/or resulting in
-more gender-equitable sharing of household work, this is beyond the
-current scope of this policy brief.
+time poverty. Furthermore, we will focus only on married couples, where
+both partners are working-age, non-disabled individuals, to explore the
+impact of redistribution on the gender gap.
 
-While we allow for redistribution to happen across all working-age
-(18-64 years) and non-disabled household members (we call this group the
-elgible sample), our main focus is on analyzing the impact of
-redistribution between men and women. Thus, we will concentrate on
-exploring the impact of redistribution on heterosexual couples, where
-both partners are working-age, non-disabled individuals.
+\section{Where we are: Time Poverty in the United
+States}\label{where-we-are-time-poverty-in-the-united-states}
 
-Under these considerations, we use an adaptation of the household
-classification proposed in Zacharias et al. (2021), with two main
-differences. First, we do not differentiate cases where, as described in
-Zacharias et al. (2021), time poverty is driven by employment. Second,
-for the household classification, we exclude the disabled when counting
-the number of members for whom redistribution is possible within a
-household. Thus, a ``single'' household refers to a household (SPM unit)
-where there is only 1 working-age, non-disabled household member. Under
-these considerations, Table~\ref{tbl-class} provides the household
-classification used for the analysis.
+Between 2015 and 2019 in the U.S., under LIMTIP definition, an average
+of 35.0\% of all households had at least one member who was time poor.
+If we restrict this to households with a married couple, this share
+increases to 36.1\%, providing a glimpse of the higher prevalence of
+time poverty among married couples. This last group consitutes the focus
+of our analysis.
 
-\begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.2273}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.1364}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.6364}}@{}}
-\caption{Household Classification for Redistribution
-Analysis}\label{tbl-class}\tabularnewline
-\toprule\noalign{}
-\begin{minipage}[b]{\linewidth}\raggedright
-Household Type
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Share
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Description
-\end{minipage} \\
-\midrule\noalign{}
-\endfirsthead
-\toprule\noalign{}
-\begin{minipage}[b]{\linewidth}\raggedright
-Household Type
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Share
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Description
-\end{minipage} \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-Non-Time Poor & 61.3\% & Individuals living in households where no one
-is time-poor. \\
-Single Person Elig & 5.1\% & The household has only one working-age,
-non-disabled individual. Redistribution is not possible. \\
-HH Type I & 1.4\% & All members in the household are time-poor.
-Household poverty cannot be eliminated, but individual time poverty
-could change. \\
-HH Type II & 5.2\% & There is at least one non-time poor individual
-living in the household. Household poverty cannot be eliminated because
-total household time surplus is less than total household time deficit,
-however individual time poverty can be reduced. \\
-HH Type III & 27.0\% & There is at least one non-time poor individual
-living in the household. Household poverty can be eliminated because
-total household time surplus is greater than total housheold time
-deficit. \\
-\end{longtable}
+Within these time poor housheolds, 52\% of the married couples may be
+classified as time poor, with only 7.8\% of other members in the
+household experiencing time poverty. From this share of time poor
+married couples, only 44\% married of men is experiencing time poverty
+compared to 61\% among married women.
 
-Across all these households, we will concentrate only on Households Type
-I, II and III, since redistribution could modify the time poverty status
-of individuals or households in these three categories.
+But who are the couples in this time poor households?
 
-In Table~\ref{tbl-stat} we present an overview of the sample
-distribution, i.e share of individuals by hosuehold types,
-characteristics and employment status of husband and wife (check with
-FRA)
+Table~\ref{tbl-stat} provides an overview of the characteristics of the
+households where these couples live. The first type of classification we
+consider is one that classifies households in regards to their potential
+to exit time poverty via redistribution. We consider three types of
+households:
+
+\begin{itemize}
+\tightlist
+\item
+  Households where everyone is time poor, thus redistribuion cannot
+  eliminate time poverty for the household.
+\item
+  Households where there is at least one non-time poor individual, but
+  its insufficient to eliminate time poverty for the household.
+\item
+  and, Households where the total time surplus is greater than the total
+  time deficit, thus redistribution can eliminate time poverty for all
+  members in the household.
+\end{itemize}
+
+Overall, 5.2\% of couples live in a household where all members are time
+poor, but 76\% could potentially leave time poverty if household
+production responsibilities were perfectly redistributed. Over half of
+the couples have a young child living with them (56\%) and 25\% have
+other members in the household. In terms of employment status, the vast
+majority of working-age individuals are employed, with 97\% of husbands
+and 91\% of wives are working. This is not surprising, as discussed in
+(\textbf{policybrief\_USLIMTIP?}), for most individuals, time poverty is
+driven by the need to work.
+
+But what about other characteristics?
+
+As shown in Table~\ref{tbl-stat}, household struture is a critical
+factor for understanding if redistribution has the potential to reducing
+time poverty. Household with young children have the lowest chance to
+exit time poverty (65.5\%), compared to other groups. In contrast, the
+presence of other age-able members in household drastically increases
+those chances (97.3\%). This is not surprising. The presence of young
+children increases the time demands on the child care activities, as
+well as overall household activities due to larger size. On the other
+hand, the presence of a fall back person for the couple greatly
+increases the potential of redistribution, because of of this
+``other-members'' do not typically experience time constrains.
+
+A third pattern observed relates to wife employment status. Families
+where wives are not currently working show higher potential for time
+redistribution reducing time poverty. However, this is also observed
+alongside two other characteristics of these families: they tend to have
+young children, while also showing a larger proportion of additional
+household members present.
 
 \begin{table}
 
-\caption{\label{tbl-stat}Summary Statisitcs Population}
+\caption{\label{tbl-stat}Summary Statistics Population}
 
 \centering{
 
 \resizebox{\textwidth}{!}{%
+
 \begin{tabular}{l*{7}{c}}
 \hline\hline
             & All Mem. TP&At Least 1 Mem. NTP&Hhld can exit TP&Has Y. Children&Oth Mem Present&  H. Working&  W. Working\\
@@ -602,39 +564,33 @@ Wife Not Working&         0.4&         2.8&        96.9&        69.0&        32.
 
 \end{table}%
 
-\section{Redistribution Scenarios}\label{redistribution-scenarios}
+\section{Where we are going: Redistribution
+Scenarios}\label{where-we-are-going-redistribution-scenarios}
 
 The idea of redistribution of household production responsibilities
 follows the principle that everyone in a household should be able to
 carry out their \textbf{fair} share of household work. But what
-constitutes a fair share? In this section, we present three different
-principles that could guide the redistribution of household production
-responsibilities among eligible household members.
+constitutes a fair share? While one could construct many rules and
+strategies to redistribute household responsabilities within a
+household, we consider three principles that could guide the
+redistribution of household production responsibilities among eligible
+household members.
 
-First, we use the simple egalitarianism principle that involves an equal
-division of total household production time among all working-age
-members. Second, we redistribute responsibilities based on the time
-available to household members. In the third scenario, redistribution is
-guided based on the principle of opportunity cost of time, where those
-with higher wages (higher opportunity cost of time) are assigned less
-household production time.
-
-For all scenarios, we only consider the redistribution of required
-household production activities \(R_j\) net of the portion met by
-household members that are either disabled or are not part of the
-working-age population. Thus, the goal is to simulate different
-\(\alpha_{ij}\) values, which represent the share of required household
-production time that each household member takes on. We also impose the
-assumption that all household members are equally efficient at taking
-care of the household responsibilities. We outline the methods used for
-implementing the scenarios below.
+For the implementation of these scenarios, we consider that all other
+elements in Equation~\ref{eq-bal} remain constant with the exception of
+\(\alpha_{ij}\), which is the share of household production time that
+each individual \(i\) in Household \(j\) takes on. The goal is to
+simulate different \(\alpha_{ij}\) based on each redistribution
+scenario, but mantaining the total share of work done by the eligible
+household members (all members 18-64). This approach imposes the
+implicit assumption that all household members are equally efficient at
+taking care of the household responsibilities.
 
 \subsection{Scenario 1: Equal Shares}\label{scenario-1-equal-shares}
 
 The first scenario considers the impact of redistributing household
-production such that all working-age members of the household are
-assigned an equal share of the required household production time. The
-new share is defined as:
+production such that all responsabilities are equally distributed across
+all eligible household members.
 
 \begin{equation}\phantomsection\label{eq-r1}{\alpha_{ij}^E= \frac{1}{I_j}*(1-\alpha_{j}^{nw})
 }\end{equation}
@@ -652,16 +608,16 @@ The time available scenario is based on the principles of equity. In
 contrast with Scenario 1, this one suggests that household
 responsibilities could be redistributed relative to the available time
 individuals may have after setting aside the time for personal
-maintenance requirements and income generation
+maintenance requirements, and income generation
 (\(Z_{ij}=168-M-D_{ij}(L_{ij}+T_{ij})\)).
 
 To implement this, we first calculate the time available (\(Z_{ij}\))
 for each individual and recalculate the shares \(\alpha_{ij}^A\) using
 the ratio of time available to the total time available among
 working-age members. For individuals that do not have any time available
-(\(Z_{ij}<0\)), we set their \(Z_{ij}\) to zero. This ensures that
-people who already suffer from time poverty are not assigned further
-tasks within the household. The new share is defined as:
+(\(Z_{ij}<0\)), we set it at zero. This ensures that people who already
+suffer from time poverty are not assigned further tasks within the
+household. The new share is defined as:
 
 \begin{equation}\phantomsection\label{eq-r2}{
 \begin{aligned}
@@ -672,13 +628,12 @@ Z_{ij} &=\max{\Big(168-M-D_{ij}(L_{ij}+T_{ij}-E_{ij}(S_{ij}),0\Big)} \\
 
 Because there are individuals (young adults) who may still be in school,
 the standard definition of \(Z_{ij}\) may not capture their true time
-availability. To address this, we add a correction to time availability
-for all individuals who declared attending school, subtracting from
-their available time (\(Z_{ij}\)) the average number of hours people
-spend in education activities per week (\(S_{ij}\)). This correction
-does not affect the time balance used for the identification of the time
-poor, only the estimation of time available and the adjusted shares
-\(\alpha_{ij}^A\).
+availability. To address this, if an individual is going to school, we
+subtracts from their available time (\(Z_{ij}\)) the average number of
+hours people spend in education activities per week (\(S_{ij}\)). This
+correction does not affect the time balance used for the identification
+of the time poor, only the estimation of time available and the adjusted
+shares \(\alpha_{ij}^A\).
 
 \subsection{Scenario 3: Opportunity
 Cost}\label{scenario-3-opportunity-cost}
@@ -689,7 +644,11 @@ individuals, such that individuals with higher potential wages are
 assigned a lower share of household production time. In principle, this
 would encourage the most productive members of the household to spend
 more time in paid work, while those with lower earning potentials would
-take on more household production responsibilities.
+take on more household production responsibilities. However, because we
+do not implement any changes in the time spend on paid work, we could
+also interpret this scenario as a bargaining case where members with the
+highest potential earnings are able to negotiate a lower share of
+household production time.
 
 For example, if there are only three working-age adults in a household,
 and where the second member earns twice as much as the first, and the
@@ -700,24 +659,21 @@ scenario, we first calculate the inverse of the wage of each individual
 as follows:
 
 \begin{equation}\phantomsection\label{eq-r3}{\begin{aligned}
-rw_{ij} &= \frac{1}{w_{ij}} \\
+rw_{ij} &= \frac{1}{w_{ij}}, \ 
 \alpha_{ij}^O &= \frac{rw_{ij}}{\sum rw_{ij}} (1-\alpha_{j}^{nw})
 \end{aligned}
 }\end{equation}
 
 where \(w_{ij}\) is the wage of individual \(i\).
 
-Because we do not observe wage data for non-working household members,
-we use the potential/predicted wages for all working-age household
-members. To do this, we use a two-step procedure. First, we predict
-occupation and industry probabilities for all non-working individuals
-using a multinomial logit model. Second, we estimate a maximum
-likelihood Heckman selection model (Heckman, 1979) using the observed
-and predicted probabilities of belonging to specific occupations and
-industries, in addition to individual, household, and spouse demographic
-characteristics. With this information, we predict wages based on the
-model that corrects for sample selection and use those wages as proxies
-for the opportunity cost of time \(w_{ij}\).
+Because wage data is not observed for all household members, we use
+potential/predicted wages for all working-age household members, based
+on a two step procedure. First, we predict the occupation and industry
+likelihood for non-working individuals, and second, we model and predict
+wages for all household members using a method (heckman selection -
+Heckman (1979)) that accounts why some people choose not to work in the
+first place (self-selection). These predicted wages serve as our measure
+of how valuable each person's time is.
 
 \section{Impact of Redistribution}\label{impact-of-redistribution}
 
@@ -1111,6 +1067,7 @@ Levy Economics Institute of Bard
 College.\href{\%20https://www.bls.gov/cex/consumption/integrating-nonmarket-consumption-bls-consumer-expenditure-survey.pdf}{https://www.bls.gov/cex/consumption/integrating-nonmarket-consumption-bls-consumer-expenditure-survey.pdf}
 
 \end{CSLReferences}
+
 
 
 

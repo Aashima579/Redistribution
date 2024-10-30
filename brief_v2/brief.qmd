@@ -86,7 +86,7 @@ As described in @policybrief_USLIMTIP and @wp_qmatch, the LIMTIP is built using 
 $$X_{ij} = 168 - M - \alpha_{ij}R_j-D_{ij}(L_{ij}+T_{ij})
 $$ {#eq-bal}
 
-An individual is classified as time poor if they have a a negative time balance based on equation @eq-bal. 
+Based on @eq-bal, an individual is classified as time poor if they have a negative time balance.
 
 At the household level, however, we assume that individuals with time surpluses are unable take up extra  responsibilities from those with time deficits. In this framework, a household is considered to be time-poor as long as there is at least one person with a time deficit living in the household.[^2] Thus, as stated in @eq-hbal, the household time deficit is calculated as the sum of all individual time deficits in the household, ignoring any time surpluses that may exist.
 
@@ -179,7 +179,7 @@ Across all these households, we will concentrate only on Households Type I, II a
 
 The idea of redistribution of household production responsibilities follows the principle that everyone in a household should be able to carry out their **fair** share of household work. But what constitutes a fair share? While one could construct many rules and strategies to redistribute household responsabilities within a household, we consider three  principles that could guide the redistribution of household production responsibilities among eligible household members.
 
-For the implementation of these scenarios, we consider that all other elements in @eq-bal remain constant with the exception of $\alpha_{ij}$, which is the share of household production time that each individual $i$ in Household $j$ takes on. The goal is to simulate different $\alpha_{ij}$ values which represent the different redistribution scenarios, but mantaining the total share of work done by eligible household members. This approach imposes the implicit assumption that all household members are equally efficient at taking care of the household responsibilities. 
+For the implementation of these scenarios, we consider that all other elements in @eq-bal remain constant with the exception of $\alpha_{ij}$, which is the share of household production time that each individual $i$ in Household $j$ takes on. The goal is to simulate different $\alpha_{ij}$ based on each redistribution scenario, but mantaining the total share of work done by the eligible household members (all members 18-64). This approach imposes the implicit assumption that all household members are equally efficient at taking care of the household responsibilities. 
 
 <!--First, we use the simple egalitarianism principle that involves an equal division of total household production time among all working-age members. Second, we redistribute responsibilities based on the time available to household members. In the third scenario, redistribution is guided based on the principle of opportunity cost of time, where those with higher wages (higher opportunity cost of time) are assigned less household production time.
 
@@ -188,7 +188,7 @@ For all scenarios, we only consider the redistribution of required household pro
 
 ## Scenario 1: Equal Shares
 
-The first scenario considers the impact of redistributing household production such that all working-age members of the household are assigned an equal share of the required household production time. The new share is defined as:
+The first scenario considers the impact of redistributing household production such that all responsabilities are equally distributed across all eligible household members. 
 
 $$\alpha_{ij}^E= \frac{1}{I_j}*(1-\alpha_{j}^{nw})
 $$ {#eq-r1}
@@ -217,7 +217,7 @@ The third possibility is based on the idea of opportunity costs along marginalis
 For example, if there are only three working-age adults in a household, and where the second member earns twice as much as the first, and the third earns three times as much as the first, the shares of household production would be 1/2, 1/3, and 1/6 respectively. To implement this scenario, we first calculate the inverse of the wage of each individual $rw_{ij}$,  and then calculate the share of household production time as follows:
 
 $$\begin{aligned}
-rw_{ij} &= \frac{1}{w_{ij}} \\
+rw_{ij} &= \frac{1}{w_{ij}}, \ 
 \alpha_{ij}^O &= \frac{rw_{ij}}{\sum rw_{ij}} (1-\alpha_{j}^{nw})
 \end{aligned}
 $$ {#eq-r3}
@@ -225,9 +225,6 @@ $$ {#eq-r3}
 where $w_{ij}$ is the wage of individual $i$.
 
 Because wage data is not observed for all household members, we use potential/predicted wages for all working-age household members, based on a two step procedure. First, we predict the occupation and industry likelihood for  non-working individuals, and second, we model and predict wages for all household members using a method (heckman selection - @heckman1979) that accounts why some people choose not to work in the first place (self-selection). These predicted wages serve as our measure of how valuable each person's time is. 
-
-
-
 
 # Impact of Redistribution
 
