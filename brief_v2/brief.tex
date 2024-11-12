@@ -43,28 +43,14 @@
 \setlength{\emergencystretch}{3em} % prevent overfull lines
 \setcounter{secnumdepth}{3}
 % Make \paragraph and \subparagraph free-standing
-\makeatletter
 \ifx\paragraph\undefined\else
   \let\oldparagraph\paragraph
-  \renewcommand{\paragraph}{
-    \@ifstar
-      \xxxParagraphStar
-      \xxxParagraphNoStar
-  }
-  \newcommand{\xxxParagraphStar}[1]{\oldparagraph*{#1}\mbox{}}
-  \newcommand{\xxxParagraphNoStar}[1]{\oldparagraph{#1}\mbox{}}
+  \renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
 \fi
 \ifx\subparagraph\undefined\else
   \let\oldsubparagraph\subparagraph
-  \renewcommand{\subparagraph}{
-    \@ifstar
-      \xxxSubParagraphStar
-      \xxxSubParagraphNoStar
-  }
-  \newcommand{\xxxSubParagraphStar}[1]{\oldsubparagraph*{#1}\mbox{}}
-  \newcommand{\xxxSubParagraphNoStar}[1]{\oldsubparagraph{#1}\mbox{}}
+  \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
 \fi
-\makeatother
 
 
 \providecommand{\tightlist}{%
@@ -166,7 +152,6 @@
 \@ifpackageloaded{caption}{}{\usepackage{caption}}
 \@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
 \makeatother
-
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
@@ -185,7 +170,6 @@ production, care work, gender equality, LIMTIP},
   citecolor={Blue},
   urlcolor={Blue},
   pdfcreator={LaTeX via pandoc}}
-
 
 
 \usepackage{datetime}
@@ -210,7 +194,7 @@ Aashima Sinha\\
 Levy Economics Institute\\
 \\
 }
-\date{2024-11-11}
+\date{2024-11-12}
 \begin{document}
 
 
@@ -243,7 +227,6 @@ household production, care work, gender equality, LIMTIP
 \clearpage\pagenumbering{arabic}
 \newpage
 \spacingset{1.2} % DON'T change the spacing!
-
 \section{Introduction}\label{introduction}
 
 Redistribution of household production, which includes unpaid caregiving
@@ -362,11 +345,11 @@ constraints and the responsibility of household production, the issue of
 time poverty has received limited attention in the U.S., partially due
 to data availability constraints.
 
-\textbf{What does this mean for Time Poverty in the U.S.? } While most
-of the earlier work on LIMTIP has focused on the analysis of time
-poverty in developing countries (Masterson, 2012; Masterson et al.,
-2022; Zacharias et al., 2018), recent work has extended the measure to
-the U.S. (Zacharias et al., 2024;
+\textbf{What does this mean for Time Poverty in the U.S.?} While most of
+the earlier work on LIMTIP has focused on the analysis of time poverty
+in developing countries (Masterson, 2012; Masterson et al., 2022;
+Zacharias et al., 2018), recent work has extended the measure to the
+U.S. (Zacharias et al., 2024;
 \textbf{policybrief\_USLIMTIP?}).\footnote{This is in addition to the
   work done for the Levy Institute Measure of Economic Well-Being
   (LIMEW).} Similar to earlier work, one of the findings of
@@ -541,7 +524,6 @@ household members present.
 \centering{
 
 \resizebox{\textwidth}{!}{%
-
 \begin{tabular}{l*{7}{c}}
 \hline\hline
             & All Mem. TP&At Least 1 Mem. NTP&Hhld can exit TP&Has Y. Children&Oth Mem Present&  H. Working&  W. Working\\
@@ -972,7 +954,7 @@ and opportunity cost principles - reveals that such redistributions can
 significantly reduce time poverty, particularly in households where time
 surpluses exceed time deficits.
 
-These findings underscore the importance of considering time poverty in
+These findings underscore the importance of integrating time poverty in
 poverty alleviation efforts. They also highlight the potential of
 intra-household redistribution as a policy tool to promote gender
 equality and improve overall household well-being. However, the varying
@@ -984,7 +966,7 @@ and a targeted tailored approach is needed.
 In conclusion, while redistribution of household production is promising
 in alleviating time poverty, and the hidden poor, it should be
 considered as part of strategies that also addresses societal and
-structural factors that contribute to time and income poverty.
+structural factors affecting time and income poverty.
 
 \section*{References}\label{references}
 \addcontentsline{toc}{section}{References}
@@ -1117,7 +1099,6 @@ Levy Economics Institute of Bard
 College.\href{\%20https://www.bls.gov/cex/consumption/integrating-nonmarket-consumption-bls-consumer-expenditure-survey.pdf}{https://www.bls.gov/cex/consumption/integrating-nonmarket-consumption-bls-consumer-expenditure-survey.pdf}
 
 \end{CSLReferences}
-
 
 
 
