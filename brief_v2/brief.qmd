@@ -29,8 +29,6 @@ bibliography:
 
 # Introduction
 
-<!-- Words ~1500 -->
-
 Redistribution of household production, which includes unpaid caregiving and domestic chores, has been identified as an important tool to achieve gender equality.
 The United Nations Sustainable Development Goal 5, Target 5.4, has incorporated the recognition, reduction, and redistribution of unpaid work strategy, popularly known as the 3R strategy.
 This is a testament to decades of activism and advocacy emphasizing that gender inequality on this front cannot be simply justified as a "private family matter", but rather be considered a matter of public policy.
@@ -49,12 +47,6 @@ In 2021, the value of unpaid household work in the U.S. amounted to \$600 billio
 Moreover, like most other countries, we observe gender disparity in sharing of household work, with women being in charge of a disproportionately larger share of the burden.
 According to the 2018 American Time Use Survey, among adults aged 15 and older, women on average spent 5.7 hours per day on unpaid household and care work, compared with 3.6 hours for men.
 In other words, women spent 37 percent more time on unpaid household and care work than men [@hess2020].
-
-```{=html}
-<!--
-lets leave this for now
-The disparity is more significant between married men and married women xxxx(TBD) and also in households where children are present. -->
-```
 
 Unfortunately, the U.S. also falls behind in other dimensions of this problem.
 Compared to other OECD countries, the U.S. lacks effective childcare policies, spending only 0.4% of GDP on early childhood education and care (ECEC), compared to the OECD average of 0.8% [@oecd2020].
@@ -102,7 +94,7 @@ Specifically, given the marked responsibilities gap between men and women, we fo
 To do this, we consider three redistribution scenarios based on equality, equity, and opportunity cost principles and assess the impact of redistribution on time poverty of working-age (18-64 years) household members who are part of a heterosexual couple.
 Further, we present the impacts for different household types, household structures (presence of young children and other members), poverty groups and employment status.
 
-<!-- merge some of the below to above
+<!--AS to merge some of the below to above
 
 
 Poverty is a multidimensional concept that goes beyond the simple notion of lack of income.
@@ -215,16 +207,9 @@ The idea of redistribution of household production responsibilities follows the 
 But what constitutes a fair share?
 While one could construct many rules and strategies to redistribute household responsibilities within a household, we consider three principles that could guide the redistribution of household production responsibilities among eligible household members.
 
-For the implementation of these scenarios, we consider that all other elements in @eq-bal remain constant with the exception of $\alpha_{ij}$, which is the share of household production time that each individual $i$ in Household $j$ takes on.
+For the implementation of these scenarios, we consider that all other elements in LIMTIP equation <!--add a footnoteon the equation!-->  remain constant with the exception of $\alpha_{ij}$, which is the share of household production time that each individual $i$ in Household $j$ takes on.
 The goal is to simulate different $\alpha_{ij}$ based on each redistribution scenario, but maintaining the total share of work done by the eligible household members (all members 18-64).
-This approach imposes the implicit assumption that all household members are equally efficient at taking care of the household responsibilities.
-
-```{=html}
-<!--First, we use the simple egalitarianism principle that involves an equal division of total household production time among all working-age members. Second, we redistribute responsibilities based on the time available to household members. In the third scenario, redistribution is guided based on the principle of opportunity cost of time, where those with higher wages (higher opportunity cost of time) are assigned less household production time.
-
-For all scenarios, we only consider the redistribution of required household production activities $R_j$ net of the portion met by household members that are either disabled or are not part of the working-age population. Thus, the goal is to simulate different $\alpha_{ij}$ values, which represent the share of required household production time that each household member takes on. We also impose the assumption that all household members are equally efficient at taking care of the household responsibilities. We outline the methods used for implementing the scenarios below.
--->
-```
+This approach imposes the implicit assumption that all household members are equally efficient at taking care of the household responsibilities. We outline the methods used for implementing the scenarios below.
 
 ## Scenario 1: Equal Shares
 
@@ -313,7 +298,7 @@ And just as described before, both men and women benefit greatly under Scenario 
 
 **The role of household Structure**
 
-The results we just presented provides us with a first picture of the potential of redistribution to reduce time poverty.
+The results we just presented provides us with an overall picture of the potential of redistribution to reduce time poverty.
 However, the effectiveness of redistribution also depends on the structure of the household.
 There are two factors, as observed in @tbl-tb3, that are important to understand how effective redistribution can be: the presence of young children and the presence of other members in the household.
 
@@ -336,7 +321,7 @@ In both cases, the reduction in time poverty we estimate for women is still larg
 This highlights how much more work women do in taking care of the household, specially providing primary child are, as well as absorbing most of the responsibilities of the household production, when there are no other members to share the responsabilities.
 This also explains why, when redistribution is applied, the reduction in time poverty is more limited for husbands.
 
-**Income and Employment**
+**Income and Emplyoment**
 
 One last aspect to consider is to analyze if there is any heterogeneity in the estimated impact of redistribution based on the household overall income or the employment status of the wife.
 We do not consider the employment status of the husband, because 97.2% of husbands are employed, and thus, there is little variation to analyze.
@@ -385,12 +370,15 @@ Hidden Poor by Characteristics
 
 The findings in this policy brief suggest that intra-household redistribution of household production is a potentially effective tool to reduce time deficits and alleviate time poverty for individuals and households. Our findings show that such redistributions can have significant well-being effects, promoting more equitable sharing of household responsibilities between men and women and, in some cases, lifting entire households out of poverty.
 
-However, the effectiveness of redistribution policies is contingent on the context of each household. For instance, in households where all members are time-poor, redistribution may not be effective and could potentially (slightly) increase LIMTIP poverty. In contrast, households with sufficient time surpluses to absorb time deficits can effectively eliminate time poverty under any of the proposed redistribution policies. Among the three redistribution scenarios considered, the equity-based approach emerged as the most effective in reducing poverty rates and enabling individuals to exit poverty.
-While redistribution policy is difficult to enforce/implement, public polices can help target inequalities in terms of time availability and opportunity cost, which are a result of prevailing gender discriminatory vicious cycle that hinders equal educational opportunities for women leading to unequal occupation opportunities as well as earning cabailities (@sinha2024). 
-The potential policy initiatives that can contribute towards a more gender-equitable redistribution of hosuehold production can be segregated into three broad categories:
-1. Labor market or employment policies to reduce gender disparity: This would involve targetting equal pay at work for men and women and ensuring elimination of gender discrimination at workplace. Moreover, long-working hours that directly impact time constraints may also need to be regulated. 
-2. Public investment in care infrastructure and services: This can be helpful as it can contribute toward reducing the required hours of household production that determine people's time deficits and time poverty. Efforts can involve provisioning of quality childcare services at subsidized rates and can even be extended to a universal and centralized provisioning of care services. In addition, parental leave laws offering not only maternity leave benefits but those combined with paternity leaves may serve to have more gender-equitable effects on household division of labor. 
-3. Targeting social norms: Gender disparity in labor market are guided by gender norms defining gender roles. Targeting norms could involve educational interventions during early schooling years, gender equitable knowledge-sharing as part of couple counseling on how gender norms can be detrimental for the overall well-being and deevlopment of the society and the economy. 
+However, the effectiveness of redistribution policies is contingent on the type and structure of households. For instance, in households where all members are time-poor, redistribution may not be effective and could potentially (slightly) increase LIMTIP poverty. In contrast, households with sufficient time surpluses to absorb time deficits can effectively eliminate time poverty under any of the proposed redistribution policies. Moreover, presence of chilren in housheodls would call and xxx..
+Among the three redistribution scenarios considered, the equity-based approach emerged as the most effective in reducing poverty rates and enabling individuals to exit poverty.
+
+While redistribution policy may be difficult to implement, public polices can help target inequalities in terms of "time availability" and "opportunity cost" experienced by men and women, which are a result of  gender discriminatory vicious cycle that hinders equal educational opportunities for women leading to unequal occupation opportunities as well as earning cabailities (@sinha2024). 
+Policy initiatives that can contribute towards a more gender-equitable sharing of hosuehold production can be segregated into three broad categories:
+
+- Labor market or employment policies to reduce gender disparity: This would involve targetting equal pay at work for men and women and ensuring elimination of gender discrimination at workplace. Moreover, long-working hours that directly impact time constraints may also need to be regulated. 
+- Public investment in care infrastructure and services: This can be helpful as it can contribute toward reducing the required hours of household production that determine people's time deficits and time poverty. Efforts can involve provisioning of quality childcare services at subsidized rates and can even be extended to a universal and centralized provisioning of care services. In addition, parental leave laws offering not only maternity leave benefits but those combined with paternity leaves may serve to have more gender-equitable effects on household division of labor. 
+-  Targeting social norms: Gender disparity in labor market are guided by gender norms defining gender roles. Targeting norms could involve educational interventions during early schooling years, gender equitable knowledge-sharing as part of couple counseling on how gender norms can be detrimental for the overall well-being and deevlopment of the society and the economy. 
 
 # Conclusion/recommendations
 
