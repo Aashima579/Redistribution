@@ -151,7 +151,7 @@ Over half of the couples have a young child living with them (56%) and 25% have 
 In terms of employment status, the vast majority of working-age individuals are employed, with 97% of husbands and 91% of wives are working.
 This is not surprising, as discussed in @policybrief_USLIMTIP, for most individuals, time poverty is driven by the need to work.
 
-**what about other characteristics?**
+**What about other characteristics?**
 
 As shown in @tbl-stat, household struture is a critical factor for understanding if redistribution has the potential to reducing time poverty.
 Household with young children have the lowest chance to exit time poverty (65.5%), compared to other groups.
