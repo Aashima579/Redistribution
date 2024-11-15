@@ -228,6 +228,9 @@ tabstat2 spmpov adjp* [w=asecwth] if couple_in_sample, by(htype) save
 matrix res = r(tmatrix2)\r(StatTotal)
 matrix res = res*100  
  
+ 
+capture frame drop toplot
+frame create toplot
 frame toplot: {
     clear
     svmat res
@@ -245,8 +248,9 @@ graph bar res1 res2 res3 res4 res5, by(group, note("") row(1) scale(1.5)) ///
     legend(order(1 "SPM Poverty" 2 "LIMTIP" 3 "Scenario 1" 4 "Scenario 2" 5 "Scenario 3") pos(6) row(1)) ///
     ytitle("Poverty rate") graphregion(margin(zero))   scale(1.5) yscale(range(0 12)) ///    
     ysize(4) xsize(10) 
-    graph export "hh_pov_couple.pdf", replace
-    graph export "hh_pov_couple.png", replace width(1500) 
+
+    graph export "hh_pov_couple_brief2.pdf", replace
+    graph export "hh_pov_couple_brief2.png", replace width(1500) 
 }
  
 tabstat2 spmpov adjp* [w=asecwth] if !couple_in_sample, by(htype) save
