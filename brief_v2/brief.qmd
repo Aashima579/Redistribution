@@ -98,7 +98,7 @@ $$Z_{j}^{adj} = Z_{j} + 52*P* |X_{j}|
 $$ {#eq-limtip}
 
 where $P$ is the price we use to give a monetary value to the time deficits the household ${j}$ faces, $Z_{j}$ is the official poverty line (SPM Poverty line), and $Z_{j}^{adj}$ is the adjusted poverty line. Intuitively, households that are not time-poor will not change status compared to the official poverty estimates. However, households that are time-poor could have their poverty status change if, after considering the adjusted poverty line, they fall below it. This group of households is considered to be the hidden poor.
-
+<!-- thought may be we should add all three equations, but open to droping if you prefer that-->
 
 In this framework, as pointed out in @policybrief_USLIMTIP, it is not uncommon to see households with a mixture of time availability (i.e., deficits and surpluses) among its members.  
 <!--AS edited--> The mixture of time availability among household members suggests that not everyone may be pulling their weight in terms of household production. We therefore, tap the scope of redistributing  household production among household members with the objective of more equitable sharing of housheold work as well as reducing time poverty incodence of the household.  
