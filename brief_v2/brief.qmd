@@ -238,7 +238,7 @@ First, we predict the occupation and industry likelihood for non-working individ
 These predicted wages serve as our measure of how valuable each person's time is.
 
 # Impact of Redistribution
-<!--May  be we should add that SPM and LIMTIP figure here?-->
+<!--May  be we should add that SPM and LIMTIP figure by scenario here?-->
 
 Because there are many household members that could potentially take on more household production responsibilities, the potential for redistribution is high.
 However, the effectiveness depends considerably on characteristics of the household, such as the presence of children, the presence of other members, and the employment status of the wife.
@@ -250,8 +250,7 @@ Furthermore, because the redistribution scenarios are based on a zero-sum game, 
 Time Poverty and Transition Rates
 :::
 
-\footnotesize Note: BL refers to the baseline estimates
-<!--add table footnote-->
+<!--add table footnote, I added to the tex file, please adjust if needed-->
 
 In terms of incidence of time poverty, see @tbl-tb2, women benefit more from redistribution than men, except under Scenario 3.
 This shows that even the simplistic redistribution rules we defined, the gender wage gap has important implications in terms of women's time poverty.
@@ -292,7 +291,6 @@ The small differences we observe are as expected, with somewhat higher levels of
 
 Time Poverty by Household Structure
 :::
-\footnotesize Note: BL refers to the baseline estimates and S1, S2 and S3 refer to the three scenarios respectively.
 
 When considering the impact of the redistribution scenarios, we find a clear pattern that the presence of children and absence of other members have a very similar impact reducing the effectiveness of redistribution scenarios.
 In both cases, the reduction in time poverty we estimate for women is still larger than that for men.
@@ -327,9 +325,10 @@ However, because women still take on most of the household production, the impac
 
 **What about the Hidden Poor?**
 
-One of the main contributions of the LIMTIP is the identification of the hidden poor, i.e., individuals who are not classified as poor based on official poverty estimates but are classified as such when one accounts for the time deficits they face.
-For our sample, we estimate that 4.7% of the population who is not classified as officially poor, fall under this definition with when we adjust time deficits.
-However, if any of the redistribution scenarios were to be implemented, the share of hidden poor could be reduced to 1.8-0.7%.
+One of the main contributions of the LIMTIP is the identification of the hidden poor, i.e., individuals who are not classified as poor based on official poverty estimates but are classified as such when one accounts for the time deficits they face. In @tbl-tb5 we present the hidden poor estimates by sub-groups. 
+
+For our sample, we estimate that 4.7% of the population who is not classified as officially poor, fall under this definition when we adjust time deficits.
+However, if any of the redistribution scenarios were to be implemented, the share of hidden poor could be reduced to 1.8-0.7% 
 
 When considering household characteristics, redistribution scenarios could actually increase hidden poverty in households where everyone is time poor, but can be greatly reduced whenever there is room for redistribution.
 For example, if the household has the potential to exit time poverty, redistribution based on the time available principle could almost eliminate the share of hidden poor (0.1%).
