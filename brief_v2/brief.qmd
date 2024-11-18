@@ -240,11 +240,12 @@ These predicted wages serve as our measure of how valuable each person's time is
 # Impact of Redistribution
 <!--May  be we should add that SPM and LIMTIP figure by scenario here?-->
 Redistribution across all three scenarios was effective in reducing the time-adjusted income poverty in turn reducing the proportion of hidden poor.xxxxx
-::: {#fig-limtip1 fig-pos="H"}
+<!--::: {#fig-limtip1 fig-pos="H"}
 ![](resources_brief/hh_pov_couple_brief2.png)
 
 Changes in Poverty estimates across redistribution scenarios
 :::
+-->
 
 Because there are many household members that could potentially take on more household production responsibilities, the potential for redistribution is high.
 However, the effectiveness depends considerably on characteristics of the household, such as the presence of children, the presence of other members, and the employment status of the wife.
