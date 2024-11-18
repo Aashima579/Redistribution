@@ -272,7 +272,7 @@ graph bar res1 res2 res3 res4 res5 if group==0, ///
     bar(3, bstyle(p1)) bar(4, bstyle(p2)) bar(5, bstyle(p3)) ///
     legend(order(1 "SPM Poverty" 2 "LIMTIP" 3 "Scenario 1" 4 "Scenario 2" 5 "Scenario 3") pos(6) row(1)) ///
     ytitle("Poverty rate") graphregion(margin(zero))   scale(1.5) yscale(range(0 12)) ///    
-    ysize(4) xsize(10) 
+    ysize(4) xsize(10) /// 
 
     graph export "hh_pov_couple_brief2_all.pdf", replace
     graph export "hh_pov_couple_brief2_all.png", replace width(1500) 
