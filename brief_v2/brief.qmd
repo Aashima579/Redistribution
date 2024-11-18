@@ -19,15 +19,13 @@ author:
 date: today
 keywords: "Time Poverty, Income Poverty, Redistribution, household production, care work, gender equality, LIMTIP"
 abstract: |
-    This policy brief examines how redistributing household production responsibilities could reduce time poverty among married U.S. couples. Using the Levy Institute Measure of Time and Income Poverty (LIMTIP), we analyze three scenarios based on equality, equity, and opportunity cost principles. Our findings show that redistribution could effectively reduce time poverty in households where time surplus exceeds deficits, with the equity-based approach proving most successful. However, redistribution has a megative impact when all household members are already time-poor. The effectiveness varies across household types and structures, suggesting targeted approaches may work better than universal solutions.
+    This policy brief examines how redistributing household production responsibilities could reduce time poverty among married U.S. couples. Using the Levy Institute Measure of Time and Income Poverty (LIMTIP), we analyze three scenarios based on equality, equity, and opportunity cost principles. Our findings show that redistribution could effectively reduce time poverty in households where time surplus exceeds deficits, with the equity-based approach proving most successful. However, redistribution has a negative impact when all household members are already time-poor. The effectiveness varies across household types and structures, suggesting targeted approaches may work better than universal solutions.
 
 bibliography:
   - publications.bib
   - biblio.bib
   - references.bib
 ---
-
-<!--Isnt this sentence in the abstract obvious? However, redistribution has limited impact when all household members are already time-poor. -->
 
 # Introduction
 
@@ -82,13 +80,7 @@ For the identification of time poverty, using weekly hours as the unit of analys
 $$X_{ij} = 168 - M - \alpha_{ij}R_j-D_{ij}(L_{ij}+T_{ij})
 $$ {#eq-bal}
 
-Some of these components are identified based on people's decisions (i.e., time spent on paid work), but others are assumed to have some minimum time requirements, such as the case for household production and personal maintenance.
-If the responsibilities of an individual exceed the 168 hours per week, that individual is classified as time poor.
-
-```{=html}
-<!-- can drop this and keep the next para below :To identify time poverty at the household level, LIMTIP imposes the assumption that individuals are unable or unwilling to help those with time deficits.
-Thus, even if a single individual struggles to meet their responsibilities, the whole family is considered to be living under time poverty. -->
-```
+Some of these components are identified based on people's decisions (i.e., time spent on paid work), but others are assumed to have some minimum time requirements, such as the case for household production and personal maintenance. If the responsibilities of an individual exceed the 168 hours per week, that individual is classified as time poor.
 
 At the household level, however, we assume that individuals with time surpluses are unable or unwilling to share and redistribute some of the responsibilities of those with time deficits.
 In this framework, a household is considered to be time-poor as long as there is at least one person with a time deficit living in the household, and the household deficit is equivalent to the deficits of all its members.[^1]
@@ -109,10 +101,9 @@ where $P$ is the monetary value we give to the time deficits the household ${j}$
 Intuitively, households that are not time-poor will not change status compared to the official poverty estimates.
 However, households that are time-poor could have their poverty status change if they fall below the adjusted poverty line.
 These group of households are considered to be the hidden poor.
-<!-- thought may be we should add all three equations, but open to droping if you prefer that. FRA: No its fine. -->
 
 In this framework, as pointed out in @policybrief_USLIMTIP, it is not uncommon to see households with a mixture of time availability (i.e., deficits and surpluses) among its members.\
-<!--AS edited--> The mixture of time availability among household members suggests that not everyone may be pulling their weight in terms of household production.
+The mixture of time availability among household members suggests that not everyone may be pulling their weight in terms of household production.
 This allow us to explore how redistributing household production among its members can help reducing time time constrains in the household.
 
 In spite of the growing recognition of the importance of time constraints and the responsibility of household production, the issue of time poverty has received limited attention in the U.S., partially due to data availability constraints.
@@ -140,17 +131,10 @@ This group constitutes the focus of our analysis.
 Within these time poor households, 52% of the married couples may be classified as time poor, with only 7.8% of other members in the household experiencing time poverty.
 Furthermore, among time-poor married couples, 44% of married men are experiencing time poverty compared to 61% among married women.
 
-```{=html}
-<!--- can perhaps add this not sure?. Further, in Table xx we present the four-way classification of limtip estimates for individuals. We find that xx % women experience double poverty: income poor and time poor. Given these time poverty outcomes, we investigate the impact of redistribution of household production work among all eligible members in time poor couple housheolds (18-64 and abled). Our focus is on married couples and we examine if redistribution between them and to other hh members can reduce time poverty. 
-We also find that among married couples, 5.6% of households are hidden poor, i.e those who are not classified poor based on official poverty estimates but are poor based on LIMTIP estimation. 
-FRA: Not sure what is your point here
+**Who are the couples in these time poor households?**
 
--->
-```
-
-**Who are the couples in this time poor households?**
-
-<!-- consider breaking Table 1?; FRA: Open to suggestions-->
+<!-- consider breaking Table 1?; FRA: Open to suggestions--
+also change title-->
 
 @tbl-stat provides an overview of the characteristics of the households where these couples live.
 
@@ -179,7 +163,7 @@ Summary Statistics Population
 
 The idea of redistribution of household production responsibilities follows the principle that everyone in a household should be able to carry out their **fair** share of household work.
 
-**what constitutes a fair share?**
+**What constitutes a fair share?**
 
 While one could construct many rules and strategies to redistribute household responsibilities within a household, we consider three principles that could guide the redistribution of household production responsibilities among eligible household members.
 
