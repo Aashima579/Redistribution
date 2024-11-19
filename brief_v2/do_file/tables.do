@@ -5,7 +5,7 @@ Unfortunately, original Dofile got lost.
 
 ***/
 
-* Not to run Every time
+/* Not to run Every time
 
 *use "J:\Shared drives\levy_distribution\Time Poverty\US\LIMTIP\redistribution_simulation\appended1519.dta", clear
 use "$levy/Time Poverty/US/LIMTIP/redistribution_simulation/appended1519.dta", clear
@@ -15,13 +15,16 @@ keep if h_tpoor==1
 
 bysort year spmfamunit:egen mcp = max(couple_in_sample==1)
 drop if mcp==0
-save "J:\Shared drives\levy_distribution\Time Poverty\US\LIMTIP\redistribution_simulation\appended1519_small.dta", replace
+*save "J:\Shared drives\levy_distribution\Time Poverty\US\LIMTIP\redistribution_simulation\appended1519_small.dta", replace
+save "$levy/Time Poverty/US/LIMTIP/redistribution_simulation/appended1519_small.dta", replace
+
 */
 
 ** Data: "SMall"
 ** Already has only Time poor households
 ** Age Constrained
-use "J:\Shared drives\levy_distribution\Time Poverty\US\LIMTIP\redistribution_simulation\appended1519_small.dta", clear
+*use "J:\Shared drives\levy_distribution\Time Poverty\US\LIMTIP\redistribution_simulation\appended1519_small.dta", clear
+use "$levy/Time Poverty/US/LIMTIP/redistribution_simulation/appended1519_small.dta", clear
 
 gen is_couple = couple_order!=99
 compress
@@ -214,20 +217,20 @@ esttab matrix(tb1, fmt(%5.1f)) , nomtitle ///
     b3 "No Y.Children" ///
     b4 "Other H Member" ///
     b5 "No Other Member" ///
-    b6 "Wife Works" b7 "Wife Not working")   tex
+    b6 "Wife Works" b7 "Wife Not working") tex
 
 esttab matrix(tb2, fmt(%5.1f)) , nomtitle ///
     collabel("BL" "S.1" "S.2" "S. 3" "BL" "S.1" "S.2" "S. 3") ///
     varlabel(b1 "All" b2 "BL: Time NP" b3 "BL: Time P" ///
     b4 "Household Type" b5 "\ All Mem. TP " ///
-    b6 "\ At Least 1 Mem.time NP" b7 "\ Hhld can exit TP") 
+    b6 "\ At Least 1 Mem.time NP" b7 "\ Hhld can exit TP") ///
     tex
     
 esttab matrix(tb3, fmt(%5.1f)) , nomtitle ///
     collabel("BL" "S.1" "S.2" "S. 3" "BL" "S.1" "S.2" "S. 3") ///
     varlabel(b1 "Yng Children Presence" b2 "\ No Children" b3 "\ With Children" ///
     b4 "Other Members in HH" b5 "\ No " ///
-    b6 "\ Yes") 
+    b6 "\ Yes") tex
     
  esttab matrix(tb4, fmt(%5.1f)) , nomtitle ///
     collabel("BL" "S.1" "S.2" "S. 3" "BL" "S.1" "S.2" "S. 3") ///
@@ -239,7 +242,7 @@ esttab matrix(tb3, fmt(%5.1f)) , nomtitle ///
     b5 "\ > 4 x Pline" ///
     b6 "Wife Works Status" ///
     b7 "\ Not working" ///
-    b8 "\ Working")  
+    b8 "\ Working")  ///
     tex
     
 esttab matrix(tb5, fmt(%5.1f)) , nomtitle ///
@@ -258,7 +261,7 @@ esttab matrix(tb5, fmt(%5.1f)) , nomtitle ///
     b11 "\ Not working" ///
     b12 "\ Working")   ///
     eqlabel("" "Household Type" "Yng Children Presence" ///
-    "Other Members in HH" "Income/Pline" "Wife Work Status") 
+    "Other Members in HH" "Income/Pline" "Wife Work Status") ///
     tex
     
         
