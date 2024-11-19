@@ -4,10 +4,12 @@ This dofile should replicate the results I had earlier for the Brief
 Unfortunately, original Dofile got lost.
 
 ***/
-/*
+
 * Not to run Every time
 
-use "J:\Shared drives\levy_distribution\Time Poverty\US\LIMTIP\redistribution_simulation\appended1519.dta", clear
+*use "J:\Shared drives\levy_distribution\Time Poverty\US\LIMTIP\redistribution_simulation\appended1519.dta", clear
+use "$levy/Time Poverty/US/LIMTIP/redistribution_simulation/appended1519.dta", clear
+
 keep if h_tpoor==1
 ** Note NOBS 266127
 
