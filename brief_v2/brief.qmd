@@ -122,7 +122,7 @@ To do this, we consider three redistribution scenarios based on equality, equity
 Further, we present the impacts for different household types, household structures (presence of young children and other members), poverty groups and employment status.
 
 # Where we are: Time Poverty in the United States
-
+<!--check stats in this section-->
 Between 2015 and 2019 in the U.S., under LIMTIP definition, an average of 35.0% of all households had at least one member who was time poor.
 If we restrict this to households with a married couple, this share increases to 36.1%, providing a glimpse of high prevalence of time poverty among married couples.
 This group constitutes the focus of our analysis.
@@ -136,13 +136,13 @@ Over the time period 2015-19, the ratio of the share of houshold production of m
 
 The first type of classification we consider is one that classifies households in regards to their potential to exit time poverty via redistribution. Households can vary in terms of the presence of time poor and time non-poor members and in terms of the total time deficit and surplus. Members with time surpluses could take on more household responsibilities, reducing the burden of those with time deficits, and potentially lifting the household out of poverty. Even if the household remains time-poor, redistribution could still make the time deficits more equal among the household members, particulalry balancing the share between men and women. In this framework, households fall into three groups: those where time constraints affect everyone, those with some available time but insufficient free all time constraines, and those with enough total free time to potentially help all members if redistributed.
 
-Over the period of analysis,  5.2% of couples live in a household where all members are time poor, but 76% could potentially leave time poverty if household production responsibilities were to be redistributed.
-Over half of the couples have a young child living with them (56%) and 25% have other members in the household.
+Over the period of analysis,  5.3% of couples live in a household where all members are time poor, but 76% could potentially leave time poverty if household production responsibilities were to be redistributed.
+Over half of the couples have a young child living with them (55%) and 25% have other members in the household.
 In terms of employment status, the vast majority of working-age individuals are employed, with 97% of husbands and 91% of wives are working. This is not surprising, as discussed in @policybrief_USLIMTIP, for most individuals, time poverty is driven by the need to work.
 
 **What about other characteristics?**
 
-As shown in @tbl-stat, household struture is a critical factor for understanding if redistribution has the potential to reducing time poverty. Household with young children have the lowest chance to exit time poverty (65.5%), compared to other groups. In contrast, the presence of other age-able members in household drastically increases those chances (97.3%).
+As shown in @tbl-stat, household struture is a critical factor for understanding if redistribution has the potential to reducing time poverty. Household with young children have the lowest chance <!--FRA is it ok to say chance>--> to exit time poverty (64.8%), compared to other groups. In contrast, the presence of other age-able members in household drastically increases those chances (97.3%).
 This is not surprising. The presence of young children increases the time demands on the child care activities, as well as overall household activities due to larger size. On the other hand, the presence of a fall back person for the couple greatly increases the potential of redistribution, because this "other-members" do not typically experience time constrains.
 
 A third pattern observed relates to wife's employment status. Families where wives are not currently working show higher potential for time redistribution reducing time poverty. However, this is also observed alongside two other characteristics of these families: they tend to have young children, while also showing a larger proportion of additional household members present.
@@ -232,9 +232,9 @@ Time Poverty and Transition Rates
 :::
 
 
-In terms of incidence of time poverty, see @tbl-tb2, women benefit more from redistribution than men, except under Scenario 3. This shows that even the simplistic redistribution rules we defined, the gender wage gap has important implications in terms of women's time poverty. The simulations also suggest that Scenario 2 is the most effective in reducing time poverty for both men and women, bringing the share of time poor individuals to 29.6% (men) and 26.4%(women).
+In terms of incidence of time poverty, see @tbl-tb2, women benefit more from redistribution than men, except under Scenario 3. This shows that even the simplistic redistribution rules we defined, the gender wage gap has important implications in terms of women's time poverty. The simulations also suggest that Scenario 2 is the most effective in reducing time poverty for both men and women, bringing the share of time poor individuals to 26.4% (men) and 22.5%(women).
 
-These improvements do not come without casualties. Among non-time poor men (baseline), we estimate that up 23% of them could enter time poverty under redistribution scenario 1, with a lower end of 13.7% under scenario 3. In contrast, while there is generally a smaller rate of women falling into time poverty , the transition into poverty rate under scenario 3 (16.3%) is higher than that observed for men. This reinforces the idea that gaps in opportunity costs/bargaining power can have important implications for the redistribution of time and could affect time poverty.
+These improvements do not come without casualties. Among non-time poor men (baseline), we estimate that about 23% of them could enter time poverty under redistribution scenario 1, with a lower end of 13.9% under scenario 3. In contrast, while there is generally a smaller rate of women falling into time poverty , the transition into poverty rate under scenario 3 (16.7%) is higher than that observed for men. This reinforces the idea that gaps in opportunity costs/bargaining power can have important implications for the redistribution of time and could affect time poverty.
 
 The type of the household also plays an important role in the effectiveness of redistribution. Even in cases where everyone in the household is time poor, redistribution can still reduce the time poverty status individuals. While this improvements are small for men, there are significant reductions in time poverty for women under the equal shares scenarios (Scenario 1). As we will see later, however, this should not be interpreted as a general improvement, as someone else in the household will have to take on the extra responsibilities, and thus increasing their own and the household time decifit. The results that appear to be the most paradoxical relate to households where there are non-time poor individuals, but the total time surplus is not enough to eliminate time poverty. In these households, sased on individual time poverty alone, it may seem that all redistribution scenarios have a negative impact on both husbands and wives. However, despite the higher time poverty incidence, there is also a reduction in time deficits that should still improve overall welfare of the household.
 
@@ -260,7 +260,7 @@ When considering the impact of the redistribution scenarios, we find a clear pat
 
 **Income and Employment**
 
-One last aspect to consider is to analyze if there is any heterogeneity in the estimated impact of redistribution based on the household overall income or the employment status of the wife. We do not consider the employment status of the husband, because 97.2% of husbands are employed, and thus, there is little variation to analyze. We should also remember that we concentrate on households that are time poor, and thus are less likely to be income poor, because one or both of the partners are employed.
+One last aspect to consider is to analyze if there is any heterogeneity in the estimated impact of redistribution based on the household overall income or the employment status of the wife. We do not consider the employment status of the husband, because 97.2% <!--check-->of husbands are employed, and thus, there is little variation to analyze. We should also remember that we concentrate on households that are time poor, and thus are less likely to be income poor, because one or both of the partners are employed.
 
 ::: {#tbl-tb4 tab-pos="H"}
 {{< include table/tb4.tex >}}
@@ -268,11 +268,11 @@ One last aspect to consider is to analyze if there is any heterogeneity in the e
 Time Poverty by Income
 :::
 
-We first consider the impact of redistribution based on the household income, or more specifically, the income-to-poverty-line ratio. Interestingly, it may seem that time poverty, at baseline, does not discriminate across income groups, showing similar levels across the income distribution. Although we do observe a slightly lower share of time poor women (55.9%) in the lowest income group, compared to average of 61.0%.
+We first consider the impact of redistribution based on the household income, or more specifically, the income-to-poverty-line ratio. Interestingly, it may seem that time poverty, at baseline, does not discriminate across income groups, showing similar levels across the income distribution. Although we do observe a slightly lower share of time poor women (56.6%) in the lowest income group, compared to average of 61.0%.
 
 For men, there is very little variation in the impact of redistribution across income groups for scenarios 1 and 3. It may seem that men will either increase their share of household production (Scenario 1) or will take advantage of the opportunity cost of time (Scenario 3), regardless of the income. For Scenario 2, however, we observe that redistribution is more effective in reducing time poverty for those in the lowest income group.
 
-What is more interesting is that the same pattern of decreasing effectiveness of redistribution policies is also observed among women, for all scenarios. A possible explanation is that the share of employed men does not vary much across income groups. However, the share of non-employed women goes from 30% in the lowest income group, to 5% in the highest income group. This means that for people in the highest income group, there is less room for redistribution because both husband and wife are employed. However, because women still take on most of the household production, the impact of redistribution is still higher for them compared to men
+What is more interesting is that the same pattern of decreasing effectiveness of redistribution policies is also observed among women, for all scenarios. A possible explanation is that the share of employed men does not vary much across income groups. However, the share of non-employed women goes from <!--check-->30% in the lowest income group, to 5% in the highest income group. This means that for people in the highest income group, there is less room for redistribution because both husband and wife are employed. However, because women still take on most of the household production, the impact of redistribution is still higher for them compared to men
 
 **What about the Hidden Poor?**
 
@@ -280,7 +280,7 @@ One of the main contributions of the LIMTIP is the identification of the hidden 
 
 <!-- This may need to be updated to the official approach. The message will be the same, just different Level-->
 
-For our sample, we estimate that 4.7% of the population who is not classified as officially poor, fall under this definition when we adjust time deficits. However, if any of the redistribution scenarios were to be implemented, the share of hidden poor could be reduced to 1.8-0.7%.  
+For our sample, we estimate that 4.6% of the population which is not classified as officially poor, fall under this definition when we adjust time deficits. However, if any of the redistribution scenarios were to be implemented, the share of hidden poor could be reduced to 0.7-1.8%.  
 
 When considering household characteristics, redistribution scenarios could actually increase hidden poverty in households where everyone is time poor, but can be greatly reduced whenever there is room for redistribution. For example, if the household has the potential to exit time poverty, redistribution based on the time available principle could almost eliminate the share of hidden poor (0.1%).
 
@@ -308,7 +308,7 @@ While redistribution policy may be difficult to implement, public polices can he
 
 # Conclusion/recommendations
 
-This policy brief has examined the potential of redistributing household production responsibilities to alleviate time poverty in the United States for married couples. Using the Levy Institute Measure of Time and Income Poverty (LIMTIP), we have shown that time poverty is a significant issue affecting married couples, about 36% of households with couples experienced time poverty.
+This policy brief has examined the potential of redistributing household production responsibilities to alleviate time poverty in the United States for married couples. Using the Levy Institute Measure of Time and Income Poverty (LIMTIP), we have shown that time poverty is a significant issue affecting married couples, about 36% <!--check-->of households with couples experienced time poverty.
 
 Our analysis of three redistribution scenarios - based on equality, equity, and opportunity cost principles - reveals that such redistributions can significantly reduce time poverty, particularly in households where time surpluses exceed time deficits.
 
