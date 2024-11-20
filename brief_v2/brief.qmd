@@ -128,6 +128,8 @@ If we restrict this to households with a married couple, this share increases to
 This group constitutes the focus of our analysis.
 Within these time poor households, 52% of the married couples may be classified as time poor, with only 7.8% of other members in the household experiencing time poverty.
 Furthermore, among time-poor married couples, 44% of married men are experiencing time poverty compared to 61% among married women.
+<!--tdef srhp number changed-->
+
 Over the time period 2015-19, the ratio of the share of houshold production of married women to married men has remain more or less stagnant such that wives share is 1.6 time more than husbands. Moreover wives are experiencing greater time deficits in the 
 
 **Glimpse of Couple Household Characteristics ?**
