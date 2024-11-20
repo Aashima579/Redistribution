@@ -24,7 +24,9 @@ fre h_tpoor [aw=asecwth] if hcouple_in_sample==1 & flagh==1 & flag2==1
 tab iscouple tpoor [aw=asecwth] if hcouple_in_sample==1 & flag2==1 & h_tpoor==1, nofreq row
 
 tab sex tpoor [aw=asecwth] if hcouple_in_sample==1 & flag2==1 & h_tpoor==1 & iscouple , nofreq row
+tab sex emp [aw=asecwth] if hcouple_in_sample==1 & flag2==1 & h_tpoor==1 & iscouple , nofreq row
 
+**
 bys	sex: tabstat	srhp	[w=asecwth]	if	couple_in_sample==1,	by(limtip_year)	stats(mean	sd	n)
 bys	sex: tabstat	tdefw	[w=asecwth]	if	couple_in_sample==1 ,	by(limtip_year)	stats(mean	sd	n)
 
