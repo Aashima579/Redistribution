@@ -194,7 +194,7 @@ Aashima Sinha\\
 Levy Economics Institute\\
 \\
 }
-\date{2024-11-20}
+\date{2024-11-21}
 \begin{document}
 
 
@@ -212,11 +212,10 @@ analyze three scenarios based on equality, equity, and opportunity cost
 principles. Our findings show that redistribution could effectively
 reduce time poverty for married couples, particularly in households
 where time surplus exceeds deficits; with the equity-based approach
-proving most successful. However, redistribution may have negative
-impact on incidence of household time poverty when all household members
-are already time-poor. The effectiveness varies across household types
-and structures, suggesting targeted approaches may work better than
-universal solutions.
+proving most successful. Additionally, redistribution can potentially
+lift households out of poverty and reduce the hidden poor. The
+effectiveness varies across household types and structures, suggesting
+targeted approaches may work better than universal solutions.
 \end{abstract}
  
 \vspace{.2in}
@@ -433,8 +432,10 @@ young children and other members), poverty groups and employment status.
 States}\label{where-we-are-time-poverty-in-the-united-states}
 
 Between 2015 and 2019 in the U.S., under LIMTIP definition, an average
-of 36\% of all households had at least one member who was time poor. If
-we restrict this to households with a married couple, this share
+of 36\% of all households had at least one member who was time
+poor.\footnote{Estimates in this section correspond to households with
+  atleast one eligible person i.e in age group 18-64 and not disabled}
+If we restrict this to households with a married couple, this share
 increases to 48\%, providing a glimpse of high prevalence of time
 poverty among married couples. This group constitutes the focus of our
 analysis. Within these time poor households, 52\% of the married couples
@@ -462,13 +463,16 @@ poor and time non-poor members and in terms of the total time deficit
 and surplus. Members with time surpluses could take on more household
 responsibilities, reducing the burden of those with time deficits, and
 potentially lifting the household out of poverty. Even if the household
-remains time-poor, redistribution could still make the time deficits
-more equal among the household members, particulalry balancing the share
-between men and women. In this framework, households fall into three
-groups: those where time constraints affect everyone, those with some
-available time but insufficient free all time constraines, and those
-with enough total free time to potentially help all members if
-redistributed.
+remains time-poor, redistribution could still make time deficits more
+equal among the household members, particulalry balancing the share
+between men and women. In this framework, we consider three types of
+households: (i) Households where everyone is time poor, thus
+redistribution cannot eliminate time poverty for the household (ii)
+Households with atleast one time non poor individual, but total time
+surplus insufficient to absorb total time deficit and lift housheold out
+of poverty; and (iii) Housheld where total time surplus can absorb all
+the time deficit, thus redistribution can eliminate time poverty of all
+members and lift the hosuehold out of poverty.
 
 Over the period of analysis, 5.3\% of couples live in a household where
 all members are time poor, but 76\% could potentially leave time poverty
@@ -549,10 +553,10 @@ in LIMTIP Equation~\ref{eq-bal} remain constant with the exception of
 each individual \(i\) in Household \(j\) takes on. The goal is to
 simulate different \(\alpha_{ij}\) based on each redistribution
 scenario, but maintaining the total share of work done by the eligible
-household members (all members 18-64).This approach imposes the implicit
-assumption that all household members are equally efficient at taking
-care of the household responsibilities. We outline the methods used for
-implementing the scenarios below.
+household members (all members 18-64 ).This approach imposes the
+implicit assumption that all household members are equally efficient at
+taking care of the household responsibilities. We outline the methods
+used for implementing the scenarios below.
 
 \subsection{Scenario 1: Equal Shares}\label{scenario-1-equal-shares}
 
@@ -639,11 +643,17 @@ of how valuable each person's time is.
 
 Redistribution across all three scenarios is effective in reducing the
 time-adjusted income poverty in turn reducing the proportion of hidden
-poor. In Figure~\ref{fig-limtip} we present the official income poverty
-estimates along with the baseline LIMTIP estimates and the LIMTIP for
-the three scenarios for couple households. The difference between the
-SPM poverty estimate and the LIMTIP estimates are the hidden poor, which
-decreases across all three scenarios.
+poor. In Figure~\ref{fig-limtip} we present the official Supplemental
+Poverty Measure (SPM) income poverty estimates along with the baseline
+LIMTIP estimates and the LIMTIP for the three scenarios for couple
+households.\footnote{SPM is a broader measure of poverty that considers
+  cash income, in-kind benefits, and necessary expenses. The SPM
+  thresholds are based on expenditures for food, clothing, shelter,
+  utilities, telephone, internet, and some in-kind benefits.
+  Nondiscretionary expenses, such as taxes, work expenses, and medical
+  out-of-pocket costs, are subtracted from family income.} The
+difference between the SPM poverty estimate and the LIMTIP estimates are
+the hidden poor, which decreases across all three scenarios.
 
 \begin{figure}[H]
 
@@ -717,15 +727,15 @@ affect time poverty.
 The type of the household also plays an important role in the
 effectiveness of redistribution. Even in cases where everyone in the
 household is time poor, redistribution can still reduce the time poverty
-status individuals. While this improvements are small for men, there are
-significant reductions in time poverty for women under the equal shares
-scenarios (Scenario 1). As we will see later, however, this should not
-be interpreted as a general improvement, as someone else in the
-household will have to take on the extra responsibilities, and thus
+status of individuals. While this improvements are small for men, there
+are significant reductions in time poverty for women under the equal
+shares scenarios (Scenario 1). As we will see later, however, this
+should not be interpreted as a general improvement, as someone else in
+the household will have to take on the extra responsibilities, and thus
 increasing their own and the household time decifit. The results that
 appear to be the most paradoxical relate to households where there are
 non-time poor individuals, but the total time surplus is not enough to
-eliminate time poverty. In these households, sased on individual time
+eliminate time poverty. In these households, based on individual time
 poverty alone, it may seem that all redistribution scenarios have a
 negative impact on both husbands and wives. However, despite the higher
 time poverty incidence, there is also a reduction in time deficits that
@@ -877,12 +887,11 @@ One of the main contributions of the LIMTIP is the identification of the
 hidden poor, i.e., individuals who are not classified as poor based on
 official poverty estimates but are classified as such when one accounts
 for the time deficits they face. In Table~\ref{tbl-tb5} we present the
-hidden poor estimates by sub-groups.
-
-For our sample, we estimate that 4.6\% of the population which is not
-classified as officially poor, fall under this definition when we adjust
-time deficits. However, if any of the redistribution scenarios were to
-be implemented, the share of hidden poor could be reduced to 0.7-1.8\%.
+hidden poor estimates by sub-groups. For our sample, we estimate that
+4.6\% of the population which is not classified as officially poor, fall
+under this definition when we adjust time deficits. However, if any of
+the redistribution scenarios were to be implemented, the share of hidden
+poor could be reduced to 0.7-1.8\%.
 
 When considering household characteristics, redistribution scenarios
 could actually increase hidden poverty in households where everyone is
