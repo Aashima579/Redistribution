@@ -90,8 +90,8 @@ frame coll: {
 ** Figures
 set scheme white2
 color_style  bay
-cd "C:\Users\Fernando\Documents\GitHub\Redistribution\resources_brief"
-*cd "/Users/aashimasinha/Documents/GitHub/Redistribution/resources_brief"
+*cd "C:\Users\Fernando\Documents\GitHub\Redistribution\resources_brief"
+cd "/Users/aashimasinha/Documents/GitHub/Redistribution/resources_brief"
 
 frame coll: {
     graph bar (asis) tpoor_sc1 tpoor_sc2 tpoor_sc3 if new_class==1, over(ptype) ///
@@ -248,7 +248,6 @@ graph bar res1 res2 res3 res4 res5, by(group, note("") row(1) scale(1.5)) ///
     legend(order(1 "SPM Poverty" 2 "LIMTIP" 3 "Scenario 1" 4 "Scenario 2" 5 "Scenario 3") pos(6) row(1)) ///
     ytitle("Poverty rate") graphregion(margin(zero))   scale(1.5) yscale(range(0 12)) ///    
     ysize(4) xsize(10) 
-
     graph export "hh_pov_couple_brief2.pdf", replace
     graph export "hh_pov_couple_brief2.png", replace width(1500) 
 }
@@ -269,7 +268,7 @@ color_style bay
 graph bar res1 res2 res3 res4 res5 if group==0, ///
     blabel(bar, format(%3.1f))  ///
     bar(1, color(gs4)) bar(2, color(gs7)) ///
-    bar(3, bstyle(p1)) bar(4, bstyle(p2)) bar(5, bstyle(p3)) ///
+    bar(3, bstyle(p1)) bar(4, bstyle(p2)) bar(5, bstyle(p3))  ///
     legend(order(1 "SPM Poverty" 2 "LIMTIP" 3 "Scenario 1" 4 "Scenario 2" 5 "Scenario 3") pos(6) row(1)) ///
     ytitle("Poverty rate") graphregion(margin(zero))   scale(1.5) yscale(range(0 12)) ///    
     ysize(4) xsize(10) /// 
