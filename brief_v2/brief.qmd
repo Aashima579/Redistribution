@@ -129,7 +129,7 @@ Within these time poor households, 52% of the married couples may be classified 
 Furthermore, among time-poor married couples, 44% of married men are experiencing time poverty compared to 61% among married women.
 Over the period 2015-19, the ratio of the share of required hours of housheold production experienced by married women to married men has remain more or less stagnant such that wives' deficits on average are 1.6 times that of husbands. This also translates into wives experiencing higher time defciits compared to husbands. In this context redistributing housheold production time can become a useful tool to reduce time poverty incidence. What factors could potentially drive the effectivenes of redistribution?
 
-[^3]:Estimates in this section correspond to households with atleast one eligible person i.e in age group 18-64 and not disabled
+[^3]:Estimates in this section correspond to households with at least one eligible person i.e in age group 18-64 and not disabled
 
 
 **Glimpse of Couple Household Characteristics ?**
@@ -168,7 +168,7 @@ The idea of redistribution of household production responsibilities follows the 
 
 While one could construct many rules and strategies to redistribute household responsibilities within a household, we consider three principles that could guide the redistribution of household production responsibilities among eligible household members.
 
-For the implementation of these scenarios, we consider that all elements in LIMTIP @eq-bal remain constant with the exception of $\alpha_{ij}$, which is the share of household production time that each individual $i$ in Household $j$ takes on. The goal is to simulate different $\alpha_{ij}$ based on each redistribution scenario, but maintaining the total share of work done by the eligible household members (all members 18-64 <!--and not disabled-->).This approach imposes the implicit assumption that all household members are equally efficient at taking care of the household responsibilities. We outline the methods used for implementing the scenarios below.
+For the implementation of these scenarios, we consider that all elements in LIMTIP @eq-bal remain constant with the exception of $\alpha_{ij}$, which is the share of household production time that each individual $i$ in Household $j$ takes on. The goal is to simulate different $\alpha_{ij}$ based on each redistribution scenario, but maintaining the total share of work done by the eligible household members<!--Already mentioned in Footnote-->.This approach imposes the implicit assumption that all household members are equally efficient at taking care of the household responsibilities. We outline the methods used for implementing the scenarios below.
 
 ## Scenario 1: Equal Shares
 
@@ -280,7 +280,7 @@ We first consider the impact of redistribution based on the household income, or
 
 For men, there is very little variation in the impact of redistribution across income groups for scenarios 1 and 3. It may seem that men will either increase their share of household production (Scenario 1) or will take advantage of the opportunity cost of time (Scenario 3), regardless of the income. For Scenario 2, however, we observe that redistribution is more effective in reducing time poverty for those in the lowest income group.
 
-What is more interesting is that the same pattern of decreasing effectiveness of redistribution policies is also observed among women, for all scenarios. A possible explanation is that the share of employed men does not vary much across income groups. However, the share of non-employed women goes from <!--check-->30% in the lowest income group, to 5% in the highest income group. This means that for people in the highest income group, there is less room for redistribution because both husband and wife are employed. However, because women still take on most of the household production, the impact of redistribution is still higher for them compared to men
+What is more interesting is that the same pattern of decreasing effectiveness of redistribution policies is also observed among women, for all scenarios. A possible explanation is that the share of employed men does not vary much across income groups. However, the share of non-employed women goes from about 30% in the lowest income group, to 5% in the highest income group. This means that for people in the highest income group, there is less room for redistribution because both husband and wife are employed. However, because women still take on most of the household production, the impact of redistribution is still higher for them compared to men.
 
 **What about the Hidden Poor?**
 
