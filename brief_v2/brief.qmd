@@ -168,7 +168,7 @@ The idea of redistribution of household production responsibilities follows the 
 
 While one could construct many rules and strategies to redistribute household responsibilities within a household, we consider three principles that could guide the redistribution of household production responsibilities among eligible household members.
 
-For the implementation of these scenarios, we consider that all elements in LIMTIP @eq-bal remain constant with the exception of $\alpha_{ij}$, which is the share of household production time that each individual $i$ in Household $j$ takes on. The goal is to simulate different $\alpha_{ij}$ based on each redistribution scenario, but maintaining the total share of work done by the eligible household members<!--Already mentioned in Footnote-->.This approach imposes the implicit assumption that all household members are equally efficient at taking care of the household responsibilities. We outline the methods used for implementing the scenarios below.
+For the implementation of these scenarios, we consider that all elements in LIMTIP @eq-bal remain constant with the exception of $\alpha_{ij}$, which is the share of household production time that each individual $i$ in Household $j$ takes on. The goal is to simulate different $\alpha_{ij}$ based on each redistribution scenario, but maintaining the total share of work done by the eligible household members.This approach imposes the implicit assumption that all household members are equally efficient at taking care of the household responsibilities. We outline the methods used for implementing the scenarios below.
 
 ## Scenario 1: Equal Shares
 
